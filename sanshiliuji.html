@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>三十六计 · 趣味入门</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#faf3e3;--card:#fffaf0;--ink:#3b2a1a;--sub:#7a6650;--red:#b3322a;--line:#e3d3b0;--gold:#c8962e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1812;--card:#2a231a;--ink:#f1e6d0;--sub:#b8a888;--red:#e2574d;--line:#4a3d2a;--gold:#e0b050}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif SC","Songti SC",STSong,serif;line-height:1.6}
+header{text-align:center;padding:28px 16px 8px}
+h1{margin:0;font-size:2.2rem;letter-spacing:.3em;color:var(--red)}
+header p{margin:4px 0;color:var(--sub)}
+.bar{max-width:420px;margin:10px auto;height:10px;border-radius:9px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--red));transition:width .5s}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:10px}
+nav button,.btn{font:inherit;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:6px 14px;border-radius:20px;cursor:pointer}
+nav button.on,.btn{background:var(--red);color:#fff;border-color:var(--red)}
+.grid{max-width:960px;margin:0 auto;padding:10px 14px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.c{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;position:relative;transition:transform .2s}
+.c:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--gold)}
+.c .e{font-size:2.3rem;display:block;animation:fl 3s ease-in-out infinite}
+.c b{display:block;font-size:1.1rem}.c small{color:var(--sub)}
+.c.done::after{content:"✓";position:absolute;top:6px;right:10px;color:var(--red);font-weight:bold}
+@keyframes fl{50%{transform:translateY(-6px)}}
+.m{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:14px;z-index:9}
+.m.show{display:flex}
+.box{background:var(--card);max-width:520px;width:100%;max-height:92%;overflow:auto;border-radius:18px;padding:18px;border:3px solid var(--gold);animation:pop .3s}
+@keyframes pop{from{transform:scale(.8);opacity:0}}
+.stage{height:120px;border-radius:12px;background:linear-gradient(var(--line),transparent);position:relative;overflow:hidden;margin:8px 0;font-size:3rem}
+.stage span{position:absolute;bottom:14px}
+.stage span:nth-child(1){animation:a1 4s ease-in-out infinite}
+.stage span:nth-child(2){animation:a2 4s ease-in-out infinite;left:45%}
+.stage span:nth-child(3){animation:a3 4s ease-in-out infinite;right:6%}
+@keyframes a1{0%{left:2%}50%{left:38%}100%{left:2%}}
+@keyframes a2{0%,100%{transform:scale(1)}50%{transform:scale(1.4) rotate(12deg)}}
+@keyframes a3{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
+h2{margin:4px 0;color:var(--red)}
+.t{display:inline-block;background:var(--gold);color:#fff;border-radius:10px;padding:0 10px;font-size:.8rem}
+.q{background:var(--bg);border-left:4px solid var(--red);padding:6px 10px;margin:8px 0;border-radius:6px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.opts button{font:inherit;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.ok{background:#3a9a4a!important;color:#fff!important}.no{background:#c0392b!important;color:#fff!important;animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.row{display:flex;gap:8px;margin-top:12px;justify-content:space-between}
+#lg{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:8;display:flex;gap:4px}#lg button{font:inherit;font-size:.8rem;padding:3px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;cursor:pointer}#lg button.on{background:var(--red);color:#fff;border-color:var(--red)}header{padding-top:46px!important}h1{font-size:clamp(1.5rem,6vw,2.2rem)}
+</style></head><body>
+<div id="lg"><button data-l="zh" onclick="setLang('zh')">中文</button><button data-l="en" onclick="setLang('en')">EN</button><button data-l="ms" onclick="setLang('ms')">BM</button></div>
+<header><h1 id="h1">三十六计</h1><p id="sub">🐉 零基础也能懂的智慧小课堂 🐉</p>
+<div class="bar"><i id="pb"></i></div><p id="pt"></p></header>
+<nav id="nav"></nav>
+<div class="grid" id="g"></div>
+<div class="m" id="m"><div class="box" id="bx"></div></div>
+<script>
+const G=["胜战计·有优势时","敌战计·对敌之时","攻战计·进攻之时","混战计·乱局之时","并战计·联合之时","败战计·劣势之时"];
+// 名|图|释义|故事|现代
+const D=`瞒天过海|🚢🌊😴|在对方习以为常、放松警惕时行动|唐太宗东征，大军渡海，谋士设宴让他以为在海边赏景，不知不觉就渡过了大海。|把大改动拆成日常小步骤，让人不觉突兀。
+围魏救赵|🏰⚔️🏃|不正面硬拼，攻击对方要害，逼其回防|魏国攻赵，齐军不救赵，反而直取魏都，魏军只得回救，赵国之围自解。|对手攻你强项，你就去攻他的薄弱处。
+借刀杀人|🗡️🤝😈|自己不出手，借别人的力量达成目标|春秋时，对手想除掉敌人，便挑动第三方出手，自己置身事外。|善用合作方、平台的力量，少亲自冲锋。
+以逸待劳|😌⏳😫|养足精神，等对方疲惫再出击|孙膑等庞涓大军奔袭疲惫，再设伏一举击败。|考试前睡好觉，比通宵死磕更有效。
+趁火打劫|🔥💰🏃|趁对方陷入困境时果断夺取利益|越王勾践抓住吴国天灾空虚之机，出兵灭吴。|竞争对手出危机时，快速抢占市场机会。
+声东击西|📢🥁🎯|制造假象吸引注意，实际攻击另一处|大军佯攻东面，吸引守军后，主力突袭西面。|球场上假动作：眼看左边，传球却在右边。
+无中生有|🎭✨💨|把假象变成真，真假难辨，让人迷惑|张巡守城缺箭，用草人夜里“借”到敌军数十万支箭。|营造声势，让小事业看起来很有规模。
+暗度陈仓|🛣️🌙🌾|表面做一件事，暗地走另一条路|刘邦明修栈道迷惑对手，暗中绕道陈仓突袭关中。|正面吸引注意，侧面悄悄推进。
+隔岸观火|🔥👀🍿|对手内乱时静观其变，坐收渔利|袁尚袁熙投奔辽东，曹操不追，等他们自相残杀。|同事吵架时先别掺和，等事态明朗。
+笑里藏刀|😊🔪😰|表面友善亲切，暗中准备行动|口蜜腹剑的奸臣，当面笑脸相迎，背后下手。|提醒我们：过分热情的人要多留心。
+李代桃僵|🍑🌳🔄|在不得不损失时，以小损失换大胜利|田忌赛马：用下等马对上等马，换来整体胜利。|放弃小利保大局，局部牺牲换全局成功。
+顺手牵羊|🐑🤏😏|抓住对手的每个小疏漏，顺势得利|战场上大军行进，遇小破绽顺势取之，积少成多。|留意细节与小机会，随手积累优势。
+打草惊蛇|🌿🐍😱|不明时先试探，让对方暴露行踪|不知敌情时，先敲打一下，看对方有何反应。|摸不清情况时，先小范围试点。
+借尸还魂|💀🌀🧙|利用别人弃置的资源，重新焕发生机|项梁拥立楚怀王之孙，借旧王的名号号召天下。|旧IP、旧资源重新包装，焕发新生。
+调虎离山|🐯⛰️🏠|诱使对方离开有利位置，再趁机行动|孙策诱敌出城，趁其不在时夺取城池。|把对手引离主场，再做主攻。
+欲擒故纵|🕊️🔓🕸️|先放松对方，让其松懈，再一举拿下|诸葛亮七擒七纵孟获，让其心服口服。|有时逼得太紧适得其反，放松反而更稳。
+抛砖引玉|🧱➡️💎|用小利、小成果，引来更大的回报|先抛出一个粗浅想法，引出别人更好的见解。|开会先抛初稿，引大家提出更好的方案。
+擒贼擒王|🏇🎯👑|抓住最关键的人物或要害，一举定局|唐朝张巡射杀敌将，敌军立刻大乱。|解决问题先抓主要矛盾，别在细枝末节上纠缠。
+釜底抽薪|🍲🔥🪵|从根源上解决问题，而非表面对抗|烧水沸腾，与其扬汤止沸，不如抽走锅下的柴。|治标不如治本，找出问题的根源。
+浑水摸鱼|🐟🌫️🧤|趁局势混乱，从中谋取利益|乱世中，聪明人趁混乱壮大自己。|市场大变动时，抓住机会入场。
+金蝉脱壳|🦗🐚💨|留下假象稳住对手，自己悄悄脱身|诸葛亮死后，魏延留下假像让对方不敢追击，大军安全撤退。|撤退时留好后手，稳住局面再离开。
+关门捉贼|🚪🕵️🕸️|对弱小的敌人，要封锁退路再围歼|对小股敌人，先关门封路，再一举歼灭，以免走脱。|解决问题要彻底，别留退路让问题重现。
+远交近攻|🌍🤝⚔️|结交远方，进攻近处，逐步扩张|秦国与远方齐国结盟，先攻邻近的韩魏，最终统一天下。|与远处的合作，先解决眼前最近的对手。
+假道伐虢|🛤️🎁🏯|借路为名，趁机吞并，对象最终也会遭殃|晋国向虞国借路攻虢，灭虢之后回头灭了虞国。|借来的方便，要小心背后的目的。
+偷梁换柱|🏛️🔧🎭|暗中替换关键部分，使整体变质|赵高篡改遗诏，暗中换掉继承人，改变了历史。|关键位置悄悄换人，局面就悄然改变。
+指桑骂槐|🌳📣😤|表面责备此人，实际在警告另一个人|当众责骂下属A，意在提醒旁边的B。|用案例敲打，比点名批评更有分寸。
+假痴不癫|🤪🧠😎|装傻示弱，暗中积蓄力量，伺机而动|司马懿装病骗过曹爽，后来发动政变夺权。|低调示弱，比锋芒毕露更能保存实力。
+上屋抽梯|🏠🪜😮|先给对方好处引其深入，再断其退路|引敌进入陷阱后，撤掉退路，使其无处可逃。|设局先给方便，再断绝退路，须慎用。
+树上开花|🌳🌸🎊|借势布局，让弱小的实力显得强大|在枯树上缀满彩花，让人以为树木繁茂。|借名人、借平台的光，提升自身影响力。
+反客为主|🙋🪑👑|从被动变主动，一步步掌握主导权|刘邦入关中，先客后主，逐步掌控了局势。|做客户时，也要想办法掌握话语权。
+美人计|💃🍷😵|以美色或诱惑，使对手意志消磨|越王勾践献西施给吴王夫差，使其沉迷享乐，国力衰退。|警示：诱惑最能瓦解斗志，自己也要防。
+空城计|🏯🎶🤫|实际空虚，却装作镇定，让对方不敢进攻|诸葛亮城中无兵，大开城门，抚琴自若，司马懿疑有伏兵而退。|示弱未必是真弱，镇定是心理战。
+反间计|📜🕵️🔀|利用对方间谍，让对方内部互相猜疑|周瑜利用蒋干，让曹操错杀水军都督蔡瑁、张允。|制造猜疑，让对手内部失去信任。
+苦肉计|🤕😢🎭|主动受苦，让对方相信，从而成功潜入|黄盖被打，假意投降，诈降曹操，火烧赤壁。|有时先吃亏、示诚，才能赢得信任。
+连环计|⛓️⛓️🔗|多个计策环环相扣，使对方无法破解|庞统献连环计，让曹军战船连在一起，再用火攻。|复杂目标靠多个计划相互配合。
+走为上|🏃💨🌄|形势不利时，主动撤退，保存实力|败局已定，及时撤退，留得青山在，不怕没柴烧。|及时止损，不是认输，是为了东山再起。`.split("\n").map((l,i)=>{const[n,e,m,s,x]=l.split("|");return{i,n,e,m,s,x,g:Math.floor(i/6)}});
+const E=`小明每天说“去图书馆”，久了全家习以为常，周末他带着球出门也没人多问。|为什么家人没有起疑？
+两家店抢客，A店不降价，反而推出对手最弱的外卖服务，对手只好回头补救。|A店攻的是对手的哪里？
+经理不想得罪客户，便让客户去和另一个部门沟通，由对方出面拒绝。|这样做有什么风险？
+小队长让队员先休息，对手抢攻半场后体力下降，下半场才反攻得分。|为什么要等对手累了再攻？
+邻店突然停业整顿，老板立刻抢先签下他的老客户。|这种做法有什么道德争议？
+他在朋友圈大谈旅行计划，其实在悄悄准备给老板的新提案。|“东”和“西”分别是什么？
+创业者没产品，先做精美海报预告，吸引很多人关注后才补做产品。|这样的“无”怎样变成“有”？
+队长大张旗鼓练开场战术，真正的杀招在中场悄悄布置。|哪里是“明”，哪里是“暗”？
+两位同事争功，你不插嘴，等主管看清谁更靠谱后才发言。|“观火”有什么好处和风险？
+一位新同事对你特别热情，却总打听你的项目细节。|你会怎样保持警惕？
+公司放弃一个亏损的小产品，把资源全投入主打产品，业绩翻倍。|什么是“李”，什么是“桃”？
+他看到对手忘了提价格优惠，马上补上，顺势赢得客户。|这样赢得的机会靠什么？
+新项目没把握，先找十位用户试用，看他们的反应再决定。|“草”和“蛇”分别指什么？
+一家老字号换新包装、上网销售，老味道又火了。|被“还魂”的是什么？
+谈判前，他故意约对手去自己熟悉的茶楼，对方不适应，节奏被他掌控。|“山”是指什么？
+老板没急着追讨货款，反而放宽期限，客户感激，后来主动多订货。|“纵”为什么反而有效？
+老师先让同学们说出粗糙的想法，很快引出一个绝妙点子。|“砖”和“玉”各是什么？
+项目卡住，他不纠结小问题，直接找到拍板的人沟通，事情当天解决。|谁是你的“贼王”？
+同学总抄作业，老师不骂人，而是改成当堂出题，抄袭自然消失。|抽走的“薪”是什么？
+市场大动荡时，他趁同行混乱，悄悄招揽人才和客户。|“混水”带来什么机会？
+他想辞职，先交接好工作、稳住团队，才平稳转身。|“蝉壳”留给了谁？
+公司发现内鬼，先停掉所有权限、封锁系统，才开始调查。|为什么要先“关门”？
+一家新店先和远处的供应商合作，同时集中力量争取附近小区的客户。|“远”和“近”分别是谁？
+一家大公司借“合作”名义进入小厂，数年后将其收购。|被借的“道”是什么？
+有人在合同里悄悄换了几个关键词，结果整份合同的意思完全变了。|你读合同时会注意什么？
+老师当众提醒“迟到的同学要自觉”，其实是在暗示某位常迟到的同学。|这样做有什么好处？
+他在会议上不抢话，大家以为他没想法，他却在背后默默做好完整方案。|“装傻”背后是什么？
+对手被诱入一个看似赚钱的项目，随后资源被切断，进退两难。|这样做有什么风险？
+小店借明星同款包装宣传，短期销量暴增，但品质跟不上。|“花”是真的还是假的？
+实习生先帮忙做杂事，慢慢掌握流程，最后成了团队主力。|他是怎样变“主”的？
+对手公司派出魅力十足的销售，拉拢你的核心客户。|怎样抵抗这种诱惑？
+系统故障、人员不足时，经理淡定地说“一切在控制中”，客户反而放心。|为什么镇定很重要？
+对手收到一份伪造的“内部文件”，开始怀疑自己的合伙人。|为什么猜疑最有杀伤力？
+员工为了向客户证明诚意，主动承担责任、延长工时，赢得了信任。|这样做的代价是什么？
+团队先用小活动引来用户，再用会员积分留住，最后推出新产品转化。|这几步如何“环环相扣”？
+创业项目亏损严重，他果断收手，转做新业务，两年后重新盈利。|撤退为什么不等于失败？`.split("\n").map(l=>l.split("|"));
+const Q=`天天重复，大家习以为常|家人太忙没空管|他说得特别大声
+对手最薄弱的环节|对手最强的产品|对手的价格
+可能被察觉，伤害信任|一定会成功|没有任何风险
+对手体力下降，更易取胜|为了拖延时间|因为规则规定
+趁人之危，有失厚道|工作太勤奋|价格太低
+东是假目标，西是真目标|东是真目标，西是假目标|两处都是真的
+先造声势，再补上实际|一直不做产品|全靠运气
+明是开场战术，暗是中场杀招|明是中场，暗是开场|两者都是开场
+保存实力，但可能错失时机|一定能赢，没有风险|只会得罪人
+不透露关键信息，多观察|把项目全告诉他|立刻翻脸
+李是亏损小产品，桃是主打产品|李是主打产品，桃是小产品|两者都是主打
+靠敏锐观察细节|全靠运气|靠大声嚷嚷
+草是小范围试探，蛇是用户反应|草是用户，蛇是产品|草是价格，蛇是对手
+老字号的旧品牌与口碑|全新的产品|已倒闭的工厂
+对手熟悉、有优势的主场|一座真正的山|谈判的价格
+对方放松感激，更愿合作|对方被吓到|对方忘了欠款
+砖是粗糙想法，玉是更好点子|砖是好点子，玉是粗糙想法|砖和玉都是礼物
+能做决定的关键人物|最努力的同事|最年轻的同事
+让抄作业不再可行的条件|老师的怒气|同学的作业本
+同行混乱，可抢人才与客户|一定会亏损|没有任何机会
+留给团队稳定的交接与局面|留给竞争对手|什么都没留
+防止对方逃走或销毁证据|为了省电|为了好看
+远是远方供应商，近是附近客户|远是附近客户，近是远方供应商|都是供应商
+合作的名义与通行的机会|一条真实的公路|公司的名字
+关键词是否被改动|只看封面|只看页数
+不点名也能警示相关的人|可以羞辱别人|完全没效果
+默默积蓄实力|真的没想法|想偷懒
+对方可能识破并反击|一定会成功|没有风险
+假的，借来的外观|真的|一半一半
+逐步掌握流程与话语权|一开始就当老板|全靠运气
+保持清醒，坚守原则|全盘接受|躲着不见面
+稳住客户信心，避免恐慌|能让问题永远消失|没有任何作用
+内部互不信任，自乱阵脚|让对手更团结|让对手更富有
+个人要承受损失与辛苦|没有代价|全由客户承担
+前一步为后一步铺路|各步骤互不相关|同时做所有事
+及时止损，保存实力再起|因为不会再有机会|因为面子重要`.split("\n").map(l=>l.split("|"));
+function mc(i){const o=qo(i).map((t,j)=>({t,j})).sort(()=>Math.random()-.5);return `<div class="opts" style="grid-template-columns:1fr">${o.map(x=>`<button data-c="${x.j==0?1:0}" onclick="pk(this,${x.j==0})">${x.t}</button>`).join("")}</div><p id="fb" style="font-weight:bold"></p>`}
+function pk(b,ok){[...b.parentNode.children].forEach(x=>{x.onclick=null;if(x.dataset.c=="1")x.classList.add("ok")});if(!ok)b.classList.add("no");$("fb").textContent=ok?tr("yes"):tr("nope")}
+const S=`唐太宗要坐船渡海去打仗，可他很怕海。大将请他到一间“大房子”里喝酒，其实那是一艘船，窗外挂满了布帘。喝着喝着，船已经在海上走了好几天。
+魏国攻打赵国，赵国向齐国求救。齐国军师孙膑不去赵国，而是直接去打魏国的首都。魏军急着回家救援，赵国就安全了。
+晏子想除掉三个很凶的勇士，就让国君送两个桃子，说“功劳最大的才能吃”。三个人为了争桃子互相不服，结果全都自杀了，晏子一根手指都没动。
+齐国进攻鲁国，一上来就猛擂战鼓。鲁国的曹刿却不让士兵动，等齐军擂了三次鼓、力气用完了，才下令冲锋，一下子就打赢了。
+越王勾践被吴国打败后，忍了很多年。等到吴国闹旱灾、粮食不够，吴王又带兵在外面，勾践立刻出兵，一举灭掉了吴国。
+韩信要攻打魏国。他在一个渡口大张旗鼓地摆船，让魏军以为要从这里过河，自己的主力却偷偷从另一处用木桶渡河，从后面突袭，魏军一下子就垮了。
+唐朝的张巡守城，箭用光了。他晚上让人扎了很多草人，穿上黑衣，用绳子从城墙放下去。敌军以为有人偷袭，拼命放箭，张巡一夜就收获了几十万支箭。
+韩信故意派人大张旗鼓地修栈道，让敌人以为大军要走这条路，主力却悄悄绕小路，从陈仓出来，突袭敌人后方。
+曹操打败袁绍后，袁家两兄弟逃到辽东。大家劝曹操追击，他却说“不用”。果然，辽东的首领怕惹麻烦，自己杀了两兄弟，把人头送了过来。
+唐朝的大臣李林甫，见人总是笑嘻嘻、说好听的话，背地里却设圈套陷害别人。所以大家说他“嘴上抹蜜，肚里藏剑”。
+田忌和齐王赛马，各有上、中、下三匹马。孙膑让田忌用最差的马对齐王最好的，用最好的对中等的，用中等的对最差的。输一场，却赢了两场。
+两军对阵，对方的运粮队走得慢，队伍出现了一个小空隙。一支小队偷偷过去，顺手抢走几车粮食。虽然不是大仗，但对方越来越饿，最后撑不住了。
+有个官员贪污，百姓写状子告了他的手下。他看到状子，吓得写下：“你们只是打了草，我这条蛇已经被吓到了。”意思是，别人敲打别人，自己心虚先露了馅。
+项梁起兵反抗秦朝，却没人响应。他找到了从前楚王的孙子，当时正在放羊，就立他为新的“楚王”。大家看到旧王的后代，纷纷来投靠。
+孙策想攻下一座城，但敌人守得很牢。他故意送礼示弱，骗敌人带兵去打别处，趁城里空了，夜里一下子占领了城池。
+诸葛亮带兵南征，抓住了敌人首领孟获，却把他放了。这样抓了七次，放了七次。最后孟获终于服气，说：“你们真厉害，我不会再造反了。”
+唐朝诗人常建听说有名的诗人赵嘏要来游寺，就先在墙上写了两句平平常常的诗。赵嘏看到忍不住，提笔补上两句，写得非常精彩。
+安史之乱时，张巡守城。他发现敌军里有一个很重要的头领，就派神箭手射出一箭，把他射死了。敌军一下子乱了，只好撤兵。
+官渡之战，曹操偷偷派兵烧了袁绍的粮仓。袁绍的十万大军没饭吃，一下子军心大乱，输得一塌糊涂。他不是和士兵打，而是断了士兵的“吃饭”。
+刘备在荆州发展，曹操和孙权正在互相打仗，局面很乱。刘备趁他们顾不上，慢慢占了荆州的几个郡，有了自己的地盘。
+诸葛亮病重去世前，吩咐军队悄悄撤退，还做了一尊他的木像坐在车上。司马懿远远看到，以为诸葛亮还活着，吓得不敢追，蜀军就这样安全撤回。
+长平之战，秦军把赵军围在山谷里，切断了粮道和退路。赵军被围了四十多天，饿得没办法，最后全军覆没。
+秦王听了谋士范雎的建议：离得远的齐国，先交朋友；离得近的韩国、魏国，先打。先吃下邻居，再慢慢扩大，最后秦国统一了天下。
+晋国想攻打虢国，路上要经过虞国。晋国送给虞国国君宝马和美玉，借了路。灭了虢国回来时，顺手也把虞国灭了。
+秦始皇去世后，赵高和李斯偷偷改了遗书，把皇位传给胡亥，而不是原来的太子扶苏。一份假遗书，改变了整个国家的命运。
+春秋时，司马穰苴带兵，国君派来的宠臣庄贾迟到了。穰苴按军法当众处罚了他。全军看到连国君的宠臣都不例外，从此没人敢违令。
+三国时，司马懿被曹爽排挤，就装成重病、老糊涂的样子，说话颠三倒四。曹爽放松了警惕，司马懿趁他出城时发动政变，夺回大权。
+刘备的儿子刘琦被后母排挤，想请诸葛亮出主意，诸葛亮却不肯说。刘琦就请他上楼喝酒，再偷偷把楼梯撤掉，说：“现在没外人，你可以说了。”
+长坂坡，张飞身边只有几十个骑兵。他让骑兵在马尾巴上绑树枝，来回乱跑，扬起满天灰尘，自己站在桥上大吼。曹军以为有大批伏兵，不敢追过来。
+刘备被刘璋请去蜀地帮忙打仗，是“客人”。他一边帮忙，一边悄悄收买人心。最后反客为主，夺下了整个蜀地。
+越王勾践把美女西施送给吴王夫差。夫差被迷住了，整天只顾享乐，不管国家大事，国力越来越弱，最后被越国灭掉。
+诸葛亮守西城，城里只剩一些老弱的士兵。司马懿的大军来了，诸葛亮大开城门，自己坐在城楼上悠闲弹琴。司马懿心想“有埋伏”，赶紧退兵了。
+赤壁之战前，周瑜故意让曹操派来的蒋干“偷看”了一封假信，信里写着曹操的两位水军将领要投降。曹操信以为真，把这两位将领杀了。
+赤壁之战，周瑜当众打了老将黄盖五十棍。黄盖假装怀恨，写信向曹操“投降”。曹操相信了，结果黄盖的火船冲进曹军，一场大火烧光了战船。
+赤壁之战前，庞统假装投奔曹操，建议把战船用铁链连在一起，说这样北方士兵就不会晕船。曹操同意了，结果周瑜一放火，所有船连成一片，谁也逃不掉。
+刘备打了很多败仗，每次打不过就果断逃走，保存了自己的力量。后来他一次次东山再起，终于建立了蜀国。`.split("\n");
+let L="zh";try{L=localStorage.getItem("s36l")||"zh"}catch(e){}
+const NE=`Cross the Sea by Deception
+Besiege Wei to Rescue Zhao
+Kill with a Borrowed Knife
+Rest While the Enemy Tires
+Loot a Burning House
+Feint East, Strike West
+Create Something from Nothing
+Secretly Cross at Chencang
+Watch the Fire Across the River
+Hide a Dagger Behind a Smile
+Sacrifice the Plum for the Peach
+Lead a Sheep Away in Passing
+Beat the Grass, Startle the Snake
+Borrow a Corpse to Return the Soul
+Lure the Tiger Off the Mountain
+Let Them Go to Catch Them
+Toss a Brick to Attract Jade
+Capture the Chief First
+Remove the Firewood from the Pot
+Muddy the Water to Catch Fish
+Slip Away like the Golden Cicada
+Shut the Door to Catch the Thief
+Befriend the Far, Attack the Near
+Borrow a Road to Conquer Guo
+Swap the Beams for Rotten Timber
+Point at the Mulberry, Curse the Locust
+Feign Folly, Stay Sharp
+Remove the Ladder After the Climb
+Deck the Tree with False Blossoms
+Turn Guest into Host
+The Beauty Trap
+The Empty Fort
+Sow Discord
+The Self-Injury Trick
+Chain Stratagems
+Retreat Is the Best Move`.split("\n");
+const NM=`Menipu Langit Menyeberangi Laut
+Kepung Wei Selamatkan Zhao
+Pinjam Pisau untuk Membunuh
+Berehat Sementara Musuh Letih
+Rompak Rumah yang Terbakar
+Tipu Timur, Serang Barat
+Cipta Sesuatu daripada Kosong
+Menyeberang Diam-diam di Chencang
+Tonton Api dari Seberang Sungai
+Senyum Sembunyi Pisau
+Korbankan Plum Selamatkan Pic
+Ragut Kambing Sambil Lalu
+Pukul Rumput Kejutkan Ular
+Pinjam Jasad Hidupkan Roh
+Pancing Harimau Keluar Gunung
+Lepaskan untuk Menangkap
+Lempar Bata Tarik Permata
+Tangkap Ketua Dahulu
+Cabut Kayu dari Bawah Periuk
+Keruhkan Air Tangkap Ikan
+Tanggal Kulit seperti Cengkerik Emas
+Tutup Pintu Tangkap Pencuri
+Berkawan Jauh, Serang Dekat
+Pinjam Jalan Tawan Guo
+Tukar Alang dengan Kayu Reput
+Tunjuk Murbei, Maki Belalang
+Pura-pura Bodoh, Tetap Tajam
+Cabut Tangga Selepas Memanjat
+Hias Pokok dengan Bunga Palsu
+Tetamu Jadi Tuan Rumah
+Perangkap Wanita Cantik
+Kubu Kosong
+Tabur Fitnah
+Tipu Daya Seksa Diri
+Strategi Berantai
+Berundur Pilihan Terbaik`.split("\n");
+const ME=`Act openly under cover of routine, so the enemy never suspects.
+Don't clash head-on; strike their weak spot so they must pull back.
+Don't act yourself; use someone else's hand to get it done.
+Rest and save energy, then strike when the opponent is tired.
+Seize gains when the opponent is in trouble.
+Create a distraction in one place, then attack another.
+Make something unreal look real until people are fooled.
+Show one path openly while secretly taking another.
+Stay back while rivals fight each other, then profit.
+Look friendly on the outside while preparing to strike.
+Give up a small loss to win something bigger.
+Grab the small chances the opponent leaves open.
+When unsure, probe first and see how they react.
+Revive something others discarded and use it anew.
+Lure the opponent out of their strong position first.
+Loosen your grip so they relax, then close in.
+Offer something small to draw out something better.
+Target the key leader or the heart of the problem.
+Solve the root cause instead of fighting the symptoms.
+Profit quietly while everyone else is in chaos.
+Leave a false front behind and slip away safely.
+Seal off the exits before dealing with the small enemy.
+Befriend distant rivals while attacking the nearest.
+Ask for passage as a pretext, then take over.
+Secretly swap the key part to change everything.
+Scold one person to warn someone else.
+Act foolish and weak while quietly building strength.
+Lure them in, then cut off their way back.
+Borrow outward show to look stronger than you are.
+Turn from guest to host and take the lead.
+Use temptation to wear down the opponent's will.
+Look calm with nothing behind you so they hesitate.
+Sow doubt so the enemy turns on itself.
+Hurt yourself to win the enemy's trust.
+Link several plans together so each supports the next.
+When losing, retreat to fight another day.`.split("\n");
+const MM=`Bertindak di depan mata dengan rutin biasa supaya musuh tidak curiga.
+Jangan berlawan terus; serang titik lemah supaya lawan terpaksa berundur.
+Jangan bertindak sendiri; guna tangan orang lain.
+Berehat dan simpan tenaga, serang bila lawan sudah letih.
+Rebut peluang ketika lawan dalam kesusahan.
+Alihkan perhatian di satu tempat, serang tempat lain.
+Jadikan perkara palsu kelihatan benar sehingga orang tertipu.
+Tunjuk satu jalan secara terbuka, tetapi ambil jalan lain secara rahsia.
+Berdiri jauh ketika musuh bergaduh, kemudian ambil untung.
+Nampak mesra di luar, tetapi bersedia menyerang.
+Korbankan kerugian kecil untuk menang lebih besar.
+Ambil peluang kecil yang ditinggalkan lawan.
+Bila tidak pasti, uji dahulu dan lihat reaksi mereka.
+Hidupkan semula sesuatu yang dibuang orang dan guna dengan cara baharu.
+Pancing lawan keluar dari kedudukan kukuh mereka.
+Longgarkan cengkaman supaya mereka lega, kemudian tutup rapat.
+Beri sesuatu yang kecil untuk menarik yang lebih baik.
+Sasar pemimpin utama atau punca masalah.
+Selesaikan punca masalah, bukan hanya gejalanya.
+Ambil untung secara senyap ketika semua orang kelam-kabut.
+Tinggalkan kesan palsu dan lolos dengan selamat.
+Tutup semua jalan keluar sebelum menangani musuh kecil.
+Berkawan dengan yang jauh, serang yang paling dekat.
+Minta laluan sebagai alasan, kemudian kuasai.
+Tukar bahagian penting secara rahsia untuk mengubah segalanya.
+Tegur seorang untuk memberi amaran kepada orang lain.
+Berlagak bodoh dan lemah sambil mengumpul kekuatan.
+Pancing mereka masuk, kemudian putuskan jalan pulang.
+Pinjam kemegahan luar supaya nampak lebih kuat.
+Ubah daripada tetamu menjadi tuan rumah dan ambil alih.
+Guna godaan untuk melemahkan semangat lawan.
+Nampak tenang walaupun kosong supaya lawan teragak-agak.
+Tabur keraguan supaya musuh berbalah sesama sendiri.
+Seksa diri sendiri untuk memenangi kepercayaan musuh.
+Sambungkan beberapa rancangan supaya saling menyokong.
+Bila kalah, berundur dan bertarung pada hari lain.`.split("\n");
+const GN={zh:G,en:["Winning Stratagems·From Strength","Confrontation Stratagems·Facing the Enemy","Attack Stratagems·Taking the Offensive","Chaos Stratagems·In Confusion","Alliance Stratagems·Joining Forces","Desperate Stratagems·From Weakness"],ms:["Strategi Kemenangan·Ketika Berkelebihan","Strategi Berdepan Musuh·Ketika Berhadapan","Strategi Menyerang·Ketika Menyerang","Strategi Kekacauan·Ketika Huru-hara","Strategi Gabungan·Ketika Bersatu","Strategi Terdesak·Ketika Lemah"]};
+const T={
+h1:["三十六计","The Thirty-Six Stratagems","Tiga Puluh Enam Strategi"],
+sub:["🐉 零基础也能懂的智慧小课堂 🐉","🐉 A fun beginner's course in ancient wisdom 🐉","🐉 Kelas kebijaksanaan purba yang mudah untuk pemula 🐉"],
+all:["全部","All","Semua"],
+qb:["🎮 毕业测验（12题）","🎮 Final Quiz (12 Qs)","🎮 Kuiz Akhir (12 Soalan)"],
+prog:[n=>`已学 ${n} / 36 计`+(n==36?" 🎉 恭喜出师！":""),n=>`Learned ${n} / 36`+(n==36?" 🎉 Graduate!":""),n=>`Dipelajari ${n} / 36`+(n==36?" 🎉 Tahniah!":"")],
+tg:[n=>`第${n}计`,n=>`No. ${n}`,n=>`No. ${n}`],
+one:["💡 一句话：","💡 In short: ","💡 Ringkasnya: "],
+sty:["📖 小故事：","📖 Story: ","📖 Cerita: "],
+mod:["🧑‍💼 现代用法：","🧑‍💼 Modern use: ","🧑‍💼 Kegunaan moden: "],
+dra:["🎬 生活小剧场：","🎬 Everyday scene: ","🎬 Adegan harian: "],
+thk:["想一想：","Think: ","Fikir: "],
+prev:["← 上一计","← Previous","← Sebelum"],next:["下一计 →","Next →","Seterusnya →"],close:["关闭","Close","Tutup"],
+note:["","The story, scene and question below are still in Chinese. Full translation is coming soon.","Cerita, adegan dan soalan di bawah masih dalam bahasa Cina. Terjemahan penuh akan datang."],
+score:[s=>`🏆 得分 ${s} / 12（答对 6 题（50%）以上即可拿证书）`,s=>`Score ${s} / 12 (get 6 or more, i.e. 50%, to earn the certificate)`,s=>`Skor ${s} / 12 (dapat 6 atau lebih, iaitu 50%, untuk memperoleh sijil)`],
+fail:["差一点点！再看看卡片，再试一次拿证书吧！","Almost there! Review the cards and try again to earn your certificate.","Hampir berjaya! Semak kad dan cuba lagi untuk dapatkan sijil."],
+again:["再来一次","Try again","Cuba lagi"],back:["返回","Back","Kembali"],
+qn:[n=>`第 ${n}/12 题`,n=>`Question ${n}/12`,n=>`Soalan ${n}/12`],
+qh:["猜猜是哪一计？","Which stratagem is it?","Strategi yang manakah?"],
+qq:["下面哪一计的意思是：","Which stratagem means:","Strategi manakah yang bermaksud:"],
+yes:["✅ 答对了！你真棒！","✅ Correct! Well done!","✅ Betul! Syabas!"],
+nope:["❌ 不对哦，绿色的是正确答案，再想想为什么。","❌ Not quite. Green is the right answer; think about why.","❌ Belum tepat. Hijau ialah jawapan betul; fikirkan sebabnya."],
+cg:["恭喜通关！","Congratulations!","Tahniah!"],
+cs:[s=>`你答对了 ${s} / 12 题。输入名字，领取你的证书：`,s=>`You got ${s} / 12 right. Enter your name to claim your certificate:`,s=>`Anda betul ${s} / 12. Masukkan nama untuk menuntut sijil anda:`],
+ph:["你的名字","Your name","Nama anda"],anon:["同学","Student","Pelajar"],
+org:["三十六计趣味课堂","THE 36 STRATAGEMS","36 STRATEGI"],
+ct:["结业证书","Certificate","Sijil Tamat"],
+zm:["兹证明","This certifies that","Ini mengesahkan bahawa"],
+st1:["已圆满完成《三十六计》入门课程并通过毕业测验","has successfully completed the Thirty-Six Stratagems beginner course and passed the final quiz","telah berjaya menamatkan kursus permulaan Tiga Puluh Enam Strategi dan lulus kuiz akhir"],
+st2:[s=>`测验成绩 ${s} / 12，特发此证，以资鼓励`,s=>`with a quiz score of ${s} / 12. Awarded in recognition of this achievement.`,s=>`dengan skor kuiz ${s} / 12. Dianugerahkan sebagai pengiktirafan.`],
+dt:["日期","Date","Tarikh"],s1:["三十六计","THE 36","36"],s2:["结业认证","AWARD","ANUGERAH"],no:["编号","No.","No."],
+dlb:["下载证书","Download certificate","Muat turun sijil"],
+shot:["如果无法下载，可以直接截图保存。","If the download doesn't work, just take a screenshot.","Jika muat turun tidak berfungsi, ambil tangkapan skrin sahaja."],
+loc:["zh-CN","en-GB","ms-MY"],fn:["三十六计结业证书","36-Stratagems-Certificate","Sijil-36-Strategi"]};
+const tr=k=>T[k][L=="zh"?0:L=="en"?1:2];
+const nm=i=>L=="zh"?D[i].n:(L=="en"?NE:NM)[i],mn=i=>L=="zh"?D[i].m:(L=="en"?ME:MM)[i];
+function setLang(l){L=l;try{localStorage.setItem("s36l",l)}catch(e){}$("m").classList.remove("show");applyLang()}
+function applyLang(){document.documentElement.lang=L=="zh"?"zh-CN":L;document.title=tr("h1");$("h1").textContent=tr("h1");$("sub").textContent=tr("sub");document.querySelectorAll("#lg button").forEach(b=>b.classList.toggle("on",b.dataset.l==L));nav();grid();prog()}
+const XE=`Emperor Taizong feared the sea. A general invited him to a feast in a "big house" hung with curtains. It was really a ship, and by the time he noticed, they were far out at sea.|Break a big change into small everyday steps so no one feels it.|Xiaoming kept saying "I'm going to the library". Soon his family took it for granted, and nobody asked when he went out with a ball.|Why didn't his family get suspicious?|It happened daily, so it became normal|The family was too busy to care|He said it very loudly
+Wei attacked Zhao, and Zhao asked Qi for help. Qi's strategist Sun Bin didn't go to Zhao; he attacked Wei's capital instead. The Wei army rushed home, and Zhao was saved.|When a rival attacks your strength, hit their weak spot.|Two shops compete. Shop A doesn't cut prices; it launches delivery, the rival's weakest service, and the rival has to scramble back.|What part of the rival did Shop A attack?|Their weakest link|Their strongest product|Their prices
+Yan Zi wanted to remove three fierce warriors. He had the duke send two peaches, saying only the greatest hero could eat one. The three fought over credit and all died, without Yan Zi lifting a finger.|Use partners and platforms; don't charge in yourself.|A manager doesn't want to upset a client, so he sends the client to another department to refuse on his behalf.|What is the risk of doing this?|It may be noticed and hurt trust|It will surely succeed|There is no risk
+Qi attacked Lu and beat its war drums right away. Cao Gui of Lu told his troops to wait. After the third drum, Qi's energy was spent, and Lu charged and won.|Sleep well before an exam rather than cramming all night.|A team captain lets players rest. The opponent rushes the first half and tires, and the team scores in the second half.|Why wait until the opponent is tired?|Their stamina drops, so they are easier to beat|To waste time|Because the rules say so
+King Goujian of Yue endured for years after losing to Wu. When Wu suffered drought and its king was away with the army, Goujian attacked at once and destroyed Wu.|When a rival hits a crisis, quickly seize the market opening.|A neighboring shop suddenly closes for inspection. The owner rushes to sign up its old customers.|What is the ethical debate here?|Taking advantage of someone's trouble is unkind|Working too hard|Prices being too low
+Han Xin attacked Wei. He made a big show of boats at one ferry, so Wei thought he would cross there. His main force secretly crossed elsewhere on wooden barrels and struck from behind.|Like a soccer fake: look left, pass right.|He talks loudly on social media about travel plans, while quietly preparing a new proposal for his boss.|What are the "east" and the "west" here?|East is the decoy, west is the real goal|East is the real goal, west is the decoy|Both are real
+Zhang Xun's city ran out of arrows. At night he lowered straw men in black clothes from the wall. The enemy fired at them wildly, and he collected hundreds of thousands of arrows.|Build up momentum so a small venture looks substantial.|A founder with no product first made a beautiful teaser poster. Many people noticed, and only then did he build the product.|How did "nothing" turn into "something"?|Create buzz first, then deliver|Never build the product|Pure luck
+Han Xin sent men to loudly repair a plank road so the enemy thought the army would come that way. His main force secretly took a side path to Chencang and struck from behind.|Draw attention in front while quietly advancing from the side.|The captain loudly drills the opening tactic, while the real killer move is secretly set up in midfield.|Which is the "open" one and which the "secret" one?|Open: opening tactic; secret: midfield move|Open: midfield; secret: opening|Both are in the opening
+After Cao Cao beat Yuan Shao, the two Yuan brothers fled to Liaodong. Everyone urged pursuit, but Cao Cao said no. Sure enough, Liaodong's ruler killed the brothers himself and sent their heads.|When colleagues argue, don't jump in; wait until things are clear.|Two colleagues fight over credit. You stay quiet until the boss sees who is more reliable, then you speak.|What are the benefits and risks of watching?|It saves strength, but may miss the moment|You always win, no risk|It only upsets people
+The Tang minister Li Linfu always smiled and said sweet things, yet set traps behind people's backs. People said he had "honey on his lips and a sword in his belly".|A reminder to be careful of overly warm people.|A new colleague is especially friendly to you but keeps asking about your project details.|How would you stay alert?|Share no key details and observe|Tell him everything|Fall out with him at once
+Tian Ji raced horses against the king, three each. Sun Bin had him pit his worst horse against the king's best, his best against the middle, and his middle against the worst. He lost once but won twice.|Give up something small to protect the whole.|A company dropped a loss-making minor product and put all resources into its main product; revenue doubled.|What is the "plum" and what is the "peach"?|Plum is the minor product, peach is the main one|Plum is the main product, peach is the minor one|Both are main products
+Two armies face each other. The enemy's supply wagons are slow and a small gap opens. A small team slips in and grabs a few carts. It's no big battle, but the enemy grows hungrier until it cannot hold on.|Watch small details and collect advantages bit by bit.|He saw a rival forget to mention a discount, quickly mentioned it himself, and won the customer.|What did he rely on to win this chance?|Sharp attention to detail|Luck|Shouting loudly
+An official was accused of corruption. When he saw the complaint about his subordinates, he wrote: "You only beat the grass, but this snake is already startled." His guilt gave him away.|When unsure, run a small trial first.|With a new project uncertain, he asked ten users to try it first and watched their reactions before deciding.|What are the "grass" and the "snake"?|Grass is a small probe, snake is user reaction|Grass is users, snake is the product|Grass is price, snake is the rival
+Xiang Liang rebelled against Qin but nobody joined. He found a grandson of the old Chu king herding sheep and made him "King Huai of Chu". Seeing the old king's descendant, people flocked to him.|Repackage old brands or resources to bring them back to life.|An old-brand shop changed its packaging and started selling online, and the classic flavor became popular again.|What is being "revived"?|The old brand and its reputation|A brand new product|A closed factory
+Sun Ce wanted a city that was well defended. He pretended to be weak and sent gifts, tricking the enemy into attacking elsewhere. While the city was empty, he took it in one night.|Draw your rival away from home turf, then make your main move.|Before a negotiation, he invited the other side to a teahouse he knew well. They felt uneasy, and he controlled the pace.|What is the "mountain"?|The rival's familiar home advantage|A real mountain|The negotiated price
+Zhuge Liang captured the rebel chief Meng Huo and let him go, seven times. After the seventh time, Meng Huo was truly convinced and swore not to rebel again.|Pushing too hard can backfire; easing off is sometimes steadier.|A boss didn't rush to collect payment but extended the deadline. The customer was grateful and later ordered more.|Why does "letting go" work?|They feel grateful and are more willing to cooperate|They were scared|They forgot the debt
+The poet Chang Jian heard that the famed poet Zhao Gu would visit a temple, so he wrote two ordinary lines on the wall. Zhao Gu couldn't resist adding two brilliant lines.|In a meeting, share a rough draft first to draw out better ideas.|A teacher first let students share rough ideas, and soon one brilliant idea emerged.|What are the "brick" and the "jade"?|Brick is a rough idea, jade is a better one|Brick is a good idea, jade is a rough one|Both are gifts
+During the An Lushan rebellion, Zhang Xun noticed a key enemy leader and sent a sharpshooter to shoot him dead. The enemy army fell into chaos and withdrew.|Tackle the main problem first; don't get stuck on details.|A project was stuck. He ignored small issues and went straight to the decision-maker, solving it that day.|Who is your "chief"?|The key person who can decide|The hardest-working colleague|The youngest colleague
+In the Battle of Guandu, Cao Cao secretly burned Yuan Shao's grain stores. Yuan's 100,000 troops had no food, fell into chaos, and lost badly. He didn't fight the soldiers; he cut off their food.|Fix the cause, not just the symptom.|A student kept copying homework. The teacher didn't scold but switched to in-class questions, and the copying vanished.|What is the "firewood" that was removed?|The condition that made copying possible|The teacher's anger|The students' notebooks
+In the Three Kingdoms, while Cao Cao and Sun Quan were fighting, Liu Bei in Jingzhou slowly took over several districts and built his own base.|When the market shifts, seize the chance to enter.|During market turmoil, he quietly recruited talent and customers while competitors were in disarray.|What opportunity does "muddy water" bring?|Rivals in disarray means talent and customers to win|It always loses money|No opportunity at all
+Before Zhuge Liang died, he told the army to withdraw quietly, leaving flags and a wooden statue of himself in a cart. Sima Yi thought he was still alive, didn't dare chase, and the Shu army retreated safely.|Leave a good backup when you leave, and keep things stable.|He wanted to quit, so he first handed over the work and steadied the team, then left smoothly.|Who was the "shell" left to?|A stable handover and situation for the team|The competitor|Nothing was left
+At Changping, the Qin army trapped the Zhao army in a valley and cut off its supply and retreat. After more than 40 days of hunger, the Zhao army was wiped out.|Solve problems thoroughly; don't leave exits for them to return.|When the company found a mole, it first cut all access and locked the system, then started investigating.|Why "close the door" first?|To stop them escaping or destroying evidence|To save electricity|To look nice
+The King of Qin took advice from Fan Ju: befriend distant Qi, attack nearby Han and Wei. Eat the neighbors first, expand slowly, and Qin eventually unified the land.|Cooperate with those far away; deal with the nearest rival first.|A new shop partnered with a distant supplier while focusing on winning customers in the nearby neighborhood.|Who are "far" and "near"?|Far is the distant supplier, near is the nearby customers|Far is nearby customers, near is the distant supplier|Both are suppliers
+Jin wanted to attack Guo but had to pass through Yu. It gave Yu's ruler fine horses and jade to borrow the road. After destroying Guo, Jin turned and destroyed Yu too.|Be wary of the motives behind borrowed convenience.|A big company entered a small firm under the name of "cooperation" and acquired it several years later.|What is the borrowed "road"?|The name of cooperation and the chance to pass through|A real road|The company name
+After the First Emperor died, Zhao Gao and Li Si secretly changed his will and gave the throne to Huhai instead of Prince Fusu. One fake will changed the nation's fate.|Quietly replacing key people quietly changes the whole situation.|Someone quietly changed a few key words in a contract, and the whole meaning changed.|What will you watch for when reading a contract?|Whether key words were changed|Only the cover|Only the page count
+In the Spring and Autumn period, Sima Rangju led troops. The duke's favorite, Zhuang Jia, was late, and Rangju executed him publicly. The whole army never dared disobey again.|A case that warns everyone works better than naming someone.|The teacher said publicly, "Latecomers should be self-disciplined", actually hinting at one student who is often late.|What is the advantage of this?|It warns the right people without naming them|It can humiliate someone|It has no effect
+In the Three Kingdoms, Sima Yi was pushed aside by Cao Shuang, so he pretended to be sick and senile, babbling nonsense. Cao Shuang relaxed, and Sima Yi launched a coup while he was out of the city and seized power.|Staying low-key preserves strength better than showing off.|In meetings he didn't speak up, and people thought he had no ideas. Meanwhile he quietly built a complete plan.|What lies behind the "act of folly"?|Quietly building strength|He really has no ideas|He wants to be lazy
+Liu Qi, the son of Liu Biao, was pushed aside by his stepmother and wanted advice from Zhuge Liang, who refused. So Liu Qi invited him upstairs for drinks and had the ladder removed, saying, "No outsiders now. You can speak."|Set a trap by first giving convenience, then cutting off retreat; use carefully.|A rival was lured into a seemingly profitable project, then its resources were cut off, leaving it trapped.|What is the risk of this?|The other side may see through it and strike back|It will surely succeed|There is no risk
+At Changban, Zhang Fei had only a few dozen horsemen. He had them tie branches to the horses' tails and ride back and forth, raising dust, while he stood on the bridge and roared. Cao's army suspected an ambush and didn't pursue.|Borrow big names and platforms to boost your influence.|A small shop borrowed a celebrity's look in its packaging, and sales surged briefly, but quality couldn't keep up.|Are the "flowers" real or fake?|Fake, borrowed appearance|Real|Half and half
+Liu Bei was invited by Liu Zhang to help fight in Shu. While helping, he quietly won hearts, and eventually turned the tables and took Shu.|Even as a customer, find ways to take the lead.|An intern first helped with chores, gradually learned the process, and ended up as a core member of the team.|How did he become the "host"?|Gradually gained mastery of the process and the say|Became the boss from day one|Luck
+King Goujian of Yue gave the beauty Xishi to King Fuchai of Wu. Fuchai was captivated, indulged in pleasure, neglected state affairs, and Wu weakened and was eventually destroyed by Yue.|Warning: temptation erodes willpower, and we must guard against it too.|A rival company sent a charming salesperson to win over your key customers.|How can you resist such temptation?|Stay clear-headed and keep principles|Accept everything|Avoid meeting
+Zhuge Liang held Xicheng with only a few old and weak soldiers. When Sima Yi's army came, he opened the gates and calmly played the zither on the tower. Sima Yi suspected an ambush and withdrew.|Looking weak isn't always weakness; calm is psychological warfare.|During a system failure and staff shortage, the manager calmly said "everything is under control", and customers felt reassured.|Why is staying calm important?|It steadies customer confidence and avoids panic|It makes the problem disappear forever|It has no effect
+Before Red Cliffs, Zhou Yu let Cao Cao's envoy Jiang Gan "steal a peek" at a fake letter saying two of Cao Cao's admirals would defect. Cao Cao believed it and executed both.|Create suspicion so the rival loses internal trust.|A rival received a forged "internal document" and began to doubt its own partner.|Why is suspicion so damaging?|Internal distrust leads to self-disruption|It makes the rival more united|It makes the rival richer
+At Red Cliffs, Zhou Yu publicly beat the old general Huang Gai fifty strokes. Huang Gai pretended to be angry and sent a letter to Cao Cao to "surrender". Cao Cao believed it, and Huang Gai's fire ships rammed in and burned his fleet.|Sometimes taking a loss first shows sincerity and earns trust.|To prove sincerity to a client, an employee took responsibility and worked extra hours, and earned trust.|What is the cost of doing this?|He bears personal loss and hardship|There is no cost|The client bears it all
+Before Red Cliffs, Pang Tong pretended to join Cao Cao and suggested chaining the ships together so northern soldiers wouldn't get seasick. Cao Cao agreed, and when Zhou Yu set fire, all the ships burned as one and none could escape.|Complex goals need several plans working together.|A team first drew users with small events, retained them with membership points, then converted them with a new product.|How are these steps "linked"?|Each step prepares the way for the next|The steps are unrelated|Do everything at once
+Liu Bei lost many battles, but each time he decisively escaped, preserving his strength. Later he bounced back again and again and finally founded Shu.|Cutting losses is not defeat; it is how you get back up.|A startup was losing heavily. He decisively quit, switched to a new business, and was profitable again two years later.|Why isn't retreat the same as failure?|It stops losses and saves strength to rise again|Because there will be no more chances|Because face matters`.split("\n").map(l=>l.split("|"));
+const XM=`Maharaja Taizong takut laut. Seorang jeneral menjemputnya berjamuan di "rumah besar" yang berlangsir. Sebenarnya ia sebuah kapal, dan apabila dia sedar, mereka sudah jauh di tengah laut.|Pecahkan perubahan besar kepada langkah harian yang kecil supaya tiada siapa perasan.|Xiaoming selalu berkata "saya ke perpustakaan". Lama-kelamaan keluarganya sudah biasa, dan tiada siapa bertanya ketika dia keluar membawa bola.|Mengapa keluarganya tidak curiga?|Berlaku setiap hari sehingga jadi kebiasaan|Keluarga terlalu sibuk untuk ambil peduli|Dia bercakap dengan sangat kuat
+Wei menyerang Zhao, dan Zhao meminta bantuan Qi. Penasihat Qi, Sun Bin, tidak pergi ke Zhao tetapi menyerang ibu kota Wei. Tentera Wei bergegas pulang dan Zhao selamat.|Apabila pesaing menyerang kekuatan anda, serang titik lemahnya.|Dua kedai bersaing. Kedai A tidak menurunkan harga tetapi melancarkan perkhidmatan penghantaran, titik paling lemah pesaing, sehingga pesaing terkial-kial membaikinya.|Bahagian mana pesaing yang diserang Kedai A?|Titik paling lemah|Produk paling kuat|Harga
+Yan Zi mahu menyingkirkan tiga pahlawan ganas. Dia meminta raja menghantar dua biji pic dan berkata hanya yang paling berjasa boleh makan. Ketiga-tiganya berebut jasa dan semuanya mati, tanpa Yan Zi mengangkat jari.|Gunakan rakan kongsi dan platform; jangan serbu sendiri.|Seorang pengurus tidak mahu menyinggung pelanggan, lalu menghantar pelanggan itu ke jabatan lain untuk menolak bagi pihaknya.|Apakah risiko tindakan ini?|Mungkin disedari dan merosakkan kepercayaan|Pasti berjaya|Tiada sebarang risiko
+Qi menyerang Lu dan terus memalu gendang perang. Cao Gui dari Lu menyuruh askarnya menunggu. Selepas gendang ketiga, tenaga Qi habis, lalu Lu menyerbu dan menang.|Tidur cukup sebelum peperiksaan, bukan berjaga malam.|Kapten pasukan membiarkan pemain berehat. Lawan menyerang bertubi-tubi pada separuh masa pertama dan letih, lalu pasukan menjaringkan gol pada separuh masa kedua.|Mengapa tunggu sehingga lawan letih?|Stamina lawan menurun, lebih mudah dikalahkan|Untuk membuang masa|Kerana peraturan menetapkannya
+Raja Goujian dari Yue bersabar bertahun-tahun selepas kalah kepada Wu. Apabila Wu ditimpa kemarau dan rajanya berada di luar bersama tentera, Goujian terus menyerang dan menghapuskan Wu.|Apabila pesaing menghadapi krisis, rebut peluang pasaran dengan cepat.|Kedai jiran tiba-tiba ditutup untuk pemeriksaan. Pemilik bergegas menandatangani pelanggan lamanya.|Apakah pertikaian etika di sini?|Mengambil kesempatan atas kesusahan orang kurang baik|Terlalu rajin bekerja|Harga terlalu rendah
+Han Xin menyerang Wei. Dia menyusun bot beramai-ramai di satu jeti supaya Wei menyangka dia akan menyeberang di situ. Pasukan utamanya menyeberang di tempat lain menggunakan tong kayu dan menyerang dari belakang.|Seperti gerak tipu bola sepak: pandang kiri, hantar ke kanan.|Dia bercakap kuat di media sosial tentang rancangan melancong, sedangkan dia diam-diam menyiapkan cadangan baharu untuk bosnya.|Apakah "timur" dan "barat" di sini?|Timur ialah umpan, barat ialah sasaran sebenar|Timur ialah sasaran sebenar, barat ialah umpan|Kedua-duanya sebenar
+Kota Zhang Xun kehabisan anak panah. Pada waktu malam, dia menurunkan orang-orangan jerami berpakaian hitam dari tembok. Musuh melepaskan anak panah ke arahnya dengan melulu, dan dia mengumpul ratusan ribu batang.|Bina momentum supaya usaha kecil kelihatan besar.|Seorang pengasas yang belum ada produk membuat poster teaser yang cantik. Ramai orang menyedarinya, dan barulah dia membina produknya.|Bagaimana "tiada" menjadi "ada"?|Bina sensasi dahulu, kemudian sempurnakan|Tidak pernah membina produk|Semata-mata nasib
+Han Xin menghantar orang membaiki jalan papan dengan bising supaya musuh menyangka tentera akan lalu di situ. Pasukan utamanya diam-diam melalui lorong sampingan ke Chencang dan menyerang dari belakang.|Tarik perhatian di hadapan sambil bergerak diam-diam dari tepi.|Kapten melatih taktik pembukaan dengan bising, sedangkan langkah mematikan yang sebenar disediakan secara rahsia di tengah padang.|Yang manakah "terang" dan yang manakah "rahsia"?|Terang: taktik pembukaan; rahsia: langkah tengah padang|Terang: tengah padang; rahsia: pembukaan|Kedua-duanya di pembukaan
+Selepas Cao Cao mengalahkan Yuan Shao, dua beradik Yuan melarikan diri ke Liaodong. Semua orang menggesa Cao Cao mengejar, tetapi dia berkata tidak. Benar, pemerintah Liaodong sendiri membunuh dua beradik itu dan menghantar kepala mereka.|Apabila rakan sekerja bertengkar, jangan menyibuk; tunggu sehingga keadaan jelas.|Dua rakan sekerja berebut jasa. Anda diam sehingga bos melihat siapa yang lebih boleh dipercayai, barulah anda bersuara.|Apakah kebaikan dan risiko menonton dari jauh?|Menjimatkan tenaga, tetapi mungkin terlepas peluang|Pasti menang, tiada risiko|Hanya menyinggung orang
+Menteri Dinasti Tang, Li Linfu, sentiasa tersenyum dan bercakap manis, tetapi memasang perangkap di belakang orang. Orang menyebutnya "ada madu di bibir, pedang di perut".|Peringatan untuk berwaspada terhadap orang yang terlalu mesra.|Seorang rakan sekerja baharu sangat mesra dengan anda tetapi sentiasa bertanya butiran projek anda.|Bagaimana anda akan berwaspada?|Tidak mendedahkan butiran penting dan memerhati|Memberitahu dia segala-galanya|Terus bermusuh dengannya
+Tian Ji berlumba kuda dengan raja, tiga ekor setiap seorang. Sun Bin menyuruh Tian Ji menandingkan kuda terburuknya dengan kuda terbaik raja, kuda terbaiknya dengan kuda pertengahan, dan kuda pertengahannya dengan kuda terburuk. Kalah sekali tetapi menang dua kali.|Korbankan yang kecil untuk melindungi keseluruhan.|Sebuah syarikat melepaskan produk kecil yang rugi dan menumpukan semua sumber pada produk utama; hasil berganda.|Apakah "plum" dan apakah "pic"?|Plum ialah produk kecil, pic ialah produk utama|Plum ialah produk utama, pic ialah produk kecil|Kedua-duanya produk utama
+Dua tentera berhadapan. Gerabak bekalan musuh bergerak perlahan dan satu ruang kecil terbuka. Pasukan kecil menyelinap masuk dan merampas beberapa gerabak. Bukan pertempuran besar, tetapi musuh semakin lapar sehingga tidak mampu bertahan.|Perhatikan butiran kecil dan kumpul kelebihan sedikit demi sedikit.|Dia melihat pesaing terlupa menyebut diskaun, lalu cepat menyebutnya sendiri dan memenangi pelanggan itu.|Apakah yang dia gunakan untuk merebut peluang ini?|Perhatian tajam kepada butiran|Nasib|Menjerit kuat
+Seorang pegawai dituduh rasuah. Apabila dia melihat aduan tentang orang bawahannya, dia menulis: "Kamu hanya memukul rumput, tetapi ular ini sudah terkejut." Rasa bersalahnya mendedahkannya.|Apabila tidak pasti, jalankan percubaan kecil dahulu.|Dengan projek baharu yang tidak pasti, dia meminta sepuluh pengguna mencubanya dahulu dan melihat reaksi mereka sebelum membuat keputusan.|Apakah "rumput" dan "ular"?|Rumput ialah ujian kecil, ular ialah reaksi pengguna|Rumput ialah pengguna, ular ialah produk|Rumput ialah harga, ular ialah pesaing
+Xiang Liang memberontak terhadap Qin tetapi tiada siapa menyertai. Dia menjumpai cucu raja Chu lama yang sedang menggembala kambing dan menabalkannya sebagai "Raja Huai dari Chu". Melihat keturunan raja lama, orang ramai berpusu-pusu menyokongnya.|Bungkus semula jenama atau sumber lama supaya hidup semula.|Sebuah kedai jenama lama menukar pembungkusan dan mula menjual dalam talian, dan rasa klasiknya popular semula.|Apakah yang "dihidupkan semula"?|Jenama lama dan reputasinya|Produk yang benar-benar baharu|Kilang yang sudah ditutup
+Sun Ce mahu menawan sebuah kota yang kukuh pertahanannya. Dia berpura-pura lemah dan menghantar hadiah, memperdaya musuh supaya menyerang tempat lain. Semasa kota kosong, dia menawannya dalam satu malam.|Tarik pesaing keluar dari kawasan kuasanya, kemudian lakukan langkah utama.|Sebelum rundingan, dia menjemput pihak lawan ke sebuah kedai teh yang dikenalinya. Mereka berasa tidak selesa, dan dialah yang mengawal rentak.|Apakah "gunung" itu?|Kelebihan tempat yang biasa bagi pesaing|Sebuah gunung sebenar|Harga yang dirundingkan
+Zhuge Liang menawan ketua pemberontak Meng Huo dan melepaskannya, tujuh kali. Selepas kali ketujuh, Meng Huo benar-benar yakin dan bersumpah tidak memberontak lagi.|Terlalu mendesak boleh memakan diri; kadangkala bertenang lebih mantap.|Seorang bos tidak tergesa-gesa menuntut bayaran tetapi melanjutkan tarikh akhir. Pelanggan berterima kasih dan kemudian menempah lebih banyak.|Mengapa "melepaskan" berkesan?|Mereka berterima kasih dan lebih rela bekerjasama|Mereka takut|Mereka lupa hutang itu
+Penyair Chang Jian mendengar bahawa penyair terkenal Zhao Gu akan melawat sebuah kuil, lalu menulis dua baris biasa di dinding. Zhao Gu tidak dapat menahan diri daripada menambah dua baris yang cemerlang.|Dalam mesyuarat, kongsi draf kasar dahulu untuk menarik idea yang lebih baik.|Seorang guru mula-mula membiarkan pelajar berkongsi idea kasar, dan tidak lama kemudian muncul satu idea yang cemerlang.|Apakah "bata" dan "permata"?|Bata ialah idea kasar, permata ialah idea yang lebih baik|Bata ialah idea yang baik, permata ialah idea kasar|Kedua-duanya hadiah
+Semasa pemberontakan An Lushan, Zhang Xun menyedari seorang pemimpin utama musuh dan menghantar penembak tepat untuk menembaknya mati. Tentera musuh menjadi kucar-kacir dan berundur.|Tangani masalah utama dahulu; jangan tersangkut pada butiran.|Sebuah projek terhenti. Dia mengabaikan isu kecil dan terus berjumpa pembuat keputusan, menyelesaikannya pada hari itu juga.|Siapakah "ketua" anda?|Orang utama yang boleh membuat keputusan|Rakan sekerja paling rajin|Rakan sekerja paling muda
+Dalam Pertempuran Guandu, Cao Cao diam-diam membakar simpanan bijirin Yuan Shao. Seratus ribu tentera Yuan tiada makanan, menjadi kucar-kacir, dan kalah teruk. Dia tidak melawan askar, tetapi memutuskan makanan mereka.|Betulkan puncanya, bukan hanya gejala.|Seorang pelajar kerap menyalin kerja rumah. Guru tidak memarahi tetapi menukar kepada soalan dalam kelas, dan menyalin pun hilang.|Apakah "kayu api" yang dicabut?|Syarat yang membolehkan menyalin|Kemarahan guru|Buku nota pelajar
+Pada zaman Tiga Kerajaan, ketika Cao Cao dan Sun Quan berperang, Liu Bei di Jingzhou perlahan-lahan menawan beberapa daerah dan membina pangkalannya sendiri.|Apabila pasaran berubah, rebut peluang untuk masuk.|Semasa pasaran bergolak, dia diam-diam merekrut bakat dan pelanggan sementara pesaing kucar-kacir.|Apakah peluang yang dibawa oleh "air keruh"?|Pesaing kucar-kacir bermakna bakat dan pelanggan boleh dirangkul|Pasti rugi|Tiada peluang langsung
+Sebelum meninggal, Zhuge Liang menyuruh tentera berundur secara senyap, meninggalkan bendera dan patung kayu dirinya dalam kereta. Sima Yi menyangka dia masih hidup, tidak berani mengejar, dan tentera Shu berundur dengan selamat.|Tinggalkan sandaran yang baik apabila pergi, dan kekalkan kestabilan.|Dia mahu berhenti kerja, lalu menyerahkan tugas dahulu dan menstabilkan pasukan, kemudian pergi dengan lancar.|Kepada siapa "kulit" itu ditinggalkan?|Penyerahan dan keadaan yang stabil kepada pasukan|Pesaing|Tiada apa yang ditinggalkan
+Di Changping, tentera Qin memerangkap tentera Zhao di lembah dan memutuskan bekalan serta jalan berundur. Selepas lebih 40 hari kelaparan, tentera Zhao dihapuskan.|Selesaikan masalah dengan menyeluruh; jangan tinggalkan jalan untuk kembali.|Apabila syarikat menemui pembelot, ia mula-mula memutuskan semua akses dan mengunci sistem, kemudian baru menyiasat.|Mengapa "tutup pintu" dahulu?|Untuk menghalang mereka lari atau memusnahkan bukti|Untuk menjimatkan elektrik|Supaya nampak cantik
+Raja Qin mengikut nasihat Fan Ju: berkawan dengan Qi yang jauh, serang Han dan Wei yang dekat. Telan jiran dahulu, kembang perlahan-lahan, dan akhirnya Qin menyatukan negara.|Bekerjasama dengan yang jauh; uruskan pesaing paling dekat dahulu.|Sebuah kedai baharu bekerjasama dengan pembekal yang jauh sambil menumpukan pada merebut pelanggan di kawasan perumahan berdekatan.|Siapakah "jauh" dan "dekat"?|Jauh ialah pembekal yang jauh, dekat ialah pelanggan berdekatan|Jauh ialah pelanggan berdekatan, dekat ialah pembekal yang jauh|Kedua-duanya pembekal
+Jin mahu menyerang Guo tetapi perlu melalui Yu. Ia memberi pemerintah Yu kuda baik dan jed untuk meminjam jalan. Selepas memusnahkan Guo, Jin berpaling dan memusnahkan Yu juga.|Berwaspada dengan motif di sebalik kemudahan yang dipinjam.|Sebuah syarikat besar memasuki firma kecil atas nama "kerjasama" dan membelinya beberapa tahun kemudian.|Apakah "jalan" yang dipinjam?|Nama kerjasama dan peluang untuk lalu|Jalan raya sebenar|Nama syarikat
+Selepas Maharaja Pertama meninggal, Zhao Gao dan Li Si diam-diam menukar wasiatnya dan memberikan takhta kepada Huhai, bukan Putera Fusu. Satu wasiat palsu mengubah nasib negara.|Menukar orang penting secara senyap mengubah keseluruhan keadaan secara senyap.|Seseorang diam-diam menukar beberapa kata kunci dalam kontrak, dan seluruh maksudnya berubah.|Apakah yang anda perhatikan semasa membaca kontrak?|Sama ada kata kunci diubah|Hanya kulit depan|Hanya bilangan halaman
+Pada zaman Musim Bunga dan Musim Luruh, Sima Rangju memimpin tentera. Kegemaran raja, Zhuang Jia, terlambat, dan Rangju menghukumnya mati di khalayak. Seluruh tentera tidak berani ingkar lagi.|Contoh yang memberi amaran kepada semua orang lebih berkesan daripada menamakan seseorang.|Guru berkata di khalayak, "Yang terlambat hendaklah berdisiplin", sebenarnya menyindir seorang pelajar yang kerap terlambat.|Apakah kelebihannya?|Memberi amaran kepada orang yang betul tanpa menamakan|Boleh memalukan seseorang|Tiada kesan langsung
+Pada zaman Tiga Kerajaan, Sima Yi disingkirkan oleh Cao Shuang, lalu berpura-pura sakit dan nyanyuk, bercakap merepek. Cao Shuang lalai, dan Sima Yi melancarkan rampasan kuasa ketika dia keluar dari kota dan merampas kuasa.|Bersikap rendah diri memelihara kekuatan lebih baik daripada menunjuk-nunjuk.|Dalam mesyuarat dia tidak bersuara, dan orang menyangka dia tiada idea. Sementara itu dia diam-diam menyiapkan rancangan lengkap.|Apakah yang di sebalik "berpura-pura bodoh"?|Diam-diam mengumpul kekuatan|Dia benar-benar tiada idea|Dia mahu bermalas-malas
+Liu Qi, anak Liu Biao, disingkirkan ibu tirinya dan mahu nasihat Zhuge Liang, yang enggan. Maka Liu Qi menjemputnya naik ke tingkat atas untuk minum dan mengalihkan tangga, katanya, "Tiada orang luar sekarang. Anda boleh bercakap."|Pasang perangkap dengan memberi kemudahan dahulu, kemudian putuskan jalan berundur; gunakan dengan berhati-hati.|Seorang pesaing dipancing masuk ke dalam projek yang kelihatan menguntungkan, kemudian sumbernya diputuskan, menjadikannya terperangkap.|Apakah risiko tindakan ini?|Pihak lain mungkin sedar dan membalas serangan|Pasti berjaya|Tiada risiko
+Di Changban, Zhang Fei hanya mempunyai beberapa puluh pasukan berkuda. Dia menyuruh mereka mengikat dahan di ekor kuda dan berlari ke sana ke mari menimbulkan debu, sementara dia berdiri di atas jambatan dan menjerit. Tentera Cao menyangka ada serangan hendap dan tidak mengejar.|Pinjam nama besar dan platform untuk meningkatkan pengaruh.|Sebuah kedai kecil meminjam rupa selebriti pada pembungkusannya, dan jualan melonjak seketika, tetapi kualiti tidak dapat menandingi.|Adakah "bunga" itu sebenar atau palsu?|Palsu, rupa yang dipinjam|Sebenar|Separuh separuh
+Liu Bei dijemput Liu Zhang untuk membantu berperang di Shu. Sambil membantu, dia diam-diam memenangi hati orang, dan akhirnya berbalik arah dan menawan Shu.|Walaupun sebagai pelanggan, cari jalan untuk mengambil alih pimpinan.|Seorang pelatih mula-mula membantu kerja kecil, perlahan-lahan memahami proses, dan akhirnya menjadi ahli teras pasukan.|Bagaimana dia menjadi "tuan rumah"?|Beransur-ansur menguasai proses dan suara|Menjadi bos dari hari pertama|Nasib
+Raja Goujian dari Yue memberikan wanita cantik Xishi kepada Raja Fuchai dari Wu. Fuchai terpikat, hanyut dalam keseronokan, mengabaikan hal negara, dan Wu menjadi lemah lalu dimusnahkan oleh Yue.|Amaran: godaan menghakis semangat, dan kita juga perlu berjaga-jaga.|Syarikat pesaing menghantar jurujual yang menawan untuk memikat pelanggan utama anda.|Bagaimana anda menahan godaan sebegini?|Kekal tenang dan pegang prinsip|Terima segalanya|Mengelak daripada berjumpa
+Zhuge Liang menjaga Xicheng hanya dengan beberapa askar tua dan lemah. Apabila tentera Sima Yi tiba, dia membuka pintu gerbang dan dengan tenang memetik guzheng di menara. Sima Yi mengesyaki serangan hendap dan berundur.|Nampak lemah tidak semestinya lemah; ketenangan ialah perang psikologi.|Semasa sistem rosak dan kekurangan kakitangan, pengurus dengan tenang berkata "semuanya terkawal", dan pelanggan berasa lega.|Mengapa kekal tenang penting?|Menstabilkan keyakinan pelanggan dan mengelak panik|Menghilangkan masalah selama-lamanya|Tiada kesan
+Sebelum Pertempuran Tebing Merah, Zhou Yu membiarkan utusan Cao Cao, Jiang Gan, "mengintai" surat palsu yang mengatakan dua laksamana Cao Cao akan membelot. Cao Cao mempercayainya dan membunuh kedua-duanya.|Cipta keraguan supaya pesaing hilang kepercayaan dalaman.|Pesaing menerima "dokumen dalaman" palsu dan mula meragui rakan kongsinya sendiri.|Mengapa syak wasangka begitu merosakkan?|Ketidakpercayaan dalaman membawa kepada kekacauan sendiri|Menjadikan pesaing lebih bersatu|Menjadikan pesaing lebih kaya
+Di Tebing Merah, Zhou Yu memukul jeneral tua Huang Gai lima puluh rotan di khalayak. Huang Gai berpura-pura marah dan menghantar surat kepada Cao Cao untuk "menyerah". Cao Cao mempercayainya, dan kapal api Huang Gai merempuh masuk lalu membakar armadanya.|Kadangkala menanggung rugi dahulu menunjukkan keikhlasan dan memenangi kepercayaan.|Untuk membuktikan keikhlasan kepada pelanggan, seorang pekerja menanggung tanggungjawab dan bekerja lebih masa, lalu memenangi kepercayaan.|Apakah kos tindakan ini?|Dia menanggung kerugian dan kesusahan peribadi|Tiada kos|Pelanggan menanggung semuanya
+Sebelum Tebing Merah, Pang Tong berpura-pura menyertai Cao Cao dan mencadangkan kapal dirantai bersama supaya askar utara tidak mabuk laut. Cao Cao bersetuju, dan apabila Zhou Yu membakar, semua kapal terbakar sebagai satu dan tiada yang dapat lari.|Matlamat rumit memerlukan beberapa rancangan yang bekerjasama.|Sebuah pasukan mula-mula menarik pengguna dengan acara kecil, mengekalkan mereka dengan mata keahlian, kemudian menukar mereka dengan produk baharu.|Bagaimana langkah-langkah ini "bersambung"?|Setiap langkah menyediakan jalan untuk langkah seterusnya|Langkah-langkah tidak berkaitan|Lakukan segalanya serentak
+Liu Bei kalah dalam banyak pertempuran, tetapi setiap kali dia melarikan diri dengan tegas, memelihara kekuatannya. Kemudian dia bangkit semula berkali-kali dan akhirnya mengasaskan Shu.|Menghentikan kerugian bukan kekalahan; itulah cara untuk bangkit semula.|Sebuah perniagaan baharu rugi teruk. Dia berhenti dengan tegas, beralih kepada perniagaan baharu, dan untung semula dua tahun kemudian.|Mengapa berundur tidak sama dengan gagal?|Menghentikan kerugian dan menjimatkan kekuatan untuk bangkit semula|Kerana tidak akan ada peluang lagi|Kerana maruah penting`.split("\n").map(l=>l.split("|"));
+const tx=(i,j)=>L=="zh"?[S[i],D[i].x,E[i][0],E[i][1]][j]:(L=="en"?XE:XM)[i][j],qo=i=>L=="zh"?Q[i]:(L=="en"?XE:XM)[i].slice(4);
+let cur=-1,done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem("s36")||"[]"))}catch(e){}
+const $=id=>document.getElementById(id);
+function save(){try{localStorage.setItem("s36",JSON.stringify([...done]))}catch(e){}}
+function prog(){const p=done.size/36*100;$("pb").style.width=p+"%";$("pt").textContent=tr("prog")(done.size)}
+function nav(){$("nav").innerHTML=[tr("all"),...GN[L]].map((t,i)=>`<button class="${i==cur+1?'on':''}" onclick="sel(${i-1})">${t}</button>`).join("")+`<button class="btn" onclick="quiz()">${tr("qb")}</button>`}
+function sel(g){cur=g;nav();grid()}
+function grid(){$("g").innerHTML=D.filter(d=>cur<0||d.g==cur).map(d=>`<div class="c ${done.has(d.i)?'done':''}" onclick="open_(${d.i})"><span class="e">${d.e.slice(0,2)}</span><b>${nm(d.i)}</b><small>${tr("tg")(d.i+1)}</small></div>`).join("")}
+function show(h){$("bx").innerHTML=h;$("m").classList.add("show")}
+function hide(){$("m").classList.remove("show");grid();prog()}
+$("m").onclick=e=>{if(e.target.id=="m")hide()};
+function open_(i){const d=D[i];done.add(i);save();
+const em=[...d.e];
+show(`<span class="t">${tr("tg")(i+1)} · ${GN[L][d.g].split("·")[0]}</span><h2>${nm(i)}</h2>
+<div class="stage"><span>${em[0]}${em[1]||""}</span><span>${em[2]||"✨"}</span><span>${em[3]||"⭐"}</span></div>
+<p><b>${tr("one")}</b>${mn(i)}</p><div class="q"><b>${tr("sty")}</b>${tx(i,0)}</div><p><b>${tr("mod")}</b>${tx(i,1)}</p><div class="q" style="border-left-color:var(--gold)"><b>${tr("dra")}</b>${tx(i,2)}</div><p style="background:var(--bg);padding:8px 10px;border-radius:10px"><b>${tr("thk")}</b>${tx(i,3)}</p>${mc(i)}
+<div class="row"><button class="btn" onclick="open_(${(i+35)%36})">${tr("prev")}</button><button class="btn" onclick="hide()">${tr("close")}</button><button class="btn" onclick="open_(${(i+1)%36})">${tr("next")}</button></div>`)}
+let sc=0,k=0;
+let cno="";
+function cert(){cno="SS36-"+String(Math.random()*1e6|0).padStart(6,"0");const d=new Date().toLocaleDateString(tr("loc")),G="#b08a2e",R="#b3322a";
+show(`<h2 style="margin-top:0">${tr("cg")}</h2><p>${tr("cs")(sc)}</p><input id="nm" maxlength="12" placeholder="${tr("ph")}" oninput="$('cn').textContent=this.value||'${tr("anon")}'" style="font:inherit;padding:8px;width:100%;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)">
+<div style="margin:12px 0;padding:8px;background:linear-gradient(135deg,#fffdf6,#f6ecd2);border:3px solid ${G};color:#3b2a1a;font-family:serif;border-radius:4px"><div style="border:1px solid ${R};padding:20px 10px 14px;text-align:center">
+<div style="font-size:.75rem;letter-spacing:.5em;color:${G}">${tr("org")}</div>
+<div style="font-size:${L=="zh"?"2.2rem":"1.5rem"};font-weight:bold;letter-spacing:.35em;color:${R};margin:6px 0 0 .35em">${tr("ct")}</div>
+<div style="font-size:.62rem;letter-spacing:.3em;color:#7a6650">CERTIFICATE OF COMPLETION</div>
+<div style="width:120px;height:2px;background:${G};margin:10px auto"></div>
+<div style="letter-spacing:.3em">${tr("zm")}</div>
+<div id="cn" style="display:inline-block;min-width:160px;font-size:1.7rem;font-weight:bold;letter-spacing:.1em;border-bottom:2px solid ${G};margin:6px 0">${tr("anon")}</div>
+<p style="font-size:.9rem;margin:8px 0">${tr("st1")}<br>${tr("st2")(sc)}</p>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;font-size:.75rem;margin-top:10px"><div>${tr("dt")}<br>${d}</div><div style="width:62px;height:62px;border:3px double ${R};border-radius:50%;color:${R};display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;font-size:${L=="zh"?".85rem":".5rem"};transform:rotate(-12deg);line-height:1.25"><span>${tr("s1")}</span><span>${tr("s2")}</span></div><div>${tr("no")}<br>${cno}</div></div></div></div>
+<div class="row"><button class="btn" onclick="dl()">${tr("dlb")}</button><button class="btn" onclick="hide()">${tr("back")}</button></div><small style="color:var(--sub)">${tr("shot")}</small>`)}
+function dl(){const n=$("nm").value||tr("anon"),W=1200,H=850,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d"),G="#b08a2e",R="#b3322a",K="#3b2a1a",d=new Date().toLocaleDateString(tr("loc"));
+const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#fffdf6");g.addColorStop(1,"#f6ecd2");x.fillStyle=g;x.fillRect(0,0,W,H);
+x.strokeStyle=G;x.lineWidth=14;x.strokeRect(30,30,W-60,H-60);x.lineWidth=2;x.strokeRect(58,58,W-116,H-116);x.strokeStyle=R;x.lineWidth=3;x.strokeRect(72,72,W-144,H-144);
+x.fillStyle=G;[[72,72],[W-72,72],[72,H-72],[W-72,H-72]].forEach(([a,b])=>{x.save();x.translate(a,b);x.rotate(Math.PI/4);x.fillRect(-12,-12,24,24);x.restore()});
+x.textAlign="center";
+const t=(s,X,y,f,col,sp)=>{x.font=f;x.fillStyle=col;x.letterSpacing=sp||"0px";x.fillText(s,X,y)};
+t(tr("org"),W/2,155,"28px serif",G,"10px");
+t(tr("ct"),W/2,255,(L=="zh"?"bold 96px":"bold 76px")+" serif",R,"24px");
+t("CERTIFICATE OF COMPLETION",W/2,300,"22px serif","#7a6650","8px");
+x.fillStyle=G;x.fillRect(W/2-180,325,360,2);
+t(tr("zm"),W/2,385,"32px serif",K,"8px");
+t(n,W/2,470,"bold 72px serif",K,"6px");
+x.fillStyle=G;x.fillRect(W/2-260,495,520,2);
+t(tr("st1"),W/2,560,L=="zh"?"30px serif":"19px serif",K,L=="zh"?"2px":"0px");
+t(tr("st2")(sc),W/2,606,L=="zh"?"30px serif":"19px serif",K,L=="zh"?"2px":"0px");
+x.fillStyle=K;x.fillRect(150,715,260,1.5);x.fillRect(W-410,715,260,1.5);
+t(tr("dt")+"  "+d,280,750,"24px serif",K,"2px");t(tr("no")+"  "+cno,W-280,750,"24px serif",K,"2px");
+x.save();x.translate(W/2,705);x.rotate(-.2);x.strokeStyle=R;x.lineWidth=5;x.beginPath();x.arc(0,0,60,0,7);x.stroke();x.lineWidth=1.5;x.beginPath();x.arc(0,0,51,0,7);x.stroke();
+t(tr("s1"),0,-4,"bold "+(L=="zh"?24:16)+"px serif",R,"2px");t(tr("s2"),0,28,"bold "+(L=="zh"?24:16)+"px serif",R,"2px");x.restore();
+const a=document.createElement("a");a.href=c.toDataURL("image/png");a.download=tr("fn")+".png";a.click()}
+let deck=[];function quiz(){sc=0;k=0;deck=[...D].sort(()=>Math.random()-.5).slice(0,12);nq()}
+function nq(){if(k==12){if(sc>=6)return cert();show(`<h2>${tr("score")(sc)}</h2><p>${tr("fail")}</p><div class="row"><button class="btn" onclick="quiz()">${tr("again")}</button><button class="btn" onclick="hide()">${tr("back")}</button></div>`);return}
+const a=deck[k],o=[a];while(o.length<4){const r=D[Math.random()*36|0];if(!o.includes(r))o.push(r)}
+o.sort(()=>Math.random()-.5);
+show(`<span class="t">${tr("qn")(k+1)}</span><h2>${tr("qh")}</h2><p class="q"><b>${tr("qq")}</b><br>${mn(a.i)}</p>
+<div class="opts">${o.map(x=>`<button onclick="ans(this,${x.i==a.i},${a.i})">${nm(x.i)}</button>`).join("")}</div>`)}
+function ans(b,ok,ai){if(ok){b.classList.add("ok");sc++}else{b.classList.add("no");[...b.parentNode.children].find(x=>x.textContent==nm(ai)).classList.add("ok")}
+[...b.parentNode.children].forEach(x=>x.onclick=null);k++;setTimeout(nq,1300)}
+applyLang();
+</script></body></html>
