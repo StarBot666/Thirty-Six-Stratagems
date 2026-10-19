@@ -1,520 +1,1120 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="utf-8">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>三十六计 · 趣味入门</title>
+<title>Daily Tasks</title>
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#faf3e3;--card:#fffaf0;--ink:#3b2a1a;--sub:#7a6650;--red:#b3322a;--line:#e3d3b0;--gold:#c8962e}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1812;--card:#2a231a;--ink:#f1e6d0;--sub:#b8a888;--red:#e2574d;--line:#4a3d2a;--gold:#e0b050}}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{--bg:#eef1fa;--ink:#161d3a;--mute:#5a6486;--card:#ffffff;--line:#d9def0;--tint:#e4e8fb;--acc:#3b4fe0;--accInk:#ffffff;--hot:#ff6a45;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif SC","Songti SC",STSong,serif;line-height:1.6}
-header{text-align:center;padding:28px 16px 8px}
-h1{margin:0;font-size:2.2rem;letter-spacing:.3em;color:var(--red)}
-header p{margin:4px 0;color:var(--sub)}
-.bar{max-width:420px;margin:10px auto;height:10px;border-radius:9px;background:var(--line);overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--red));transition:width .5s}
-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:10px}
-nav button,.btn{font:inherit;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:6px 14px;border-radius:20px;cursor:pointer}
-nav button.on,.btn{background:var(--red);color:#fff;border-color:var(--red)}
-.grid{max-width:960px;margin:0 auto;padding:10px 14px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-.c{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;position:relative;transition:transform .2s}
-.c:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--gold)}
-.c .e{font-size:2.3rem;display:block;animation:fl 3s ease-in-out infinite}
-.c b{display:block;font-size:1.1rem}.c small{color:var(--sub)}
-.c.done::after{content:"✓";position:absolute;top:6px;right:10px;color:var(--red);font-weight:bold}
-@keyframes fl{50%{transform:translateY(-6px)}}
-.m{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:14px;z-index:9}
-.m.show{display:flex}
-.box{background:var(--card);max-width:520px;width:100%;max-height:92%;overflow:auto;border-radius:18px;padding:18px;border:3px solid var(--gold);animation:pop .3s}
-@keyframes pop{from{transform:scale(.8);opacity:0}}
-.stage{height:120px;border-radius:12px;background:linear-gradient(var(--line),transparent);position:relative;overflow:hidden;margin:8px 0;font-size:3rem}
-.stage span{position:absolute;bottom:14px}
-.stage span:nth-child(1){animation:a1 4s ease-in-out infinite}
-.stage span:nth-child(2){animation:a2 4s ease-in-out infinite;left:45%}
-.stage span:nth-child(3){animation:a3 4s ease-in-out infinite;right:6%}
-@keyframes a1{0%{left:2%}50%{left:38%}100%{left:2%}}
-@keyframes a2{0%,100%{transform:scale(1)}50%{transform:scale(1.4) rotate(12deg)}}
-@keyframes a3{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
-h2{margin:4px 0;color:var(--red)}
-.t{display:inline-block;background:var(--gold);color:#fff;border-radius:10px;padding:0 10px;font-size:.8rem}
-.q{background:var(--bg);border-left:4px solid var(--red);padding:6px 10px;margin:8px 0;border-radius:6px}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.opts button{font:inherit;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
-.ok{background:#3a9a4a!important;color:#fff!important}.no{background:#c0392b!important;color:#fff!important;animation:sh .3s}
-@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-.row{display:flex;gap:8px;margin-top:12px;justify-content:space-between}
-#lg{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);right:10px;z-index:8;display:flex;gap:4px}#lg button{font:inherit;font-size:.8rem;padding:3px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;cursor:pointer}#lg button.on{background:var(--red);color:#fff;border-color:var(--red)}header{padding-top:46px!important}h1{font-size:clamp(1.5rem,6vw,2.2rem)}
-</style></head><body>
-<div id="lg"><button data-l="zh" onclick="setLang('zh')">中文</button><button data-l="en" onclick="setLang('en')">EN</button><button data-l="ms" onclick="setLang('ms')">BM</button></div>
-<header><h1 id="h1">三十六计</h1><p id="sub">🐉 零基础也能懂的智慧小课堂 🐉</p>
-<div class="bar"><i id="pb"></i></div><p id="pt"></p></header>
-<nav id="nav"></nav>
-<div class="grid" id="g"></div>
-<div class="m" id="m"><div class="box" id="bx"></div></div>
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 100px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Avenir Next","Segoe UI",system-ui,sans-serif;line-height:1.45}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+main{max-width:480px;margin:0 auto;padding:20px 16px 48px}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:2.1rem;margin:0;letter-spacing:-.01em}
+h2{font-family:Georgia,serif;font-size:1.25rem;margin:26px 0 10px}
+.sub{color:var(--mute);margin:2px 0 16px}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 6px;text-align:center}
+.stat b{display:block;font-size:1.35rem;font-family:Georgia,serif}
+.stat span{color:var(--mute);font-size:.78rem}
+.timer{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:14px;background:var(--acc);color:var(--accInk);border-radius:22px;padding:12px 16px;box-shadow:0 8px 24px rgba(30,40,120,.22)}
+.timer.done{background:var(--hot);color:#fff}
+.ringw{position:relative;width:76px;height:76px;flex:none}
+.ringw svg{width:100%;height:100%}
+.rb{fill:none;stroke:rgba(255,255,255,.28);stroke-width:6}
+.rf{fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-dasharray:201.06;stroke-dashoffset:201.06;transition:stroke-dashoffset .25s linear}
+.ringw span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:1.25rem;font-variant-numeric:tabular-nums}
+.tr{flex:1;min-width:0}
+.name{font-weight:700;min-height:1.4em;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btns{display:flex;gap:8px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:8px 16px;font-weight:700}
+button:focus-visible,input:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
+.timer button{background:var(--accInk);color:var(--acc)}
+.timer.done button{color:var(--hot)}
+.timer button.ghost{background:transparent;color:inherit;border:1px solid currentColor}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+li{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px}
+li.done{opacity:.7}
+li.done .t b{text-decoration:line-through}
+.row{display:flex;align-items:center;gap:12px}
+.row input{width:26px;height:26px;accent-color:var(--acc);flex:none}
+.t{flex:1;min-width:0}
+.t small{display:block;color:var(--mute)}
+.go{background:var(--acc);color:var(--accInk);padding:8px 14px;flex:none}
+svg.fig{display:block;width:100%;height:auto;margin-top:10px;background:var(--tint);border-radius:14px}
+.fig line{stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+.fig circle{fill:var(--card);stroke:var(--acc);stroke-width:3.5}
+.fig .fl{stroke:var(--line);stroke-width:2}
+.fig .wl{stroke:var(--mute);stroke-width:3}
+.fig .ar{fill:var(--acc)}
+.fig text{fill:var(--mute);font-size:7px;font-family:inherit}
+.hint{color:var(--mute);margin:0 0 10px}
+.more{display:block;width:100%;margin-top:12px;background:transparent;color:var(--acc);border:2px dashed var(--acc);padding:12px}
+.more[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:26px}
+.card h2{margin-top:0}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs button{background:var(--tint);color:var(--mute);padding:6px 14px}
+.tabs button[aria-pressed="true"]{background:var(--acc);color:var(--accInk)}
+.sum{margin:0 0 12px}
+.chart{display:flex;align-items:flex-end;gap:3px;height:112px}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.bar{width:100%;max-width:28px;border-radius:5px 5px 2px 2px;background:var(--line)}
+.bar.has{background:var(--acc)}
+.bar.now{background:var(--hot)}
+.col span{font-size:.7rem;color:var(--mute);height:16px;line-height:16px}
+.reset{display:block;margin:22px auto 0;background:none;color:var(--mute);text-decoration:underline;font-weight:400}
+.ov{position:fixed;inset:0;z-index:20;background:rgba(10,14,40,.62);display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden}
+.ov[hidden]{display:none}
+.pop{position:relative;background:var(--card);border-radius:24px;padding:26px 22px;max-width:340px;width:100%;text-align:center;animation:pop .35s ease-out}
+.pop .big{font-size:3rem}
+.pop h2{margin:4px 0 6px;font-size:1.7rem}
+.pop p{color:var(--mute);margin:0 0 18px}
+.pop button{display:block;width:100%;margin-top:8px;padding:12px;background:var(--acc);color:var(--accInk)}
+.pop button.g{background:transparent;color:var(--mute);font-weight:400}
+.conf span{position:absolute;top:-20px;width:9px;height:15px;border-radius:2px;animation:fall 2.6s linear forwards}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bd{text-align:center;padding:10px 4px;border-radius:14px;background:var(--tint)}
+.bd i{display:flex;width:54px;height:54px;margin:0 auto 4px;border-radius:50%;background:linear-gradient(135deg,#ffd35a,#ff9d3c);align-items:center;justify-content:center;font-style:normal;font-size:1.7rem}
+.bd.lock i{background:var(--line);filter:grayscale(1);opacity:.55}
+.bd b{display:block;font-size:.82rem}
+.bd small{display:block;color:var(--mute);font-size:.72rem}
+.share{display:block;width:100%;margin-top:14px;background:var(--acc);color:var(--accInk);padding:12px}
+.pop{max-height:calc(100% - 8px);overflow:auto}
+.pop canvas{width:100%;height:auto;border-radius:14px;display:block;margin-bottom:6px}
+.pop button.s{background:var(--tint);color:var(--ink)}
+.pop .badge{width:96px;height:96px;margin:0 auto 6px;border-radius:50%;background:linear-gradient(135deg,#ffd35a,#ff9d3c);display:flex;align-items:center;justify-content:center;font-size:3.2rem;box-shadow:0 6px 18px rgba(255,157,60,.45)}
+.nb{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:0 0 12px}
+.nb span{background:var(--tint);border-radius:999px;padding:4px 10px;font-size:.85rem}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;z-index:30;font-weight:700;white-space:nowrap}
+.toast[hidden]{display:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.rf{transition:none}.conf{display:none}.pop{animation:none}}
+
+:root{--h1:#3b4fe0;--h2:#7a3de0}
+main{padding-bottom:150px}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(135deg,var(--h1),var(--h2));color:#fff;border-radius:26px;padding:20px 18px;margin-bottom:14px;box-shadow:0 12px 30px rgba(59,79,224,.28)}
+.hero h1{color:#fff}.hero .sub{color:rgba(255,255,255,.82);margin:2px 0 10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,.18);border-radius:999px;padding:3px 10px;font-size:.82rem}
+.chip b{font-family:Georgia,serif}
+.hr{position:relative;width:86px;height:86px;flex:none}
+.hr svg{width:100%;height:100%}
+.hr .rb{stroke:rgba(255,255,255,.25);stroke-width:7}
+.hf{fill:none;stroke:#fff;stroke-width:7;stroke-linecap:round;stroke-dasharray:213.63;stroke-dashoffset:213.63;transition:stroke-dashoffset .4s}
+.hr span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:1.35rem;font-weight:700}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--tint);padding:4px;border-radius:15px}
+.seg.two{grid-template-columns:1fr 1fr;margin-bottom:14px}
+.seg button{background:transparent;color:var(--mute);padding:9px 4px;border-radius:11px}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 2px 8px rgba(20,30,90,.16)}
+.seg button:disabled{opacity:.45;cursor:not-allowed}
+#lv button::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:#2dbf8a}
+#lv button[data-l="medium"]::before{background:#ffb02e}
+#lv button[data-l="hard"]::before{background:var(--hot)}
+.lvbox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:6px}
+.lvh{font-weight:700;margin-bottom:8px}
+.lvbox .hint{margin:8px 2px 0;font-size:.9rem}
+li{border-radius:20px;box-shadow:0 4px 14px rgba(30,40,110,.07)}
+.row input{appearance:none;-webkit-appearance:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-content:center;background:var(--card);flex:none;cursor:pointer}
+.row input:checked{background:var(--acc);border-color:var(--acc)}
+.row input:checked::after{content:"✓";color:var(--accInk);font-weight:700;font-size:1rem}
+.t b{font-size:1.08rem}
+.tags{display:flex;gap:6px;margin-top:3px}
+.tag{font-size:.72rem;background:var(--tint);color:var(--mute);padding:2px 9px;border-radius:999px}
+.how{margin:10px 2px 0;color:var(--mute);font-size:.92rem}
+.timer{position:fixed;top:auto;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;border-radius:22px 22px 0 0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));box-shadow:0 -8px 24px rgba(30,40,120,.25)}
+.ringw{width:60px;height:60px}.ringw span{font-size:1rem}
+.toast{bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+@media (prefers-reduced-motion:reduce){.hf{transition:none}}
+
+
+main{padding-bottom:100px}
+.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+button{transition:transform .12s}
+button:active{transform:scale(.96)}
+.bnav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;z-index:8;display:grid;grid-template-columns:1fr 1fr;background:var(--card);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+.bnav button{background:transparent;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:0;font-size:.8rem;padding:6px}
+.bnav button span{font-size:1.35rem;line-height:1.2}
+.bnav button[aria-pressed="true"]{color:var(--acc)}
+li .go{background:linear-gradient(135deg,var(--h1),var(--h2));color:#fff;padding:10px 16px;border-radius:14px;box-shadow:0 4px 12px rgba(59,79,224,.3)}
+li svg.fig.mf{width:min(100%,190px);height:auto;aspect-ratio:1;margin:10px auto 0}
+li.done{opacity:.65}
+.stage{position:fixed;inset:0;z-index:25;background:linear-gradient(160deg,var(--h1),var(--h2) 70%,#1a1050);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:10px;padding:calc(14px + env(safe-area-inset-top,0px)) 20px calc(22px + env(safe-area-inset-bottom,0px));text-align:center;animation:rise .3s ease-out}
+.stage[hidden]{display:none}
+.stage.done{background:linear-gradient(160deg,#16a06b,#0b6b52)}
+.sTop{width:100%;max-width:480px;display:flex;justify-content:space-between}
+.sTop button{background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:8px 14px}
+.sName{font-family:Georgia,serif;font-size:1.7rem;margin:0}
+.sHow{opacity:.85;max-width:340px;margin:4px auto 0;font-size:.95rem}
+.sFig{height:clamp(120px,24vh,210px);aspect-ratio:1}
+.sFig svg.fig{width:100%;height:100%;background:rgba(255,255,255,.14);margin:0}
+.stage .fig line{stroke:#fff}
+.stage .fig circle{fill:transparent;stroke:#fff}
+.stage .fig .fl{stroke:rgba(255,255,255,.3)}
+.sRingW{position:relative;width:clamp(190px,36vh,290px);aspect-ratio:1}
+.sRingW svg{width:100%;height:100%}
+.sb{fill:none;stroke:rgba(255,255,255,.22);stroke-width:12}
+.sf{fill:none;stroke:#fff;stroke-width:12;stroke-linecap:round;stroke-dasharray:741.42;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
+#sTime{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:clamp(3.4rem,11vh,5.6rem);font-weight:700;font-variant-numeric:tabular-nums}
+.stage.last #sTime{animation:pulse 1s ease-in-out infinite}
+.sGo{background:#fff;color:var(--h1);font-size:1.2rem;padding:14px 44px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+@keyframes pulse{50%{transform:scale(1.12)}}
+@keyframes rise{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.stage,.stage.last #sTime{animation:none}.sf{transition:none}}
+.sReps{display:inline-block;background:#fff;color:var(--h1);font-weight:800;font-size:1.6rem;padding:5px 22px;border-radius:999px;margin-top:8px}
+.stage.done .sReps{color:#0b6b52}
+.sNote{margin:0;opacity:.85;font-size:.9rem}
+.sFig{height:clamp(110px,20vh,180px)}
+.sRingW{width:clamp(170px,30vh,250px)}
+
+:root{color-scheme:light;--bg:#e7d3b6;--card:#fbf4e8;--ink:#3a2a1c;--mute:#7b6550;--line:#d3bd9f;--tint:#f0e2cc;--acc:#8a5426;--accInk:#ffffff;--hot:#d9542a;--h1:#8b5a2b;--h2:#c4803c}
+body{background:linear-gradient(180deg,#ecdcc4,#e2cdb0) fixed;background-color:var(--bg)}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.topbar h1{font-size:1.7rem}
+.lg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.lg button{background:transparent;color:var(--mute);padding:6px 13px;font-size:.85rem;border-radius:999px}
+.lg button[aria-pressed="true"]{background:var(--acc);color:#fff}
+.hero{box-shadow:0 12px 28px rgba(110,70,30,.3)}
+.hero .sub{font-size:1.02rem;font-weight:700}
+li{background:var(--card);box-shadow:0 5px 16px rgba(110,70,30,.12)}
+li.next{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc),0 5px 16px rgba(110,70,30,.15)}
+li .go{box-shadow:0 4px 12px rgba(110,70,30,.35)}
+.stage{background:linear-gradient(160deg,var(--h1),var(--h2) 65%,#5a3515)}
+.stage.done{background:linear-gradient(160deg,#16a06b,#0b6b52)}
+.sGo{color:var(--h1)}
+.sReps{color:var(--h1)}
+.bnav{grid-template-columns:repeat(3,1fr)}
+.bnav button{font-size:.76rem}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 5px 16px rgba(110,70,30,.12);margin-top:14px}
+.qmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--mute);font-size:.9rem}
+.lvt{padding:2px 10px;border-radius:999px;color:#fff;font-size:.75rem;font-weight:700}
+.l0{background:#2dbf8a}.l1{background:#d99a14}.l2{background:var(--hot)}.l3{background:#6b3fa0}
+.qq{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;font-size:1.3rem;line-height:1.35;margin:4px 0 14px}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--tint);color:var(--ink);border:2px solid transparent;border-radius:14px;padding:13px 14px;font-weight:600;font-size:1rem}
+.opt.ok{background:#d8f3e4;border-color:#2dbf8a;color:#14573d}
+.opt.bad{background:#fde0d8;border-color:var(--hot);color:#8a2a10}
+.opt:disabled{cursor:default}
+.fb{margin:12px 0 0;font-weight:700}
+.nextq{width:100%;margin-top:12px;background:var(--acc);color:#fff;padding:13px}
+.score{font-family:Georgia,serif;font-size:4.6rem;text-align:center;line-height:1;margin:6px 0}
+.rmsg{text-align:center;font-weight:700;font-size:1.15rem;margin:0 0 12px}
+.rv{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);font-size:.92rem}
+.rv i{font-style:normal;font-weight:700;flex:none}
+.rv small{display:block;color:var(--mute)}
+.note{color:var(--mute);font-size:.88rem;margin:10px 0 0;text-align:center}
+#pShare{background:#25d366;color:#fff}
+.bnav{grid-template-columns:1fr 1.3fr 1fr;align-items:end}
+.bnav .ctr span{display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:var(--tint);font-size:2.1rem;margin-top:-34px;border:4px solid var(--card);box-shadow:0 6px 16px rgba(110,70,30,.3)}
+.bnav .ctr[aria-pressed="true"] span{background:linear-gradient(135deg,var(--h1),var(--h2))}
+.credit{text-align:center;color:#a8998a;font-size:.72rem;margin:26px 0 0}
+.cf{display:flex;justify-content:flex-end;margin-top:8px}
+.sw{background:var(--tint);color:var(--mute);padding:6px 12px;font-size:.85rem;font-weight:600}
+.nextq.alt{background:var(--tint);color:var(--ink)}
+.sCheck{position:absolute;inset:0;z-index:3;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(160deg,#16a06b,#0b6b52);cursor:pointer}
+.stage.done .sCheck{display:flex}
+.sCheck svg{width:min(58vw,250px);height:auto;animation:pop .4s ease-out}
+.sCheck circle{fill:rgba(255,255,255,.15);stroke:#fff;stroke-width:5}
+.sCheck path{fill:none;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:80;stroke-dashoffset:80;animation:draw .5s .15s ease-out forwards}
+.sCheck b{font-family:Georgia,serif;font-size:2.6rem;color:#fff}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.sCheck svg{animation:none}.sCheck path{animation:none;stroke-dashoffset:0}}
+.cstat{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;background:var(--tint);border-radius:16px;padding:10px 14px;margin-bottom:10px}
+.cstat b{font-family:Georgia,serif;font-size:2.2rem;line-height:1}
+.cstat span{font-weight:700}
+.cstat small{color:var(--mute);margin-left:auto}
+</style>
+</head>
+<body>
+<main>
+<div class="topbar"><h1>Daily Tasks</h1><div class="lg" role="group" aria-label="Language"><button id="lEn" aria-pressed="true">EN</button><button id="lZh" aria-pressed="false">中文</button></div></div>
+<div id="vToday">
+<header class="hero">
+<div><p class="sub" id="date"></p>
+<div class="chips"><span class="chip">🔥 <b id="sStreak">0</b> day streak</span><span class="chip">Week <b id="sWeek">0</b></span><span class="chip">Month <b id="sMonth">0</b></span></div></div>
+<div class="hr"><svg viewBox="0 0 86 86" aria-hidden="true"><circle class="rb" cx="43" cy="43" r="34" fill="none"/><circle class="hf" id="hRing" cx="43" cy="43" r="34" transform="rotate(-90 43 43)"/></svg><span id="sDone">0/3</span></div>
+</header>
+<div class="lvbox"><div class="lvh">Difficulty</div>
+<div class="seg" id="lv" role="group" aria-label="Difficulty"><button data-l="easy">Easy</button><button data-l="medium" aria-pressed="true">Medium</button><button data-l="hard">Hard</button></div>
+<p class="hint" id="lvTip"></p></div>
+<h2>Today’s moves</h2>
+<ul id="list"></ul>
+<h2 id="bh">Bonus moves</h2>
+<p class="hint" id="hint"></p>
+<ul id="bonus"></ul>
+<button class="more" id="more" hidden>Add another move</button>
+<button class="reset" id="clear">Reset today</button>
+</div>
+<div id="vQuiz" hidden>
+<header class="hero">
+<div><p class="sub">Daily Quiz</p>
+<div class="chips"><span class="chip">Correct today <b id="qToday">0</b></span><span class="chip">Correct total <b id="qTotal">0</b></span></div></div>
+<div class="hr"><svg viewBox="0 0 86 86" aria-hidden="true"><circle class="rb" cx="43" cy="43" r="34" fill="none"/><circle class="hf" id="qRing" cx="43" cy="43" r="34" transform="rotate(-90 43 43)"/></svg><span id="qNum">0/10</span></div>
+</header>
+<div id="qbody"></div>
+</div>
+<div id="vProg" hidden>
+<section class="card" style="margin-top:0">
+<h2>Your progress</h2>
+<div class="tabs"><button id="tabW" aria-pressed="true">This week</button><button id="tabM" aria-pressed="false">This month</button></div>
+<p class="sum" id="sum"></p>
+<div class="chart" id="chart"></div>
+</section>
+<section class="card">
+<h2>Badges</h2>
+<div class="cstat"><b id="aCor">0</b><span>Correct answers</span><small id="aCorT"></small></div>
+<p class="sum" id="bsum"></p>
+<div class="bgrid" id="bgrid"></div>
+<button class="share" id="mkBPoster">Badge poster</button><button class="share" id="mkPoster">Stretching poster</button><button class="share" id="mkQPoster">Quiz poster</button>
+</section>
+</div>
+<p class="credit">~Starbot666~</p>
+</main>
+<div class="stage" id="stage" hidden role="dialog" aria-modal="true" aria-label="Move timer">
+<div class="sTop"><button id="sClose" aria-label="Close timer">✕ Close</button><button id="sMute" aria-label="Toggle sound">🔊</button></div>
+<div><h2 class="sName" id="sName"></h2><p class="sHow" id="sHow"></p><div class="sReps" id="sReps"></div></div>
+<div class="sFig" id="sFig"></div>
+<div class="sRingW"><svg viewBox="0 0 260 260" aria-hidden="true"><circle class="sb" cx="130" cy="130" r="118"/><circle class="sf" id="sRing" cx="130" cy="130" r="118" transform="rotate(-90 130 130)"/></svg><span id="sTime" role="timer">00:30</span></div>
+<p class="sNote" id="sNote"></p>
+<button class="sGo" id="sGo">Pause</button>
+<div class="sCheck" id="sCheck" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/><path d="M28 52 L44 68 L74 34"/></svg><b>Done!</b></div>
+</div>
+<nav class="bnav" aria-label="Views"><button id="tabToday" aria-pressed="true"><span>🧘</span>Stretching</button><button id="tabProg" class="ctr" aria-pressed="false"><span>🏆</span>Achievements</button><button id="tabQuiz" aria-pressed="false"><span>💡</span>Quiz</button></nav>
+<div class="ov" id="ov" hidden role="dialog" aria-modal="true" aria-labelledby="cT">
+<div class="conf" id="conf"></div>
+<div class="pop"><div class="badge" id="cBadge">🏅</div><h2 id="cT">3 for 3!</h2><p id="cP"></p><div class="nb" id="cNew"></div>
+<button id="cPoster">Make my result poster</button><button class="s" id="cKeep">Keep going with bonus moves</button><button class="g" id="cClose">Done for today</button></div>
+</div>
+<div class="ov" id="pov" hidden role="dialog" aria-modal="true" aria-label="Result poster">
+<div class="pop"><canvas id="pc" width="1080" height="1350"></canvas><button id="pShare">Share to WhatsApp</button><button class="s" id="pSave">Save poster</button><button class="g" id="pClose">Close</button></div>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
 <script>
-const G=["胜战计·有优势时","敌战计·对敌之时","攻战计·进攻之时","混战计·乱局之时","并战计·联合之时","败战计·劣势之时"];
-// 名|图|释义|故事|现代
-const D=`瞒天过海|🚢🌊😴|在对方习以为常、放松警惕时行动|唐太宗东征，大军渡海，谋士设宴让他以为在海边赏景，不知不觉就渡过了大海。|把大改动拆成日常小步骤，让人不觉突兀。
-围魏救赵|🏰⚔️🏃|不正面硬拼，攻击对方要害，逼其回防|魏国攻赵，齐军不救赵，反而直取魏都，魏军只得回救，赵国之围自解。|对手攻你强项，你就去攻他的薄弱处。
-借刀杀人|🗡️🤝😈|自己不出手，借别人的力量达成目标|春秋时，对手想除掉敌人，便挑动第三方出手，自己置身事外。|善用合作方、平台的力量，少亲自冲锋。
-以逸待劳|😌⏳😫|养足精神，等对方疲惫再出击|孙膑等庞涓大军奔袭疲惫，再设伏一举击败。|考试前睡好觉，比通宵死磕更有效。
-趁火打劫|🔥💰🏃|趁对方陷入困境时果断夺取利益|越王勾践抓住吴国天灾空虚之机，出兵灭吴。|竞争对手出危机时，快速抢占市场机会。
-声东击西|📢🥁🎯|制造假象吸引注意，实际攻击另一处|大军佯攻东面，吸引守军后，主力突袭西面。|球场上假动作：眼看左边，传球却在右边。
-无中生有|🎭✨💨|把假象变成真，真假难辨，让人迷惑|张巡守城缺箭，用草人夜里“借”到敌军数十万支箭。|营造声势，让小事业看起来很有规模。
-暗度陈仓|🛣️🌙🌾|表面做一件事，暗地走另一条路|刘邦明修栈道迷惑对手，暗中绕道陈仓突袭关中。|正面吸引注意，侧面悄悄推进。
-隔岸观火|🔥👀🍿|对手内乱时静观其变，坐收渔利|袁尚袁熙投奔辽东，曹操不追，等他们自相残杀。|同事吵架时先别掺和，等事态明朗。
-笑里藏刀|😊🔪😰|表面友善亲切，暗中准备行动|口蜜腹剑的奸臣，当面笑脸相迎，背后下手。|提醒我们：过分热情的人要多留心。
-李代桃僵|🍑🌳🔄|在不得不损失时，以小损失换大胜利|田忌赛马：用下等马对上等马，换来整体胜利。|放弃小利保大局，局部牺牲换全局成功。
-顺手牵羊|🐑🤏😏|抓住对手的每个小疏漏，顺势得利|战场上大军行进，遇小破绽顺势取之，积少成多。|留意细节与小机会，随手积累优势。
-打草惊蛇|🌿🐍😱|不明时先试探，让对方暴露行踪|不知敌情时，先敲打一下，看对方有何反应。|摸不清情况时，先小范围试点。
-借尸还魂|💀🌀🧙|利用别人弃置的资源，重新焕发生机|项梁拥立楚怀王之孙，借旧王的名号号召天下。|旧IP、旧资源重新包装，焕发新生。
-调虎离山|🐯⛰️🏠|诱使对方离开有利位置，再趁机行动|孙策诱敌出城，趁其不在时夺取城池。|把对手引离主场，再做主攻。
-欲擒故纵|🕊️🔓🕸️|先放松对方，让其松懈，再一举拿下|诸葛亮七擒七纵孟获，让其心服口服。|有时逼得太紧适得其反，放松反而更稳。
-抛砖引玉|🧱➡️💎|用小利、小成果，引来更大的回报|先抛出一个粗浅想法，引出别人更好的见解。|开会先抛初稿，引大家提出更好的方案。
-擒贼擒王|🏇🎯👑|抓住最关键的人物或要害，一举定局|唐朝张巡射杀敌将，敌军立刻大乱。|解决问题先抓主要矛盾，别在细枝末节上纠缠。
-釜底抽薪|🍲🔥🪵|从根源上解决问题，而非表面对抗|烧水沸腾，与其扬汤止沸，不如抽走锅下的柴。|治标不如治本，找出问题的根源。
-浑水摸鱼|🐟🌫️🧤|趁局势混乱，从中谋取利益|乱世中，聪明人趁混乱壮大自己。|市场大变动时，抓住机会入场。
-金蝉脱壳|🦗🐚💨|留下假象稳住对手，自己悄悄脱身|诸葛亮死后，魏延留下假像让对方不敢追击，大军安全撤退。|撤退时留好后手，稳住局面再离开。
-关门捉贼|🚪🕵️🕸️|对弱小的敌人，要封锁退路再围歼|对小股敌人，先关门封路，再一举歼灭，以免走脱。|解决问题要彻底，别留退路让问题重现。
-远交近攻|🌍🤝⚔️|结交远方，进攻近处，逐步扩张|秦国与远方齐国结盟，先攻邻近的韩魏，最终统一天下。|与远处的合作，先解决眼前最近的对手。
-假道伐虢|🛤️🎁🏯|借路为名，趁机吞并，对象最终也会遭殃|晋国向虞国借路攻虢，灭虢之后回头灭了虞国。|借来的方便，要小心背后的目的。
-偷梁换柱|🏛️🔧🎭|暗中替换关键部分，使整体变质|赵高篡改遗诏，暗中换掉继承人，改变了历史。|关键位置悄悄换人，局面就悄然改变。
-指桑骂槐|🌳📣😤|表面责备此人，实际在警告另一个人|当众责骂下属A，意在提醒旁边的B。|用案例敲打，比点名批评更有分寸。
-假痴不癫|🤪🧠😎|装傻示弱，暗中积蓄力量，伺机而动|司马懿装病骗过曹爽，后来发动政变夺权。|低调示弱，比锋芒毕露更能保存实力。
-上屋抽梯|🏠🪜😮|先给对方好处引其深入，再断其退路|引敌进入陷阱后，撤掉退路，使其无处可逃。|设局先给方便，再断绝退路，须慎用。
-树上开花|🌳🌸🎊|借势布局，让弱小的实力显得强大|在枯树上缀满彩花，让人以为树木繁茂。|借名人、借平台的光，提升自身影响力。
-反客为主|🙋🪑👑|从被动变主动，一步步掌握主导权|刘邦入关中，先客后主，逐步掌控了局势。|做客户时，也要想办法掌握话语权。
-美人计|💃🍷😵|以美色或诱惑，使对手意志消磨|越王勾践献西施给吴王夫差，使其沉迷享乐，国力衰退。|警示：诱惑最能瓦解斗志，自己也要防。
-空城计|🏯🎶🤫|实际空虚，却装作镇定，让对方不敢进攻|诸葛亮城中无兵，大开城门，抚琴自若，司马懿疑有伏兵而退。|示弱未必是真弱，镇定是心理战。
-反间计|📜🕵️🔀|利用对方间谍，让对方内部互相猜疑|周瑜利用蒋干，让曹操错杀水军都督蔡瑁、张允。|制造猜疑，让对手内部失去信任。
-苦肉计|🤕😢🎭|主动受苦，让对方相信，从而成功潜入|黄盖被打，假意投降，诈降曹操，火烧赤壁。|有时先吃亏、示诚，才能赢得信任。
-连环计|⛓️⛓️🔗|多个计策环环相扣，使对方无法破解|庞统献连环计，让曹军战船连在一起，再用火攻。|复杂目标靠多个计划相互配合。
-走为上|🏃💨🌄|形势不利时，主动撤退，保存实力|败局已定，及时撤退，留得青山在，不怕没柴烧。|及时止损，不是认输，是为了东山再起。`.split("\n").map((l,i)=>{const[n,e,m,s,x]=l.split("|");return{i,n,e,m,s,x,g:Math.floor(i/6)}});
-const E=`小明每天说“去图书馆”，久了全家习以为常，周末他带着球出门也没人多问。|为什么家人没有起疑？
-两家店抢客，A店不降价，反而推出对手最弱的外卖服务，对手只好回头补救。|A店攻的是对手的哪里？
-经理不想得罪客户，便让客户去和另一个部门沟通，由对方出面拒绝。|这样做有什么风险？
-小队长让队员先休息，对手抢攻半场后体力下降，下半场才反攻得分。|为什么要等对手累了再攻？
-邻店突然停业整顿，老板立刻抢先签下他的老客户。|这种做法有什么道德争议？
-他在朋友圈大谈旅行计划，其实在悄悄准备给老板的新提案。|“东”和“西”分别是什么？
-创业者没产品，先做精美海报预告，吸引很多人关注后才补做产品。|这样的“无”怎样变成“有”？
-队长大张旗鼓练开场战术，真正的杀招在中场悄悄布置。|哪里是“明”，哪里是“暗”？
-两位同事争功，你不插嘴，等主管看清谁更靠谱后才发言。|“观火”有什么好处和风险？
-一位新同事对你特别热情，却总打听你的项目细节。|你会怎样保持警惕？
-公司放弃一个亏损的小产品，把资源全投入主打产品，业绩翻倍。|什么是“李”，什么是“桃”？
-他看到对手忘了提价格优惠，马上补上，顺势赢得客户。|这样赢得的机会靠什么？
-新项目没把握，先找十位用户试用，看他们的反应再决定。|“草”和“蛇”分别指什么？
-一家老字号换新包装、上网销售，老味道又火了。|被“还魂”的是什么？
-谈判前，他故意约对手去自己熟悉的茶楼，对方不适应，节奏被他掌控。|“山”是指什么？
-老板没急着追讨货款，反而放宽期限，客户感激，后来主动多订货。|“纵”为什么反而有效？
-老师先让同学们说出粗糙的想法，很快引出一个绝妙点子。|“砖”和“玉”各是什么？
-项目卡住，他不纠结小问题，直接找到拍板的人沟通，事情当天解决。|谁是你的“贼王”？
-同学总抄作业，老师不骂人，而是改成当堂出题，抄袭自然消失。|抽走的“薪”是什么？
-市场大动荡时，他趁同行混乱，悄悄招揽人才和客户。|“混水”带来什么机会？
-他想辞职，先交接好工作、稳住团队，才平稳转身。|“蝉壳”留给了谁？
-公司发现内鬼，先停掉所有权限、封锁系统，才开始调查。|为什么要先“关门”？
-一家新店先和远处的供应商合作，同时集中力量争取附近小区的客户。|“远”和“近”分别是谁？
-一家大公司借“合作”名义进入小厂，数年后将其收购。|被借的“道”是什么？
-有人在合同里悄悄换了几个关键词，结果整份合同的意思完全变了。|你读合同时会注意什么？
-老师当众提醒“迟到的同学要自觉”，其实是在暗示某位常迟到的同学。|这样做有什么好处？
-他在会议上不抢话，大家以为他没想法，他却在背后默默做好完整方案。|“装傻”背后是什么？
-对手被诱入一个看似赚钱的项目，随后资源被切断，进退两难。|这样做有什么风险？
-小店借明星同款包装宣传，短期销量暴增，但品质跟不上。|“花”是真的还是假的？
-实习生先帮忙做杂事，慢慢掌握流程，最后成了团队主力。|他是怎样变“主”的？
-对手公司派出魅力十足的销售，拉拢你的核心客户。|怎样抵抗这种诱惑？
-系统故障、人员不足时，经理淡定地说“一切在控制中”，客户反而放心。|为什么镇定很重要？
-对手收到一份伪造的“内部文件”，开始怀疑自己的合伙人。|为什么猜疑最有杀伤力？
-员工为了向客户证明诚意，主动承担责任、延长工时，赢得了信任。|这样做的代价是什么？
-团队先用小活动引来用户，再用会员积分留住，最后推出新产品转化。|这几步如何“环环相扣”？
-创业项目亏损严重，他果断收手，转做新业务，两年后重新盈利。|撤退为什么不等于失败？`.split("\n").map(l=>l.split("|"));
-const Q=`天天重复，大家习以为常|家人太忙没空管|他说得特别大声
-对手最薄弱的环节|对手最强的产品|对手的价格
-可能被察觉，伤害信任|一定会成功|没有任何风险
-对手体力下降，更易取胜|为了拖延时间|因为规则规定
-趁人之危，有失厚道|工作太勤奋|价格太低
-东是假目标，西是真目标|东是真目标，西是假目标|两处都是真的
-先造声势，再补上实际|一直不做产品|全靠运气
-明是开场战术，暗是中场杀招|明是中场，暗是开场|两者都是开场
-保存实力，但可能错失时机|一定能赢，没有风险|只会得罪人
-不透露关键信息，多观察|把项目全告诉他|立刻翻脸
-李是亏损小产品，桃是主打产品|李是主打产品，桃是小产品|两者都是主打
-靠敏锐观察细节|全靠运气|靠大声嚷嚷
-草是小范围试探，蛇是用户反应|草是用户，蛇是产品|草是价格，蛇是对手
-老字号的旧品牌与口碑|全新的产品|已倒闭的工厂
-对手熟悉、有优势的主场|一座真正的山|谈判的价格
-对方放松感激，更愿合作|对方被吓到|对方忘了欠款
-砖是粗糙想法，玉是更好点子|砖是好点子，玉是粗糙想法|砖和玉都是礼物
-能做决定的关键人物|最努力的同事|最年轻的同事
-让抄作业不再可行的条件|老师的怒气|同学的作业本
-同行混乱，可抢人才与客户|一定会亏损|没有任何机会
-留给团队稳定的交接与局面|留给竞争对手|什么都没留
-防止对方逃走或销毁证据|为了省电|为了好看
-远是远方供应商，近是附近客户|远是附近客户，近是远方供应商|都是供应商
-合作的名义与通行的机会|一条真实的公路|公司的名字
-关键词是否被改动|只看封面|只看页数
-不点名也能警示相关的人|可以羞辱别人|完全没效果
-默默积蓄实力|真的没想法|想偷懒
-对方可能识破并反击|一定会成功|没有风险
-假的，借来的外观|真的|一半一半
-逐步掌握流程与话语权|一开始就当老板|全靠运气
-保持清醒，坚守原则|全盘接受|躲着不见面
-稳住客户信心，避免恐慌|能让问题永远消失|没有任何作用
-内部互不信任，自乱阵脚|让对手更团结|让对手更富有
-个人要承受损失与辛苦|没有代价|全由客户承担
-前一步为后一步铺路|各步骤互不相关|同时做所有事
-及时止损，保存实力再起|因为不会再有机会|因为面子重要`.split("\n").map(l=>l.split("|"));
-function mc(i){const o=qo(i).map((t,j)=>({t,j})).sort(()=>Math.random()-.5);return `<div class="opts" style="grid-template-columns:1fr">${o.map(x=>`<button data-c="${x.j==0?1:0}" onclick="pk(this,${x.j==0})">${x.t}</button>`).join("")}</div><p id="fb" style="font-weight:bold"></p>`}
-function pk(b,ok){[...b.parentNode.children].forEach(x=>{x.onclick=null;if(x.dataset.c=="1")x.classList.add("ok")});if(!ok)b.classList.add("no");$("fb").textContent=ok?tr("yes"):tr("nope")}
-const S=`唐太宗要坐船渡海去打仗，可他很怕海。大将请他到一间“大房子”里喝酒，其实那是一艘船，窗外挂满了布帘。喝着喝着，船已经在海上走了好几天。
-魏国攻打赵国，赵国向齐国求救。齐国军师孙膑不去赵国，而是直接去打魏国的首都。魏军急着回家救援，赵国就安全了。
-晏子想除掉三个很凶的勇士，就让国君送两个桃子，说“功劳最大的才能吃”。三个人为了争桃子互相不服，结果全都自杀了，晏子一根手指都没动。
-齐国进攻鲁国，一上来就猛擂战鼓。鲁国的曹刿却不让士兵动，等齐军擂了三次鼓、力气用完了，才下令冲锋，一下子就打赢了。
-越王勾践被吴国打败后，忍了很多年。等到吴国闹旱灾、粮食不够，吴王又带兵在外面，勾践立刻出兵，一举灭掉了吴国。
-韩信要攻打魏国。他在一个渡口大张旗鼓地摆船，让魏军以为要从这里过河，自己的主力却偷偷从另一处用木桶渡河，从后面突袭，魏军一下子就垮了。
-唐朝的张巡守城，箭用光了。他晚上让人扎了很多草人，穿上黑衣，用绳子从城墙放下去。敌军以为有人偷袭，拼命放箭，张巡一夜就收获了几十万支箭。
-韩信故意派人大张旗鼓地修栈道，让敌人以为大军要走这条路，主力却悄悄绕小路，从陈仓出来，突袭敌人后方。
-曹操打败袁绍后，袁家两兄弟逃到辽东。大家劝曹操追击，他却说“不用”。果然，辽东的首领怕惹麻烦，自己杀了两兄弟，把人头送了过来。
-唐朝的大臣李林甫，见人总是笑嘻嘻、说好听的话，背地里却设圈套陷害别人。所以大家说他“嘴上抹蜜，肚里藏剑”。
-田忌和齐王赛马，各有上、中、下三匹马。孙膑让田忌用最差的马对齐王最好的，用最好的对中等的，用中等的对最差的。输一场，却赢了两场。
-两军对阵，对方的运粮队走得慢，队伍出现了一个小空隙。一支小队偷偷过去，顺手抢走几车粮食。虽然不是大仗，但对方越来越饿，最后撑不住了。
-有个官员贪污，百姓写状子告了他的手下。他看到状子，吓得写下：“你们只是打了草，我这条蛇已经被吓到了。”意思是，别人敲打别人，自己心虚先露了馅。
-项梁起兵反抗秦朝，却没人响应。他找到了从前楚王的孙子，当时正在放羊，就立他为新的“楚王”。大家看到旧王的后代，纷纷来投靠。
-孙策想攻下一座城，但敌人守得很牢。他故意送礼示弱，骗敌人带兵去打别处，趁城里空了，夜里一下子占领了城池。
-诸葛亮带兵南征，抓住了敌人首领孟获，却把他放了。这样抓了七次，放了七次。最后孟获终于服气，说：“你们真厉害，我不会再造反了。”
-唐朝诗人常建听说有名的诗人赵嘏要来游寺，就先在墙上写了两句平平常常的诗。赵嘏看到忍不住，提笔补上两句，写得非常精彩。
-安史之乱时，张巡守城。他发现敌军里有一个很重要的头领，就派神箭手射出一箭，把他射死了。敌军一下子乱了，只好撤兵。
-官渡之战，曹操偷偷派兵烧了袁绍的粮仓。袁绍的十万大军没饭吃，一下子军心大乱，输得一塌糊涂。他不是和士兵打，而是断了士兵的“吃饭”。
-刘备在荆州发展，曹操和孙权正在互相打仗，局面很乱。刘备趁他们顾不上，慢慢占了荆州的几个郡，有了自己的地盘。
-诸葛亮病重去世前，吩咐军队悄悄撤退，还做了一尊他的木像坐在车上。司马懿远远看到，以为诸葛亮还活着，吓得不敢追，蜀军就这样安全撤回。
-长平之战，秦军把赵军围在山谷里，切断了粮道和退路。赵军被围了四十多天，饿得没办法，最后全军覆没。
-秦王听了谋士范雎的建议：离得远的齐国，先交朋友；离得近的韩国、魏国，先打。先吃下邻居，再慢慢扩大，最后秦国统一了天下。
-晋国想攻打虢国，路上要经过虞国。晋国送给虞国国君宝马和美玉，借了路。灭了虢国回来时，顺手也把虞国灭了。
-秦始皇去世后，赵高和李斯偷偷改了遗书，把皇位传给胡亥，而不是原来的太子扶苏。一份假遗书，改变了整个国家的命运。
-春秋时，司马穰苴带兵，国君派来的宠臣庄贾迟到了。穰苴按军法当众处罚了他。全军看到连国君的宠臣都不例外，从此没人敢违令。
-三国时，司马懿被曹爽排挤，就装成重病、老糊涂的样子，说话颠三倒四。曹爽放松了警惕，司马懿趁他出城时发动政变，夺回大权。
-刘备的儿子刘琦被后母排挤，想请诸葛亮出主意，诸葛亮却不肯说。刘琦就请他上楼喝酒，再偷偷把楼梯撤掉，说：“现在没外人，你可以说了。”
-长坂坡，张飞身边只有几十个骑兵。他让骑兵在马尾巴上绑树枝，来回乱跑，扬起满天灰尘，自己站在桥上大吼。曹军以为有大批伏兵，不敢追过来。
-刘备被刘璋请去蜀地帮忙打仗，是“客人”。他一边帮忙，一边悄悄收买人心。最后反客为主，夺下了整个蜀地。
-越王勾践把美女西施送给吴王夫差。夫差被迷住了，整天只顾享乐，不管国家大事，国力越来越弱，最后被越国灭掉。
-诸葛亮守西城，城里只剩一些老弱的士兵。司马懿的大军来了，诸葛亮大开城门，自己坐在城楼上悠闲弹琴。司马懿心想“有埋伏”，赶紧退兵了。
-赤壁之战前，周瑜故意让曹操派来的蒋干“偷看”了一封假信，信里写着曹操的两位水军将领要投降。曹操信以为真，把这两位将领杀了。
-赤壁之战，周瑜当众打了老将黄盖五十棍。黄盖假装怀恨，写信向曹操“投降”。曹操相信了，结果黄盖的火船冲进曹军，一场大火烧光了战船。
-赤壁之战前，庞统假装投奔曹操，建议把战船用铁链连在一起，说这样北方士兵就不会晕船。曹操同意了，结果周瑜一放火，所有船连成一片，谁也逃不掉。
-刘备打了很多败仗，每次打不过就果断逃走，保存了自己的力量。后来他一次次东山再起，终于建立了蜀国。`.split("\n");
-let L="zh";try{L=localStorage.getItem("s36l")||"zh"}catch(e){}
-const NE=`Cross the Sea by Deception
-Besiege Wei to Rescue Zhao
-Kill with a Borrowed Knife
-Rest While the Enemy Tires
-Loot a Burning House
-Feint East, Strike West
-Create Something from Nothing
-Secretly Cross at Chencang
-Watch the Fire Across the River
-Hide a Dagger Behind a Smile
-Sacrifice the Plum for the Peach
-Lead a Sheep Away in Passing
-Beat the Grass, Startle the Snake
-Borrow a Corpse to Return the Soul
-Lure the Tiger Off the Mountain
-Let Them Go to Catch Them
-Toss a Brick to Attract Jade
-Capture the Chief First
-Remove the Firewood from the Pot
-Muddy the Water to Catch Fish
-Slip Away like the Golden Cicada
-Shut the Door to Catch the Thief
-Befriend the Far, Attack the Near
-Borrow a Road to Conquer Guo
-Swap the Beams for Rotten Timber
-Point at the Mulberry, Curse the Locust
-Feign Folly, Stay Sharp
-Remove the Ladder After the Climb
-Deck the Tree with False Blossoms
-Turn Guest into Host
-The Beauty Trap
-The Empty Fort
-Sow Discord
-The Self-Injury Trick
-Chain Stratagems
-Retreat Is the Best Move`.split("\n");
-const NM=`Menipu Langit Menyeberangi Laut
-Kepung Wei Selamatkan Zhao
-Pinjam Pisau untuk Membunuh
-Berehat Sementara Musuh Letih
-Rompak Rumah yang Terbakar
-Tipu Timur, Serang Barat
-Cipta Sesuatu daripada Kosong
-Menyeberang Diam-diam di Chencang
-Tonton Api dari Seberang Sungai
-Senyum Sembunyi Pisau
-Korbankan Plum Selamatkan Pic
-Ragut Kambing Sambil Lalu
-Pukul Rumput Kejutkan Ular
-Pinjam Jasad Hidupkan Roh
-Pancing Harimau Keluar Gunung
-Lepaskan untuk Menangkap
-Lempar Bata Tarik Permata
-Tangkap Ketua Dahulu
-Cabut Kayu dari Bawah Periuk
-Keruhkan Air Tangkap Ikan
-Tanggal Kulit seperti Cengkerik Emas
-Tutup Pintu Tangkap Pencuri
-Berkawan Jauh, Serang Dekat
-Pinjam Jalan Tawan Guo
-Tukar Alang dengan Kayu Reput
-Tunjuk Murbei, Maki Belalang
-Pura-pura Bodoh, Tetap Tajam
-Cabut Tangga Selepas Memanjat
-Hias Pokok dengan Bunga Palsu
-Tetamu Jadi Tuan Rumah
-Perangkap Wanita Cantik
-Kubu Kosong
-Tabur Fitnah
-Tipu Daya Seksa Diri
-Strategi Berantai
-Berundur Pilihan Terbaik`.split("\n");
-const ME=`Act openly under cover of routine, so the enemy never suspects.
-Don't clash head-on; strike their weak spot so they must pull back.
-Don't act yourself; use someone else's hand to get it done.
-Rest and save energy, then strike when the opponent is tired.
-Seize gains when the opponent is in trouble.
-Create a distraction in one place, then attack another.
-Make something unreal look real until people are fooled.
-Show one path openly while secretly taking another.
-Stay back while rivals fight each other, then profit.
-Look friendly on the outside while preparing to strike.
-Give up a small loss to win something bigger.
-Grab the small chances the opponent leaves open.
-When unsure, probe first and see how they react.
-Revive something others discarded and use it anew.
-Lure the opponent out of their strong position first.
-Loosen your grip so they relax, then close in.
-Offer something small to draw out something better.
-Target the key leader or the heart of the problem.
-Solve the root cause instead of fighting the symptoms.
-Profit quietly while everyone else is in chaos.
-Leave a false front behind and slip away safely.
-Seal off the exits before dealing with the small enemy.
-Befriend distant rivals while attacking the nearest.
-Ask for passage as a pretext, then take over.
-Secretly swap the key part to change everything.
-Scold one person to warn someone else.
-Act foolish and weak while quietly building strength.
-Lure them in, then cut off their way back.
-Borrow outward show to look stronger than you are.
-Turn from guest to host and take the lead.
-Use temptation to wear down the opponent's will.
-Look calm with nothing behind you so they hesitate.
-Sow doubt so the enemy turns on itself.
-Hurt yourself to win the enemy's trust.
-Link several plans together so each supports the next.
-When losing, retreat to fight another day.`.split("\n");
-const MM=`Bertindak di depan mata dengan rutin biasa supaya musuh tidak curiga.
-Jangan berlawan terus; serang titik lemah supaya lawan terpaksa berundur.
-Jangan bertindak sendiri; guna tangan orang lain.
-Berehat dan simpan tenaga, serang bila lawan sudah letih.
-Rebut peluang ketika lawan dalam kesusahan.
-Alihkan perhatian di satu tempat, serang tempat lain.
-Jadikan perkara palsu kelihatan benar sehingga orang tertipu.
-Tunjuk satu jalan secara terbuka, tetapi ambil jalan lain secara rahsia.
-Berdiri jauh ketika musuh bergaduh, kemudian ambil untung.
-Nampak mesra di luar, tetapi bersedia menyerang.
-Korbankan kerugian kecil untuk menang lebih besar.
-Ambil peluang kecil yang ditinggalkan lawan.
-Bila tidak pasti, uji dahulu dan lihat reaksi mereka.
-Hidupkan semula sesuatu yang dibuang orang dan guna dengan cara baharu.
-Pancing lawan keluar dari kedudukan kukuh mereka.
-Longgarkan cengkaman supaya mereka lega, kemudian tutup rapat.
-Beri sesuatu yang kecil untuk menarik yang lebih baik.
-Sasar pemimpin utama atau punca masalah.
-Selesaikan punca masalah, bukan hanya gejalanya.
-Ambil untung secara senyap ketika semua orang kelam-kabut.
-Tinggalkan kesan palsu dan lolos dengan selamat.
-Tutup semua jalan keluar sebelum menangani musuh kecil.
-Berkawan dengan yang jauh, serang yang paling dekat.
-Minta laluan sebagai alasan, kemudian kuasai.
-Tukar bahagian penting secara rahsia untuk mengubah segalanya.
-Tegur seorang untuk memberi amaran kepada orang lain.
-Berlagak bodoh dan lemah sambil mengumpul kekuatan.
-Pancing mereka masuk, kemudian putuskan jalan pulang.
-Pinjam kemegahan luar supaya nampak lebih kuat.
-Ubah daripada tetamu menjadi tuan rumah dan ambil alih.
-Guna godaan untuk melemahkan semangat lawan.
-Nampak tenang walaupun kosong supaya lawan teragak-agak.
-Tabur keraguan supaya musuh berbalah sesama sendiri.
-Seksa diri sendiri untuk memenangi kepercayaan musuh.
-Sambungkan beberapa rancangan supaya saling menyokong.
-Bila kalah, berundur dan bertarung pada hari lain.`.split("\n");
-const GN={zh:G,en:["Winning Stratagems·From Strength","Confrontation Stratagems·Facing the Enemy","Attack Stratagems·Taking the Offensive","Chaos Stratagems·In Confusion","Alliance Stratagems·Joining Forces","Desperate Stratagems·From Weakness"],ms:["Strategi Kemenangan·Ketika Berkelebihan","Strategi Berdepan Musuh·Ketika Berhadapan","Strategi Menyerang·Ketika Menyerang","Strategi Kekacauan·Ketika Huru-hara","Strategi Gabungan·Ketika Bersatu","Strategi Terdesak·Ketika Lemah"]};
-const T={
-h1:["三十六计","The Thirty-Six Stratagems","Tiga Puluh Enam Strategi"],
-sub:["🐉 零基础也能懂的智慧小课堂 🐉","🐉 A fun beginner's course in ancient wisdom 🐉","🐉 Kelas kebijaksanaan purba yang mudah untuk pemula 🐉"],
-all:["全部","All","Semua"],
-qb:["🎮 毕业测验（12题）","🎮 Final Quiz (12 Qs)","🎮 Kuiz Akhir (12 Soalan)"],
-prog:[n=>`已学 ${n} / 36 计`+(n==36?" 🎉 恭喜出师！":""),n=>`Learned ${n} / 36`+(n==36?" 🎉 Graduate!":""),n=>`Dipelajari ${n} / 36`+(n==36?" 🎉 Tahniah!":"")],
-tg:[n=>`第${n}计`,n=>`No. ${n}`,n=>`No. ${n}`],
-one:["💡 一句话：","💡 In short: ","💡 Ringkasnya: "],
-sty:["📖 小故事：","📖 Story: ","📖 Cerita: "],
-mod:["🧑‍💼 现代用法：","🧑‍💼 Modern use: ","🧑‍💼 Kegunaan moden: "],
-dra:["🎬 生活小剧场：","🎬 Everyday scene: ","🎬 Adegan harian: "],
-thk:["想一想：","Think: ","Fikir: "],
-prev:["← 上一计","← Previous","← Sebelum"],next:["下一计 →","Next →","Seterusnya →"],close:["关闭","Close","Tutup"],
-note:["","The story, scene and question below are still in Chinese. Full translation is coming soon.","Cerita, adegan dan soalan di bawah masih dalam bahasa Cina. Terjemahan penuh akan datang."],
-score:[s=>`🏆 得分 ${s} / 12（答对 6 题（50%）以上即可拿证书）`,s=>`Score ${s} / 12 (get 6 or more, i.e. 50%, to earn the certificate)`,s=>`Skor ${s} / 12 (dapat 6 atau lebih, iaitu 50%, untuk memperoleh sijil)`],
-fail:["差一点点！再看看卡片，再试一次拿证书吧！","Almost there! Review the cards and try again to earn your certificate.","Hampir berjaya! Semak kad dan cuba lagi untuk dapatkan sijil."],
-again:["再来一次","Try again","Cuba lagi"],back:["返回","Back","Kembali"],
-qn:[n=>`第 ${n}/12 题`,n=>`Question ${n}/12`,n=>`Soalan ${n}/12`],
-qh:["猜猜是哪一计？","Which stratagem is it?","Strategi yang manakah?"],
-qq:["下面哪一计的意思是：","Which stratagem means:","Strategi manakah yang bermaksud:"],
-yes:["✅ 答对了！你真棒！","✅ Correct! Well done!","✅ Betul! Syabas!"],
-nope:["❌ 不对哦，绿色的是正确答案，再想想为什么。","❌ Not quite. Green is the right answer; think about why.","❌ Belum tepat. Hijau ialah jawapan betul; fikirkan sebabnya."],
-cg:["恭喜通关！","Congratulations!","Tahniah!"],
-cs:[s=>`你答对了 ${s} / 12 题。输入名字，领取你的证书：`,s=>`You got ${s} / 12 right. Enter your name to claim your certificate:`,s=>`Anda betul ${s} / 12. Masukkan nama untuk menuntut sijil anda:`],
-ph:["你的名字","Your name","Nama anda"],anon:["同学","Student","Pelajar"],
-org:["三十六计趣味课堂","THE 36 STRATAGEMS","36 STRATEGI"],
-ct:["结业证书","Certificate","Sijil Tamat"],
-zm:["兹证明","This certifies that","Ini mengesahkan bahawa"],
-st1:["已圆满完成《三十六计》入门课程并通过毕业测验","has successfully completed the Thirty-Six Stratagems beginner course and passed the final quiz","telah berjaya menamatkan kursus permulaan Tiga Puluh Enam Strategi dan lulus kuiz akhir"],
-st2:[s=>`测验成绩 ${s} / 12，特发此证，以资鼓励`,s=>`with a quiz score of ${s} / 12. Awarded in recognition of this achievement.`,s=>`dengan skor kuiz ${s} / 12. Dianugerahkan sebagai pengiktirafan.`],
-dt:["日期","Date","Tarikh"],s1:["三十六计","THE 36","36"],s2:["结业认证","AWARD","ANUGERAH"],no:["编号","No.","No."],
-dlb:["下载证书","Download certificate","Muat turun sijil"],
-shot:["如果无法下载，可以直接截图保存。","If the download doesn't work, just take a screenshot.","Jika muat turun tidak berfungsi, ambil tangkapan skrin sahaja."],
-loc:["zh-CN","en-GB","ms-MY"],fn:["三十六计结业证书","36-Stratagems-Certificate","Sijil-36-Strategi"]};
-const tr=k=>T[k][L=="zh"?0:L=="en"?1:2];
-const nm=i=>L=="zh"?D[i].n:(L=="en"?NE:NM)[i],mn=i=>L=="zh"?D[i].m:(L=="en"?ME:MM)[i];
-function setLang(l){L=l;try{localStorage.setItem("s36l",l)}catch(e){}$("m").classList.remove("show");applyLang()}
-function applyLang(){document.documentElement.lang=L=="zh"?"zh-CN":L;document.title=tr("h1");$("h1").textContent=tr("h1");$("sub").textContent=tr("sub");document.querySelectorAll("#lg button").forEach(b=>b.classList.toggle("on",b.dataset.l==L));nav();grid();prog()}
-const XE=`Emperor Taizong feared the sea. A general invited him to a feast in a "big house" hung with curtains. It was really a ship, and by the time he noticed, they were far out at sea.|Break a big change into small everyday steps so no one feels it.|Xiaoming kept saying "I'm going to the library". Soon his family took it for granted, and nobody asked when he went out with a ball.|Why didn't his family get suspicious?|It happened daily, so it became normal|The family was too busy to care|He said it very loudly
-Wei attacked Zhao, and Zhao asked Qi for help. Qi's strategist Sun Bin didn't go to Zhao; he attacked Wei's capital instead. The Wei army rushed home, and Zhao was saved.|When a rival attacks your strength, hit their weak spot.|Two shops compete. Shop A doesn't cut prices; it launches delivery, the rival's weakest service, and the rival has to scramble back.|What part of the rival did Shop A attack?|Their weakest link|Their strongest product|Their prices
-Yan Zi wanted to remove three fierce warriors. He had the duke send two peaches, saying only the greatest hero could eat one. The three fought over credit and all died, without Yan Zi lifting a finger.|Use partners and platforms; don't charge in yourself.|A manager doesn't want to upset a client, so he sends the client to another department to refuse on his behalf.|What is the risk of doing this?|It may be noticed and hurt trust|It will surely succeed|There is no risk
-Qi attacked Lu and beat its war drums right away. Cao Gui of Lu told his troops to wait. After the third drum, Qi's energy was spent, and Lu charged and won.|Sleep well before an exam rather than cramming all night.|A team captain lets players rest. The opponent rushes the first half and tires, and the team scores in the second half.|Why wait until the opponent is tired?|Their stamina drops, so they are easier to beat|To waste time|Because the rules say so
-King Goujian of Yue endured for years after losing to Wu. When Wu suffered drought and its king was away with the army, Goujian attacked at once and destroyed Wu.|When a rival hits a crisis, quickly seize the market opening.|A neighboring shop suddenly closes for inspection. The owner rushes to sign up its old customers.|What is the ethical debate here?|Taking advantage of someone's trouble is unkind|Working too hard|Prices being too low
-Han Xin attacked Wei. He made a big show of boats at one ferry, so Wei thought he would cross there. His main force secretly crossed elsewhere on wooden barrels and struck from behind.|Like a soccer fake: look left, pass right.|He talks loudly on social media about travel plans, while quietly preparing a new proposal for his boss.|What are the "east" and the "west" here?|East is the decoy, west is the real goal|East is the real goal, west is the decoy|Both are real
-Zhang Xun's city ran out of arrows. At night he lowered straw men in black clothes from the wall. The enemy fired at them wildly, and he collected hundreds of thousands of arrows.|Build up momentum so a small venture looks substantial.|A founder with no product first made a beautiful teaser poster. Many people noticed, and only then did he build the product.|How did "nothing" turn into "something"?|Create buzz first, then deliver|Never build the product|Pure luck
-Han Xin sent men to loudly repair a plank road so the enemy thought the army would come that way. His main force secretly took a side path to Chencang and struck from behind.|Draw attention in front while quietly advancing from the side.|The captain loudly drills the opening tactic, while the real killer move is secretly set up in midfield.|Which is the "open" one and which the "secret" one?|Open: opening tactic; secret: midfield move|Open: midfield; secret: opening|Both are in the opening
-After Cao Cao beat Yuan Shao, the two Yuan brothers fled to Liaodong. Everyone urged pursuit, but Cao Cao said no. Sure enough, Liaodong's ruler killed the brothers himself and sent their heads.|When colleagues argue, don't jump in; wait until things are clear.|Two colleagues fight over credit. You stay quiet until the boss sees who is more reliable, then you speak.|What are the benefits and risks of watching?|It saves strength, but may miss the moment|You always win, no risk|It only upsets people
-The Tang minister Li Linfu always smiled and said sweet things, yet set traps behind people's backs. People said he had "honey on his lips and a sword in his belly".|A reminder to be careful of overly warm people.|A new colleague is especially friendly to you but keeps asking about your project details.|How would you stay alert?|Share no key details and observe|Tell him everything|Fall out with him at once
-Tian Ji raced horses against the king, three each. Sun Bin had him pit his worst horse against the king's best, his best against the middle, and his middle against the worst. He lost once but won twice.|Give up something small to protect the whole.|A company dropped a loss-making minor product and put all resources into its main product; revenue doubled.|What is the "plum" and what is the "peach"?|Plum is the minor product, peach is the main one|Plum is the main product, peach is the minor one|Both are main products
-Two armies face each other. The enemy's supply wagons are slow and a small gap opens. A small team slips in and grabs a few carts. It's no big battle, but the enemy grows hungrier until it cannot hold on.|Watch small details and collect advantages bit by bit.|He saw a rival forget to mention a discount, quickly mentioned it himself, and won the customer.|What did he rely on to win this chance?|Sharp attention to detail|Luck|Shouting loudly
-An official was accused of corruption. When he saw the complaint about his subordinates, he wrote: "You only beat the grass, but this snake is already startled." His guilt gave him away.|When unsure, run a small trial first.|With a new project uncertain, he asked ten users to try it first and watched their reactions before deciding.|What are the "grass" and the "snake"?|Grass is a small probe, snake is user reaction|Grass is users, snake is the product|Grass is price, snake is the rival
-Xiang Liang rebelled against Qin but nobody joined. He found a grandson of the old Chu king herding sheep and made him "King Huai of Chu". Seeing the old king's descendant, people flocked to him.|Repackage old brands or resources to bring them back to life.|An old-brand shop changed its packaging and started selling online, and the classic flavor became popular again.|What is being "revived"?|The old brand and its reputation|A brand new product|A closed factory
-Sun Ce wanted a city that was well defended. He pretended to be weak and sent gifts, tricking the enemy into attacking elsewhere. While the city was empty, he took it in one night.|Draw your rival away from home turf, then make your main move.|Before a negotiation, he invited the other side to a teahouse he knew well. They felt uneasy, and he controlled the pace.|What is the "mountain"?|The rival's familiar home advantage|A real mountain|The negotiated price
-Zhuge Liang captured the rebel chief Meng Huo and let him go, seven times. After the seventh time, Meng Huo was truly convinced and swore not to rebel again.|Pushing too hard can backfire; easing off is sometimes steadier.|A boss didn't rush to collect payment but extended the deadline. The customer was grateful and later ordered more.|Why does "letting go" work?|They feel grateful and are more willing to cooperate|They were scared|They forgot the debt
-The poet Chang Jian heard that the famed poet Zhao Gu would visit a temple, so he wrote two ordinary lines on the wall. Zhao Gu couldn't resist adding two brilliant lines.|In a meeting, share a rough draft first to draw out better ideas.|A teacher first let students share rough ideas, and soon one brilliant idea emerged.|What are the "brick" and the "jade"?|Brick is a rough idea, jade is a better one|Brick is a good idea, jade is a rough one|Both are gifts
-During the An Lushan rebellion, Zhang Xun noticed a key enemy leader and sent a sharpshooter to shoot him dead. The enemy army fell into chaos and withdrew.|Tackle the main problem first; don't get stuck on details.|A project was stuck. He ignored small issues and went straight to the decision-maker, solving it that day.|Who is your "chief"?|The key person who can decide|The hardest-working colleague|The youngest colleague
-In the Battle of Guandu, Cao Cao secretly burned Yuan Shao's grain stores. Yuan's 100,000 troops had no food, fell into chaos, and lost badly. He didn't fight the soldiers; he cut off their food.|Fix the cause, not just the symptom.|A student kept copying homework. The teacher didn't scold but switched to in-class questions, and the copying vanished.|What is the "firewood" that was removed?|The condition that made copying possible|The teacher's anger|The students' notebooks
-In the Three Kingdoms, while Cao Cao and Sun Quan were fighting, Liu Bei in Jingzhou slowly took over several districts and built his own base.|When the market shifts, seize the chance to enter.|During market turmoil, he quietly recruited talent and customers while competitors were in disarray.|What opportunity does "muddy water" bring?|Rivals in disarray means talent and customers to win|It always loses money|No opportunity at all
-Before Zhuge Liang died, he told the army to withdraw quietly, leaving flags and a wooden statue of himself in a cart. Sima Yi thought he was still alive, didn't dare chase, and the Shu army retreated safely.|Leave a good backup when you leave, and keep things stable.|He wanted to quit, so he first handed over the work and steadied the team, then left smoothly.|Who was the "shell" left to?|A stable handover and situation for the team|The competitor|Nothing was left
-At Changping, the Qin army trapped the Zhao army in a valley and cut off its supply and retreat. After more than 40 days of hunger, the Zhao army was wiped out.|Solve problems thoroughly; don't leave exits for them to return.|When the company found a mole, it first cut all access and locked the system, then started investigating.|Why "close the door" first?|To stop them escaping or destroying evidence|To save electricity|To look nice
-The King of Qin took advice from Fan Ju: befriend distant Qi, attack nearby Han and Wei. Eat the neighbors first, expand slowly, and Qin eventually unified the land.|Cooperate with those far away; deal with the nearest rival first.|A new shop partnered with a distant supplier while focusing on winning customers in the nearby neighborhood.|Who are "far" and "near"?|Far is the distant supplier, near is the nearby customers|Far is nearby customers, near is the distant supplier|Both are suppliers
-Jin wanted to attack Guo but had to pass through Yu. It gave Yu's ruler fine horses and jade to borrow the road. After destroying Guo, Jin turned and destroyed Yu too.|Be wary of the motives behind borrowed convenience.|A big company entered a small firm under the name of "cooperation" and acquired it several years later.|What is the borrowed "road"?|The name of cooperation and the chance to pass through|A real road|The company name
-After the First Emperor died, Zhao Gao and Li Si secretly changed his will and gave the throne to Huhai instead of Prince Fusu. One fake will changed the nation's fate.|Quietly replacing key people quietly changes the whole situation.|Someone quietly changed a few key words in a contract, and the whole meaning changed.|What will you watch for when reading a contract?|Whether key words were changed|Only the cover|Only the page count
-In the Spring and Autumn period, Sima Rangju led troops. The duke's favorite, Zhuang Jia, was late, and Rangju executed him publicly. The whole army never dared disobey again.|A case that warns everyone works better than naming someone.|The teacher said publicly, "Latecomers should be self-disciplined", actually hinting at one student who is often late.|What is the advantage of this?|It warns the right people without naming them|It can humiliate someone|It has no effect
-In the Three Kingdoms, Sima Yi was pushed aside by Cao Shuang, so he pretended to be sick and senile, babbling nonsense. Cao Shuang relaxed, and Sima Yi launched a coup while he was out of the city and seized power.|Staying low-key preserves strength better than showing off.|In meetings he didn't speak up, and people thought he had no ideas. Meanwhile he quietly built a complete plan.|What lies behind the "act of folly"?|Quietly building strength|He really has no ideas|He wants to be lazy
-Liu Qi, the son of Liu Biao, was pushed aside by his stepmother and wanted advice from Zhuge Liang, who refused. So Liu Qi invited him upstairs for drinks and had the ladder removed, saying, "No outsiders now. You can speak."|Set a trap by first giving convenience, then cutting off retreat; use carefully.|A rival was lured into a seemingly profitable project, then its resources were cut off, leaving it trapped.|What is the risk of this?|The other side may see through it and strike back|It will surely succeed|There is no risk
-At Changban, Zhang Fei had only a few dozen horsemen. He had them tie branches to the horses' tails and ride back and forth, raising dust, while he stood on the bridge and roared. Cao's army suspected an ambush and didn't pursue.|Borrow big names and platforms to boost your influence.|A small shop borrowed a celebrity's look in its packaging, and sales surged briefly, but quality couldn't keep up.|Are the "flowers" real or fake?|Fake, borrowed appearance|Real|Half and half
-Liu Bei was invited by Liu Zhang to help fight in Shu. While helping, he quietly won hearts, and eventually turned the tables and took Shu.|Even as a customer, find ways to take the lead.|An intern first helped with chores, gradually learned the process, and ended up as a core member of the team.|How did he become the "host"?|Gradually gained mastery of the process and the say|Became the boss from day one|Luck
-King Goujian of Yue gave the beauty Xishi to King Fuchai of Wu. Fuchai was captivated, indulged in pleasure, neglected state affairs, and Wu weakened and was eventually destroyed by Yue.|Warning: temptation erodes willpower, and we must guard against it too.|A rival company sent a charming salesperson to win over your key customers.|How can you resist such temptation?|Stay clear-headed and keep principles|Accept everything|Avoid meeting
-Zhuge Liang held Xicheng with only a few old and weak soldiers. When Sima Yi's army came, he opened the gates and calmly played the zither on the tower. Sima Yi suspected an ambush and withdrew.|Looking weak isn't always weakness; calm is psychological warfare.|During a system failure and staff shortage, the manager calmly said "everything is under control", and customers felt reassured.|Why is staying calm important?|It steadies customer confidence and avoids panic|It makes the problem disappear forever|It has no effect
-Before Red Cliffs, Zhou Yu let Cao Cao's envoy Jiang Gan "steal a peek" at a fake letter saying two of Cao Cao's admirals would defect. Cao Cao believed it and executed both.|Create suspicion so the rival loses internal trust.|A rival received a forged "internal document" and began to doubt its own partner.|Why is suspicion so damaging?|Internal distrust leads to self-disruption|It makes the rival more united|It makes the rival richer
-At Red Cliffs, Zhou Yu publicly beat the old general Huang Gai fifty strokes. Huang Gai pretended to be angry and sent a letter to Cao Cao to "surrender". Cao Cao believed it, and Huang Gai's fire ships rammed in and burned his fleet.|Sometimes taking a loss first shows sincerity and earns trust.|To prove sincerity to a client, an employee took responsibility and worked extra hours, and earned trust.|What is the cost of doing this?|He bears personal loss and hardship|There is no cost|The client bears it all
-Before Red Cliffs, Pang Tong pretended to join Cao Cao and suggested chaining the ships together so northern soldiers wouldn't get seasick. Cao Cao agreed, and when Zhou Yu set fire, all the ships burned as one and none could escape.|Complex goals need several plans working together.|A team first drew users with small events, retained them with membership points, then converted them with a new product.|How are these steps "linked"?|Each step prepares the way for the next|The steps are unrelated|Do everything at once
-Liu Bei lost many battles, but each time he decisively escaped, preserving his strength. Later he bounced back again and again and finally founded Shu.|Cutting losses is not defeat; it is how you get back up.|A startup was losing heavily. He decisively quit, switched to a new business, and was profitable again two years later.|Why isn't retreat the same as failure?|It stops losses and saves strength to rise again|Because there will be no more chances|Because face matters`.split("\n").map(l=>l.split("|"));
-const XM=`Maharaja Taizong takut laut. Seorang jeneral menjemputnya berjamuan di "rumah besar" yang berlangsir. Sebenarnya ia sebuah kapal, dan apabila dia sedar, mereka sudah jauh di tengah laut.|Pecahkan perubahan besar kepada langkah harian yang kecil supaya tiada siapa perasan.|Xiaoming selalu berkata "saya ke perpustakaan". Lama-kelamaan keluarganya sudah biasa, dan tiada siapa bertanya ketika dia keluar membawa bola.|Mengapa keluarganya tidak curiga?|Berlaku setiap hari sehingga jadi kebiasaan|Keluarga terlalu sibuk untuk ambil peduli|Dia bercakap dengan sangat kuat
-Wei menyerang Zhao, dan Zhao meminta bantuan Qi. Penasihat Qi, Sun Bin, tidak pergi ke Zhao tetapi menyerang ibu kota Wei. Tentera Wei bergegas pulang dan Zhao selamat.|Apabila pesaing menyerang kekuatan anda, serang titik lemahnya.|Dua kedai bersaing. Kedai A tidak menurunkan harga tetapi melancarkan perkhidmatan penghantaran, titik paling lemah pesaing, sehingga pesaing terkial-kial membaikinya.|Bahagian mana pesaing yang diserang Kedai A?|Titik paling lemah|Produk paling kuat|Harga
-Yan Zi mahu menyingkirkan tiga pahlawan ganas. Dia meminta raja menghantar dua biji pic dan berkata hanya yang paling berjasa boleh makan. Ketiga-tiganya berebut jasa dan semuanya mati, tanpa Yan Zi mengangkat jari.|Gunakan rakan kongsi dan platform; jangan serbu sendiri.|Seorang pengurus tidak mahu menyinggung pelanggan, lalu menghantar pelanggan itu ke jabatan lain untuk menolak bagi pihaknya.|Apakah risiko tindakan ini?|Mungkin disedari dan merosakkan kepercayaan|Pasti berjaya|Tiada sebarang risiko
-Qi menyerang Lu dan terus memalu gendang perang. Cao Gui dari Lu menyuruh askarnya menunggu. Selepas gendang ketiga, tenaga Qi habis, lalu Lu menyerbu dan menang.|Tidur cukup sebelum peperiksaan, bukan berjaga malam.|Kapten pasukan membiarkan pemain berehat. Lawan menyerang bertubi-tubi pada separuh masa pertama dan letih, lalu pasukan menjaringkan gol pada separuh masa kedua.|Mengapa tunggu sehingga lawan letih?|Stamina lawan menurun, lebih mudah dikalahkan|Untuk membuang masa|Kerana peraturan menetapkannya
-Raja Goujian dari Yue bersabar bertahun-tahun selepas kalah kepada Wu. Apabila Wu ditimpa kemarau dan rajanya berada di luar bersama tentera, Goujian terus menyerang dan menghapuskan Wu.|Apabila pesaing menghadapi krisis, rebut peluang pasaran dengan cepat.|Kedai jiran tiba-tiba ditutup untuk pemeriksaan. Pemilik bergegas menandatangani pelanggan lamanya.|Apakah pertikaian etika di sini?|Mengambil kesempatan atas kesusahan orang kurang baik|Terlalu rajin bekerja|Harga terlalu rendah
-Han Xin menyerang Wei. Dia menyusun bot beramai-ramai di satu jeti supaya Wei menyangka dia akan menyeberang di situ. Pasukan utamanya menyeberang di tempat lain menggunakan tong kayu dan menyerang dari belakang.|Seperti gerak tipu bola sepak: pandang kiri, hantar ke kanan.|Dia bercakap kuat di media sosial tentang rancangan melancong, sedangkan dia diam-diam menyiapkan cadangan baharu untuk bosnya.|Apakah "timur" dan "barat" di sini?|Timur ialah umpan, barat ialah sasaran sebenar|Timur ialah sasaran sebenar, barat ialah umpan|Kedua-duanya sebenar
-Kota Zhang Xun kehabisan anak panah. Pada waktu malam, dia menurunkan orang-orangan jerami berpakaian hitam dari tembok. Musuh melepaskan anak panah ke arahnya dengan melulu, dan dia mengumpul ratusan ribu batang.|Bina momentum supaya usaha kecil kelihatan besar.|Seorang pengasas yang belum ada produk membuat poster teaser yang cantik. Ramai orang menyedarinya, dan barulah dia membina produknya.|Bagaimana "tiada" menjadi "ada"?|Bina sensasi dahulu, kemudian sempurnakan|Tidak pernah membina produk|Semata-mata nasib
-Han Xin menghantar orang membaiki jalan papan dengan bising supaya musuh menyangka tentera akan lalu di situ. Pasukan utamanya diam-diam melalui lorong sampingan ke Chencang dan menyerang dari belakang.|Tarik perhatian di hadapan sambil bergerak diam-diam dari tepi.|Kapten melatih taktik pembukaan dengan bising, sedangkan langkah mematikan yang sebenar disediakan secara rahsia di tengah padang.|Yang manakah "terang" dan yang manakah "rahsia"?|Terang: taktik pembukaan; rahsia: langkah tengah padang|Terang: tengah padang; rahsia: pembukaan|Kedua-duanya di pembukaan
-Selepas Cao Cao mengalahkan Yuan Shao, dua beradik Yuan melarikan diri ke Liaodong. Semua orang menggesa Cao Cao mengejar, tetapi dia berkata tidak. Benar, pemerintah Liaodong sendiri membunuh dua beradik itu dan menghantar kepala mereka.|Apabila rakan sekerja bertengkar, jangan menyibuk; tunggu sehingga keadaan jelas.|Dua rakan sekerja berebut jasa. Anda diam sehingga bos melihat siapa yang lebih boleh dipercayai, barulah anda bersuara.|Apakah kebaikan dan risiko menonton dari jauh?|Menjimatkan tenaga, tetapi mungkin terlepas peluang|Pasti menang, tiada risiko|Hanya menyinggung orang
-Menteri Dinasti Tang, Li Linfu, sentiasa tersenyum dan bercakap manis, tetapi memasang perangkap di belakang orang. Orang menyebutnya "ada madu di bibir, pedang di perut".|Peringatan untuk berwaspada terhadap orang yang terlalu mesra.|Seorang rakan sekerja baharu sangat mesra dengan anda tetapi sentiasa bertanya butiran projek anda.|Bagaimana anda akan berwaspada?|Tidak mendedahkan butiran penting dan memerhati|Memberitahu dia segala-galanya|Terus bermusuh dengannya
-Tian Ji berlumba kuda dengan raja, tiga ekor setiap seorang. Sun Bin menyuruh Tian Ji menandingkan kuda terburuknya dengan kuda terbaik raja, kuda terbaiknya dengan kuda pertengahan, dan kuda pertengahannya dengan kuda terburuk. Kalah sekali tetapi menang dua kali.|Korbankan yang kecil untuk melindungi keseluruhan.|Sebuah syarikat melepaskan produk kecil yang rugi dan menumpukan semua sumber pada produk utama; hasil berganda.|Apakah "plum" dan apakah "pic"?|Plum ialah produk kecil, pic ialah produk utama|Plum ialah produk utama, pic ialah produk kecil|Kedua-duanya produk utama
-Dua tentera berhadapan. Gerabak bekalan musuh bergerak perlahan dan satu ruang kecil terbuka. Pasukan kecil menyelinap masuk dan merampas beberapa gerabak. Bukan pertempuran besar, tetapi musuh semakin lapar sehingga tidak mampu bertahan.|Perhatikan butiran kecil dan kumpul kelebihan sedikit demi sedikit.|Dia melihat pesaing terlupa menyebut diskaun, lalu cepat menyebutnya sendiri dan memenangi pelanggan itu.|Apakah yang dia gunakan untuk merebut peluang ini?|Perhatian tajam kepada butiran|Nasib|Menjerit kuat
-Seorang pegawai dituduh rasuah. Apabila dia melihat aduan tentang orang bawahannya, dia menulis: "Kamu hanya memukul rumput, tetapi ular ini sudah terkejut." Rasa bersalahnya mendedahkannya.|Apabila tidak pasti, jalankan percubaan kecil dahulu.|Dengan projek baharu yang tidak pasti, dia meminta sepuluh pengguna mencubanya dahulu dan melihat reaksi mereka sebelum membuat keputusan.|Apakah "rumput" dan "ular"?|Rumput ialah ujian kecil, ular ialah reaksi pengguna|Rumput ialah pengguna, ular ialah produk|Rumput ialah harga, ular ialah pesaing
-Xiang Liang memberontak terhadap Qin tetapi tiada siapa menyertai. Dia menjumpai cucu raja Chu lama yang sedang menggembala kambing dan menabalkannya sebagai "Raja Huai dari Chu". Melihat keturunan raja lama, orang ramai berpusu-pusu menyokongnya.|Bungkus semula jenama atau sumber lama supaya hidup semula.|Sebuah kedai jenama lama menukar pembungkusan dan mula menjual dalam talian, dan rasa klasiknya popular semula.|Apakah yang "dihidupkan semula"?|Jenama lama dan reputasinya|Produk yang benar-benar baharu|Kilang yang sudah ditutup
-Sun Ce mahu menawan sebuah kota yang kukuh pertahanannya. Dia berpura-pura lemah dan menghantar hadiah, memperdaya musuh supaya menyerang tempat lain. Semasa kota kosong, dia menawannya dalam satu malam.|Tarik pesaing keluar dari kawasan kuasanya, kemudian lakukan langkah utama.|Sebelum rundingan, dia menjemput pihak lawan ke sebuah kedai teh yang dikenalinya. Mereka berasa tidak selesa, dan dialah yang mengawal rentak.|Apakah "gunung" itu?|Kelebihan tempat yang biasa bagi pesaing|Sebuah gunung sebenar|Harga yang dirundingkan
-Zhuge Liang menawan ketua pemberontak Meng Huo dan melepaskannya, tujuh kali. Selepas kali ketujuh, Meng Huo benar-benar yakin dan bersumpah tidak memberontak lagi.|Terlalu mendesak boleh memakan diri; kadangkala bertenang lebih mantap.|Seorang bos tidak tergesa-gesa menuntut bayaran tetapi melanjutkan tarikh akhir. Pelanggan berterima kasih dan kemudian menempah lebih banyak.|Mengapa "melepaskan" berkesan?|Mereka berterima kasih dan lebih rela bekerjasama|Mereka takut|Mereka lupa hutang itu
-Penyair Chang Jian mendengar bahawa penyair terkenal Zhao Gu akan melawat sebuah kuil, lalu menulis dua baris biasa di dinding. Zhao Gu tidak dapat menahan diri daripada menambah dua baris yang cemerlang.|Dalam mesyuarat, kongsi draf kasar dahulu untuk menarik idea yang lebih baik.|Seorang guru mula-mula membiarkan pelajar berkongsi idea kasar, dan tidak lama kemudian muncul satu idea yang cemerlang.|Apakah "bata" dan "permata"?|Bata ialah idea kasar, permata ialah idea yang lebih baik|Bata ialah idea yang baik, permata ialah idea kasar|Kedua-duanya hadiah
-Semasa pemberontakan An Lushan, Zhang Xun menyedari seorang pemimpin utama musuh dan menghantar penembak tepat untuk menembaknya mati. Tentera musuh menjadi kucar-kacir dan berundur.|Tangani masalah utama dahulu; jangan tersangkut pada butiran.|Sebuah projek terhenti. Dia mengabaikan isu kecil dan terus berjumpa pembuat keputusan, menyelesaikannya pada hari itu juga.|Siapakah "ketua" anda?|Orang utama yang boleh membuat keputusan|Rakan sekerja paling rajin|Rakan sekerja paling muda
-Dalam Pertempuran Guandu, Cao Cao diam-diam membakar simpanan bijirin Yuan Shao. Seratus ribu tentera Yuan tiada makanan, menjadi kucar-kacir, dan kalah teruk. Dia tidak melawan askar, tetapi memutuskan makanan mereka.|Betulkan puncanya, bukan hanya gejala.|Seorang pelajar kerap menyalin kerja rumah. Guru tidak memarahi tetapi menukar kepada soalan dalam kelas, dan menyalin pun hilang.|Apakah "kayu api" yang dicabut?|Syarat yang membolehkan menyalin|Kemarahan guru|Buku nota pelajar
-Pada zaman Tiga Kerajaan, ketika Cao Cao dan Sun Quan berperang, Liu Bei di Jingzhou perlahan-lahan menawan beberapa daerah dan membina pangkalannya sendiri.|Apabila pasaran berubah, rebut peluang untuk masuk.|Semasa pasaran bergolak, dia diam-diam merekrut bakat dan pelanggan sementara pesaing kucar-kacir.|Apakah peluang yang dibawa oleh "air keruh"?|Pesaing kucar-kacir bermakna bakat dan pelanggan boleh dirangkul|Pasti rugi|Tiada peluang langsung
-Sebelum meninggal, Zhuge Liang menyuruh tentera berundur secara senyap, meninggalkan bendera dan patung kayu dirinya dalam kereta. Sima Yi menyangka dia masih hidup, tidak berani mengejar, dan tentera Shu berundur dengan selamat.|Tinggalkan sandaran yang baik apabila pergi, dan kekalkan kestabilan.|Dia mahu berhenti kerja, lalu menyerahkan tugas dahulu dan menstabilkan pasukan, kemudian pergi dengan lancar.|Kepada siapa "kulit" itu ditinggalkan?|Penyerahan dan keadaan yang stabil kepada pasukan|Pesaing|Tiada apa yang ditinggalkan
-Di Changping, tentera Qin memerangkap tentera Zhao di lembah dan memutuskan bekalan serta jalan berundur. Selepas lebih 40 hari kelaparan, tentera Zhao dihapuskan.|Selesaikan masalah dengan menyeluruh; jangan tinggalkan jalan untuk kembali.|Apabila syarikat menemui pembelot, ia mula-mula memutuskan semua akses dan mengunci sistem, kemudian baru menyiasat.|Mengapa "tutup pintu" dahulu?|Untuk menghalang mereka lari atau memusnahkan bukti|Untuk menjimatkan elektrik|Supaya nampak cantik
-Raja Qin mengikut nasihat Fan Ju: berkawan dengan Qi yang jauh, serang Han dan Wei yang dekat. Telan jiran dahulu, kembang perlahan-lahan, dan akhirnya Qin menyatukan negara.|Bekerjasama dengan yang jauh; uruskan pesaing paling dekat dahulu.|Sebuah kedai baharu bekerjasama dengan pembekal yang jauh sambil menumpukan pada merebut pelanggan di kawasan perumahan berdekatan.|Siapakah "jauh" dan "dekat"?|Jauh ialah pembekal yang jauh, dekat ialah pelanggan berdekatan|Jauh ialah pelanggan berdekatan, dekat ialah pembekal yang jauh|Kedua-duanya pembekal
-Jin mahu menyerang Guo tetapi perlu melalui Yu. Ia memberi pemerintah Yu kuda baik dan jed untuk meminjam jalan. Selepas memusnahkan Guo, Jin berpaling dan memusnahkan Yu juga.|Berwaspada dengan motif di sebalik kemudahan yang dipinjam.|Sebuah syarikat besar memasuki firma kecil atas nama "kerjasama" dan membelinya beberapa tahun kemudian.|Apakah "jalan" yang dipinjam?|Nama kerjasama dan peluang untuk lalu|Jalan raya sebenar|Nama syarikat
-Selepas Maharaja Pertama meninggal, Zhao Gao dan Li Si diam-diam menukar wasiatnya dan memberikan takhta kepada Huhai, bukan Putera Fusu. Satu wasiat palsu mengubah nasib negara.|Menukar orang penting secara senyap mengubah keseluruhan keadaan secara senyap.|Seseorang diam-diam menukar beberapa kata kunci dalam kontrak, dan seluruh maksudnya berubah.|Apakah yang anda perhatikan semasa membaca kontrak?|Sama ada kata kunci diubah|Hanya kulit depan|Hanya bilangan halaman
-Pada zaman Musim Bunga dan Musim Luruh, Sima Rangju memimpin tentera. Kegemaran raja, Zhuang Jia, terlambat, dan Rangju menghukumnya mati di khalayak. Seluruh tentera tidak berani ingkar lagi.|Contoh yang memberi amaran kepada semua orang lebih berkesan daripada menamakan seseorang.|Guru berkata di khalayak, "Yang terlambat hendaklah berdisiplin", sebenarnya menyindir seorang pelajar yang kerap terlambat.|Apakah kelebihannya?|Memberi amaran kepada orang yang betul tanpa menamakan|Boleh memalukan seseorang|Tiada kesan langsung
-Pada zaman Tiga Kerajaan, Sima Yi disingkirkan oleh Cao Shuang, lalu berpura-pura sakit dan nyanyuk, bercakap merepek. Cao Shuang lalai, dan Sima Yi melancarkan rampasan kuasa ketika dia keluar dari kota dan merampas kuasa.|Bersikap rendah diri memelihara kekuatan lebih baik daripada menunjuk-nunjuk.|Dalam mesyuarat dia tidak bersuara, dan orang menyangka dia tiada idea. Sementara itu dia diam-diam menyiapkan rancangan lengkap.|Apakah yang di sebalik "berpura-pura bodoh"?|Diam-diam mengumpul kekuatan|Dia benar-benar tiada idea|Dia mahu bermalas-malas
-Liu Qi, anak Liu Biao, disingkirkan ibu tirinya dan mahu nasihat Zhuge Liang, yang enggan. Maka Liu Qi menjemputnya naik ke tingkat atas untuk minum dan mengalihkan tangga, katanya, "Tiada orang luar sekarang. Anda boleh bercakap."|Pasang perangkap dengan memberi kemudahan dahulu, kemudian putuskan jalan berundur; gunakan dengan berhati-hati.|Seorang pesaing dipancing masuk ke dalam projek yang kelihatan menguntungkan, kemudian sumbernya diputuskan, menjadikannya terperangkap.|Apakah risiko tindakan ini?|Pihak lain mungkin sedar dan membalas serangan|Pasti berjaya|Tiada risiko
-Di Changban, Zhang Fei hanya mempunyai beberapa puluh pasukan berkuda. Dia menyuruh mereka mengikat dahan di ekor kuda dan berlari ke sana ke mari menimbulkan debu, sementara dia berdiri di atas jambatan dan menjerit. Tentera Cao menyangka ada serangan hendap dan tidak mengejar.|Pinjam nama besar dan platform untuk meningkatkan pengaruh.|Sebuah kedai kecil meminjam rupa selebriti pada pembungkusannya, dan jualan melonjak seketika, tetapi kualiti tidak dapat menandingi.|Adakah "bunga" itu sebenar atau palsu?|Palsu, rupa yang dipinjam|Sebenar|Separuh separuh
-Liu Bei dijemput Liu Zhang untuk membantu berperang di Shu. Sambil membantu, dia diam-diam memenangi hati orang, dan akhirnya berbalik arah dan menawan Shu.|Walaupun sebagai pelanggan, cari jalan untuk mengambil alih pimpinan.|Seorang pelatih mula-mula membantu kerja kecil, perlahan-lahan memahami proses, dan akhirnya menjadi ahli teras pasukan.|Bagaimana dia menjadi "tuan rumah"?|Beransur-ansur menguasai proses dan suara|Menjadi bos dari hari pertama|Nasib
-Raja Goujian dari Yue memberikan wanita cantik Xishi kepada Raja Fuchai dari Wu. Fuchai terpikat, hanyut dalam keseronokan, mengabaikan hal negara, dan Wu menjadi lemah lalu dimusnahkan oleh Yue.|Amaran: godaan menghakis semangat, dan kita juga perlu berjaga-jaga.|Syarikat pesaing menghantar jurujual yang menawan untuk memikat pelanggan utama anda.|Bagaimana anda menahan godaan sebegini?|Kekal tenang dan pegang prinsip|Terima segalanya|Mengelak daripada berjumpa
-Zhuge Liang menjaga Xicheng hanya dengan beberapa askar tua dan lemah. Apabila tentera Sima Yi tiba, dia membuka pintu gerbang dan dengan tenang memetik guzheng di menara. Sima Yi mengesyaki serangan hendap dan berundur.|Nampak lemah tidak semestinya lemah; ketenangan ialah perang psikologi.|Semasa sistem rosak dan kekurangan kakitangan, pengurus dengan tenang berkata "semuanya terkawal", dan pelanggan berasa lega.|Mengapa kekal tenang penting?|Menstabilkan keyakinan pelanggan dan mengelak panik|Menghilangkan masalah selama-lamanya|Tiada kesan
-Sebelum Pertempuran Tebing Merah, Zhou Yu membiarkan utusan Cao Cao, Jiang Gan, "mengintai" surat palsu yang mengatakan dua laksamana Cao Cao akan membelot. Cao Cao mempercayainya dan membunuh kedua-duanya.|Cipta keraguan supaya pesaing hilang kepercayaan dalaman.|Pesaing menerima "dokumen dalaman" palsu dan mula meragui rakan kongsinya sendiri.|Mengapa syak wasangka begitu merosakkan?|Ketidakpercayaan dalaman membawa kepada kekacauan sendiri|Menjadikan pesaing lebih bersatu|Menjadikan pesaing lebih kaya
-Di Tebing Merah, Zhou Yu memukul jeneral tua Huang Gai lima puluh rotan di khalayak. Huang Gai berpura-pura marah dan menghantar surat kepada Cao Cao untuk "menyerah". Cao Cao mempercayainya, dan kapal api Huang Gai merempuh masuk lalu membakar armadanya.|Kadangkala menanggung rugi dahulu menunjukkan keikhlasan dan memenangi kepercayaan.|Untuk membuktikan keikhlasan kepada pelanggan, seorang pekerja menanggung tanggungjawab dan bekerja lebih masa, lalu memenangi kepercayaan.|Apakah kos tindakan ini?|Dia menanggung kerugian dan kesusahan peribadi|Tiada kos|Pelanggan menanggung semuanya
-Sebelum Tebing Merah, Pang Tong berpura-pura menyertai Cao Cao dan mencadangkan kapal dirantai bersama supaya askar utara tidak mabuk laut. Cao Cao bersetuju, dan apabila Zhou Yu membakar, semua kapal terbakar sebagai satu dan tiada yang dapat lari.|Matlamat rumit memerlukan beberapa rancangan yang bekerjasama.|Sebuah pasukan mula-mula menarik pengguna dengan acara kecil, mengekalkan mereka dengan mata keahlian, kemudian menukar mereka dengan produk baharu.|Bagaimana langkah-langkah ini "bersambung"?|Setiap langkah menyediakan jalan untuk langkah seterusnya|Langkah-langkah tidak berkaitan|Lakukan segalanya serentak
-Liu Bei kalah dalam banyak pertempuran, tetapi setiap kali dia melarikan diri dengan tegas, memelihara kekuatannya. Kemudian dia bangkit semula berkali-kali dan akhirnya mengasaskan Shu.|Menghentikan kerugian bukan kekalahan; itulah cara untuk bangkit semula.|Sebuah perniagaan baharu rugi teruk. Dia berhenti dengan tegas, beralih kepada perniagaan baharu, dan untung semula dua tahun kemudian.|Mengapa berundur tidak sama dengan gagal?|Menghentikan kerugian dan menjimatkan kekuatan untuk bangkit semula|Kerana tidak akan ada peluang lagi|Kerana maruah penting`.split("\n").map(l=>l.split("|"));
-const tx=(i,j)=>L=="zh"?[S[i],D[i].x,E[i][0],E[i][1]][j]:(L=="en"?XE:XM)[i][j],qo=i=>L=="zh"?Q[i]:(L=="en"?XE:XM)[i].slice(4);
-let cur=-1,done=new Set();
-try{done=new Set(JSON.parse(localStorage.getItem("s36")||"[]"))}catch(e){}
-const $=id=>document.getElementById(id);
-function save(){try{localStorage.setItem("s36",JSON.stringify([...done]))}catch(e){}}
-function prog(){const p=done.size/36*100;$("pb").style.width=p+"%";$("pt").textContent=tr("prog")(done.size)}
-function nav(){$("nav").innerHTML=[tr("all"),...GN[L]].map((t,i)=>`<button class="${i==cur+1?'on':''}" onclick="sel(${i-1})">${t}</button>`).join("")+`<button class="btn" onclick="quiz()">${tr("qb")}</button>`}
-function sel(g){cur=g;nav();grid()}
-function grid(){$("g").innerHTML=D.filter(d=>cur<0||d.g==cur).map(d=>`<div class="c ${done.has(d.i)?'done':''}" onclick="open_(${d.i})"><span class="e">${d.e.slice(0,2)}</span><b>${nm(d.i)}</b><small>${tr("tg")(d.i+1)}</small></div>`).join("")}
-function show(h){$("bx").innerHTML=h;$("m").classList.add("show")}
-function hide(){$("m").classList.remove("show");grid();prog()}
-$("m").onclick=e=>{if(e.target.id=="m")hide()};
-function open_(i){const d=D[i];done.add(i);save();
-const em=[...d.e];
-show(`<span class="t">${tr("tg")(i+1)} · ${GN[L][d.g].split("·")[0]}</span><h2>${nm(i)}</h2>
-<div class="stage"><span>${em[0]}${em[1]||""}</span><span>${em[2]||"✨"}</span><span>${em[3]||"⭐"}</span></div>
-<p><b>${tr("one")}</b>${mn(i)}</p><div class="q"><b>${tr("sty")}</b>${tx(i,0)}</div><p><b>${tr("mod")}</b>${tx(i,1)}</p><div class="q" style="border-left-color:var(--gold)"><b>${tr("dra")}</b>${tx(i,2)}</div><p style="background:var(--bg);padding:8px 10px;border-radius:10px"><b>${tr("thk")}</b>${tx(i,3)}</p>${mc(i)}
-<div class="row"><button class="btn" onclick="open_(${(i+35)%36})">${tr("prev")}</button><button class="btn" onclick="hide()">${tr("close")}</button><button class="btn" onclick="open_(${(i+1)%36})">${tr("next")}</button></div>`)}
-let sc=0,k=0;
-let cno="";
-function cert(){cno="SS36-"+String(Math.random()*1e6|0).padStart(6,"0");const d=new Date().toLocaleDateString(tr("loc")),G="#b08a2e",R="#b3322a";
-show(`<h2 style="margin-top:0">${tr("cg")}</h2><p>${tr("cs")(sc)}</p><input id="nm" maxlength="12" placeholder="${tr("ph")}" oninput="$('cn').textContent=this.value||'${tr("anon")}'" style="font:inherit;padding:8px;width:100%;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)">
-<div style="margin:12px 0;padding:8px;background:linear-gradient(135deg,#fffdf6,#f6ecd2);border:3px solid ${G};color:#3b2a1a;font-family:serif;border-radius:4px"><div style="border:1px solid ${R};padding:20px 10px 14px;text-align:center">
-<div style="font-size:.75rem;letter-spacing:.5em;color:${G}">${tr("org")}</div>
-<div style="font-size:${L=="zh"?"2.2rem":"1.5rem"};font-weight:bold;letter-spacing:.35em;color:${R};margin:6px 0 0 .35em">${tr("ct")}</div>
-<div style="font-size:.62rem;letter-spacing:.3em;color:#7a6650">CERTIFICATE OF COMPLETION</div>
-<div style="width:120px;height:2px;background:${G};margin:10px auto"></div>
-<div style="letter-spacing:.3em">${tr("zm")}</div>
-<div id="cn" style="display:inline-block;min-width:160px;font-size:1.7rem;font-weight:bold;letter-spacing:.1em;border-bottom:2px solid ${G};margin:6px 0">${tr("anon")}</div>
-<p style="font-size:.9rem;margin:8px 0">${tr("st1")}<br>${tr("st2")(sc)}</p>
-<div style="display:flex;justify-content:space-between;align-items:flex-end;font-size:.75rem;margin-top:10px"><div>${tr("dt")}<br>${d}</div><div style="width:62px;height:62px;border:3px double ${R};border-radius:50%;color:${R};display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;font-size:${L=="zh"?".85rem":".5rem"};transform:rotate(-12deg);line-height:1.25"><span>${tr("s1")}</span><span>${tr("s2")}</span></div><div>${tr("no")}<br>${cno}</div></div></div></div>
-<div class="row"><button class="btn" onclick="dl()">${tr("dlb")}</button><button class="btn" onclick="hide()">${tr("back")}</button></div><small style="color:var(--sub)">${tr("shot")}</small>`)}
-function dl(){const n=$("nm").value||tr("anon"),W=1200,H=850,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d"),G="#b08a2e",R="#b3322a",K="#3b2a1a",d=new Date().toLocaleDateString(tr("loc"));
-const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#fffdf6");g.addColorStop(1,"#f6ecd2");x.fillStyle=g;x.fillRect(0,0,W,H);
-x.strokeStyle=G;x.lineWidth=14;x.strokeRect(30,30,W-60,H-60);x.lineWidth=2;x.strokeRect(58,58,W-116,H-116);x.strokeStyle=R;x.lineWidth=3;x.strokeRect(72,72,W-144,H-144);
-x.fillStyle=G;[[72,72],[W-72,72],[72,H-72],[W-72,H-72]].forEach(([a,b])=>{x.save();x.translate(a,b);x.rotate(Math.PI/4);x.fillRect(-12,-12,24,24);x.restore()});
-x.textAlign="center";
-const t=(s,X,y,f,col,sp)=>{x.font=f;x.fillStyle=col;x.letterSpacing=sp||"0px";x.fillText(s,X,y)};
-t(tr("org"),W/2,155,"28px serif",G,"10px");
-t(tr("ct"),W/2,255,(L=="zh"?"bold 96px":"bold 76px")+" serif",R,"24px");
-t("CERTIFICATE OF COMPLETION",W/2,300,"22px serif","#7a6650","8px");
-x.fillStyle=G;x.fillRect(W/2-180,325,360,2);
-t(tr("zm"),W/2,385,"32px serif",K,"8px");
-t(n,W/2,470,"bold 72px serif",K,"6px");
-x.fillStyle=G;x.fillRect(W/2-260,495,520,2);
-t(tr("st1"),W/2,560,L=="zh"?"30px serif":"19px serif",K,L=="zh"?"2px":"0px");
-t(tr("st2")(sc),W/2,606,L=="zh"?"30px serif":"19px serif",K,L=="zh"?"2px":"0px");
-x.fillStyle=K;x.fillRect(150,715,260,1.5);x.fillRect(W-410,715,260,1.5);
-t(tr("dt")+"  "+d,280,750,"24px serif",K,"2px");t(tr("no")+"  "+cno,W-280,750,"24px serif",K,"2px");
-x.save();x.translate(W/2,705);x.rotate(-.2);x.strokeStyle=R;x.lineWidth=5;x.beginPath();x.arc(0,0,60,0,7);x.stroke();x.lineWidth=1.5;x.beginPath();x.arc(0,0,51,0,7);x.stroke();
-t(tr("s1"),0,-4,"bold "+(L=="zh"?24:16)+"px serif",R,"2px");t(tr("s2"),0,28,"bold "+(L=="zh"?24:16)+"px serif",R,"2px");x.restore();
-const a=document.createElement("a");a.href=c.toDataURL("image/png");a.download=tr("fn")+".png";a.click()}
-let deck=[];function quiz(){sc=0;k=0;deck=[...D].sort(()=>Math.random()-.5).slice(0,12);nq()}
-function nq(){if(k==12){if(sc>=6)return cert();show(`<h2>${tr("score")(sc)}</h2><p>${tr("fail")}</p><div class="row"><button class="btn" onclick="quiz()">${tr("again")}</button><button class="btn" onclick="hide()">${tr("back")}</button></div>`);return}
-const a=deck[k],o=[a];while(o.length<4){const r=D[Math.random()*36|0];if(!o.includes(r))o.push(r)}
-o.sort(()=>Math.random()-.5);
-show(`<span class="t">${tr("qn")(k+1)}</span><h2>${tr("qh")}</h2><p class="q"><b>${tr("qq")}</b><br>${mn(a.i)}</p>
-<div class="opts">${o.map(x=>`<button onclick="ans(this,${x.i==a.i},${a.i})">${nm(x.i)}</button>`).join("")}</div>`)}
-function ans(b,ok,ai){if(ok){b.classList.add("ok");sc++}else{b.classList.add("no");[...b.parentNode.children].find(x=>x.textContent==nm(ai)).classList.add("ok")}
-[...b.parentNode.children].forEach(x=>x.onclick=null);k++;setTimeout(nq,1300)}
-applyLang();
-</script></body></html>
+(function(){
+var S=[50,18,50,28,50,55,42,40,40,52,58,40,60,52,46,72,44,88,54,72,56,88];
+var EX=[
+{n:"Squat",s:40,t:"Feet shoulder-width. Sit back like onto a chair, chest up, then stand.",
+ a:S,b:[44,30,46,40,36,66,58,42,68,42,58,42,68,42,56,68,48,88,58,68,54,88]},
+{n:"Wall push-up",s:40,w:1,t:"Hands on a wall at chest height. Bend your elbows, then push away.",
+ a:[58,22,52,32,37,56,68,33,84,34,68,33,84,34,29,72,22,88,31,72,24,88],
+ b:[72,32,66,42,44,64,76,54,84,36,76,54,84,36,33,77,22,88,35,77,24,88]},
+{n:"Forearm plank",s:30,t:"Forearms down, body in one straight line. Hold and keep breathing.",
+ a:[82,56,72,62,40,72,72,86,86,86,72,86,86,86,24,80,10,88,26,81,12,89]},
+{n:"Glute bridge",s:40,t:"Lie on your back, knees bent. Lift hips, squeeze, lower slowly.",
+ a:[10,80,22,82,46,84,34,84,44,86,34,84,44,86,62,62,66,86,64,62,68,86],
+ b:[10,80,22,82,46,64,34,84,44,86,34,84,44,86,62,62,66,86,64,62,68,86]},
+{n:"Calf raises",s:30,t:"Rise onto your toes, pause, lower slowly. Touch a wall if you need balance.",
+ a:[50,18,50,28,50,55,36,42,44,54,64,42,56,54,46,72,44,88,54,72,56,88],
+ b:[50,12,50,22,50,49,36,36,44,48,64,36,56,48,47,66,45,82,53,66,55,82]},
+{n:"High knees",s:30,t:"March fast on the spot. Lift knees to hip height and swing your arms.",
+ a:[50,18,50,28,50,55,40,40,46,32,60,40,56,48,46,72,44,88,64,54,64,70],
+ b:[50,18,50,28,50,55,40,40,46,48,60,40,54,32,36,54,36,70,54,72,56,88]},
+{n:"Arm circles",s:30,t:"Arms out wide. Make big, slow circles, then switch direction.",
+ a:[50,18,50,28,50,55,36,28,22,28,64,28,78,28,46,72,44,88,54,72,56,88],
+ b:[50,18,50,28,50,55,38,16,40,4,62,16,60,4,46,72,44,88,54,72,56,88]}
+];
+var ST=[
+{n:"Side bend stretch",s:40,t:"Reach one arm overhead and lean to the side. Switch sides halfway.",
+ a:[50,18,50,28,50,55,38,16,40,4,62,16,60,4,46,72,44,88,54,72,56,88],
+ b:[62,20,58,29,48,55,52,16,62,6,68,18,76,10,46,72,44,88,54,72,56,88]},
+{n:"Forward fold",s:40,t:"Hinge at the hips with soft knees. Let your head and arms hang.",
+ a:S,b:[72,72,62,64,40,54,66,76,68,86,66,76,68,86,41,72,42,88,43,72,44,88]},
+{n:"Standing quad stretch",s:40,t:"Hold one foot to your glute, knees together. Switch legs halfway.",
+ a:[50,18,50,28,50,55,40,38,34,34,60,38,66,34,46,72,44,88,54,72,56,88],
+ b:[50,18,50,28,50,55,40,38,34,34,62,42,62,58,46,72,44,88,54,70,62,58]}
+];
+function ln(x1,y1,x2,y2,c){return '<line'+(c?' class="'+c+'"':'')+' x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'"/>'}
+function body(p,wall){
+ var o=ln(4,90,96,90,"fl");if(wall)o+=ln(90,6,90,90,"wl");
+ o+=ln(p[0],p[1],p[2],p[3])+ln(p[2],p[3],p[4],p[5]);
+ o+=ln(p[2],p[3],p[6],p[7])+ln(p[6],p[7],p[8],p[9])+ln(p[2],p[3],p[10],p[11])+ln(p[10],p[11],p[12],p[13]);
+ o+=ln(p[4],p[5],p[14],p[15])+ln(p[14],p[15],p[16],p[17])+ln(p[4],p[5],p[18],p[19])+ln(p[18],p[19],p[20],p[21]);
+ return o+'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="7"/>';
+}
+function fig(m){
+ var s='<svg class="fig" viewBox="0 0 210 104" role="img" aria-label="How to do '+m.n+'">';
+ if(m.b){
+  s+='<g>'+body(m.a,m.w)+'<text x="4" y="101">Start</text></g>';
+  s+='<polygon class="ar" points="98,48 110,48 110,43 120,51 110,59 110,54 98,54"/>';
+  s+='<g transform="translate(110,0)">'+body(m.b,m.w)+'<text x="4" y="101">Then</text></g>';
+ }else{
+  s+='<g transform="translate(55,0)">'+body(m.a,m.w)+'<text x="4" y="101">Hold</text></g>';
+ }
+ return s+'</svg>';
+}
+EX.push({n:"Jumping jacks",s:30,t:"Jump your feet wide as your arms swing overhead, then back together.",
+ a:[50,18,50,28,50,55,42,40,44,54,58,40,56,54,47,72,46,88,53,72,54,88],
+ b:[50,18,50,28,50,55,38,16,40,4,62,16,60,4,38,72,28,88,62,72,72,88]});
+EX.push({n:"Push-up",s:30,t:"Hands under shoulders, body straight. Lower your chest, then press up.",
+ a:[82,44,72,50,42,66,72,68,72,86,72,68,72,86,26,76,10,86,28,77,12,87],
+ b:[84,68,74,72,42,78,62,80,72,88,62,80,72,88,26,83,10,88,28,84,12,89]});
+EX.push({n:"Lunge",s:40,t:"Step one foot forward and bend both knees. Push back up, then switch legs.",
+ a:S,b:[50,22,50,32,50,58,38,44,46,56,62,44,54,56,38,78,26,88,64,64,64,88]});
+var RT={"Squat":2,"Wall push-up":1,"Forearm plank":3,"Glute bridge":1,"Calf raises":1,"High knees":3,"Arm circles":1,"Jumping jacks":3,"Push-up":3,"Lunge":2};
+EX.forEach(function(m){m.d=RT[m.n]||2});
+ST.forEach(function(m){m.d=1});
+var LANG="en";
+var ZHD={"Correct answers":"答对题数","Correct today":"今日答对","Correct total":"累计答对","Another set":"再来一组","Done!":"完成！","Badge poster":"徽章海报","badges earned":"枚徽章","Moves":"动作","Answers":"答题","Correct":"答对","↻ Swap":"↻ 换一个","Stretching":"伸展运动","Quiz":"常识问答","Achievements":"成就","Expert":"专家","Daily Quiz":"每日常识问答","4 easy · 3 medium · 2 hard · 1 expert":"4 道简单 · 3 道中等 · 2 道困难 · 1 道专家题","Score":"得分","To retry":"待重做","Question":"题目","Correct!":"答对了！","Not quite.":"答错了。","Answer":"正确答案","Next question":"下一题","See results":"查看结果","Share result poster":"分享成绩海报","Wrong answers come back in future quizzes. Correct ones never repeat.":"答错的题目会在以后的问答中再次出现，答对的题目不会重复。","Stretching poster":"运动成绩海报","Quiz poster":"问答成绩海报","Finish today’s quiz first":"请先完成今天的问答","Share to WhatsApp":"分享到 WhatsApp","Perfect!":"满分！","Brilliant!":"太棒了！","Great job!":"做得好！","Good effort":"不错的尝试","Keep learning!":"继续加油！","Hard+":"困难+","Your answers":"你的答案","correct":"答对","Daily Tasks":"每日任务","day streak":"天连续","Week":"本周","Month":"本月","Today":"今天","Progress":"进度","Difficulty":"难度","Easy":"简单","Medium":"中等","Hard":"困难","Today’s moves":"今日动作","Bonus moves":"加练动作","Add another move":"再加一个动作","Reset today":"重置今天","Your progress":"你的进度","This week":"本周","This month":"本月","Badges":"徽章","Make my result poster":"生成我的成绩海报","✕ Close":"✕ 关闭","3 for 3!":"三项全部完成！","Keep going with bonus moves":"继续加练","Done for today":"今天到此为止","Save poster":"保存海报","Close":"关闭","this week":"本周","this month":"本月","Small goals. Every day.":"小目标，每一天。","Daily Done":"每日完成","Moves in progress":"进行中","All three moves complete":"三个动作全部完成","Three small moves a day":"每天三个小动作","Level":"难度","Pause":"暂停","Resume":"继续","Do it again":"再来一次","Nice work!":"做得好！","Tap Close to continue":"点击关闭继续","Finish your reps before the timer ends":"在计时结束前完成次数","Hold steady until the timer ends":"保持稳定直到计时结束","Exercise":"锻炼","Stretch":"拉伸","▶ Time it":"▶ 开始","two exercises and a stretch":"两个锻炼加一个拉伸","New badge":"获得新徽章","Optional. Every extra move counts toward your week and month.":"可选。每个加练动作都会计入本周和本月。","Finish today’s three moves to unlock bonus moves.":"完成今天的三个动作即可解锁加练。","Level changes unlock tomorrow.":"难度明天才能更改。","Changing level gives you a fresh set of three.":"更改难度会为你换一组新的三个动作。","Gentle pace: fewer reps and easier moves.":"节奏轻松：次数更少，动作更简单。","A balanced mix of moves and reps.":"动作与次数均衡搭配。","Tougher moves and more reps. Keep a steady pace.":"动作更难，次数更多。保持稳定节奏。"};
+var ZHM={"Squat":["深蹲","双脚与肩同宽，像坐到椅子上一样向后坐，挺胸，然后站起。"],"Wall push-up":["靠墙俯卧撑","双手扶墙，与胸同高。弯曲手肘，再推离墙面。"],"Forearm plank":["前臂平板支撑","前臂撑地，身体成一条直线。保持姿势，正常呼吸。"],"Glute bridge":["臀桥","仰卧屈膝。抬起臀部并收紧，再缓慢放下。"],"Calf raises":["提踵","踮起脚尖，停顿一下，再缓慢放下。需要时可扶墙保持平衡。"],"High knees":["高抬腿","原地快速踏步，膝盖抬到髋部高度，同时摆动手臂。"],"Arm circles":["绕臂","双臂向两侧打开，缓慢画大圆，然后换方向。"],"Jumping jacks":["开合跳","双脚跳开，同时双臂向头顶摆动，再并拢。"],"Push-up":["俯卧撑","双手在肩下，身体保持一条直线。胸部下压，再推起。"],"Lunge":["弓步蹲","一脚向前迈出，双膝弯曲。推起站直，然后换腿。"],"Side bend stretch":["侧弯拉伸","一只手臂举过头顶，身体向侧面倾斜。中途换边。"],"Forward fold":["前屈拉伸","从髋部向前折叠，膝盖微屈，让头和手臂自然下垂。"],"Standing quad stretch":["站姿大腿前侧拉伸","单手抓住脚踝贴近臀部，双膝并拢。中途换腿。"]};
+var BZ={daily:["每日完成","一天完成 3 个动作"],bonus:["加练达人","完成一个加练动作"],s3:["连续 3 天","连续 3 天"],s7:["连续 7 天","连续 7 天"],s14:["连续 14 天","连续 14 天"],s30:["连续 30 天","连续 30 天"],d10:["累计 10 天","累计完成 10 天"],m25:["25 个动作","累计 25 个动作"],m100:["100 个动作","累计 100 个动作"],m250:["250 个动作","累计 250 个动作"],m500:["500 个动作","累计 500 个动作"],q10:["答 10 题","累计答 10 道题"],q50:["答 50 题","累计答 50 道题"],q100:["答 100 题","累计答 100 道题"],q250:["答 250 题","累计答 250 道题"],qfirst:["问答新手","完成一次每日问答"],q8:["敏锐头脑","得分 8 分以上"],q10p:["满分 10 分","获得 10/10"],redeem:["再试一次","答对之前答错的题"],dbl:["双倍之日","同一天完成运动和问答"],c25:["答对 25 题","累计答对 25 题"],c100:["答对 100 题","累计答对 100 题"],exp:["专家解题","答对一道专家题"],encore:["加演一场","一天完成两组问答"],lvall:["难度探索者","简单、中等、困难各完成一天"],hardday:["硬核达人","在困难难度完成一天"],swap:["挑剔选手","更换一个不想做的动作"],poster:["晒成绩","生成一张成绩海报"],bi:["双语达人","使用英文和中文"],b5:["加练狂人","一天完成 5 个加练动作"]};
+function T(k){return LANG==="zh"&&ZHD[k]?ZHD[k]:k}
+function mn(m){return LANG==="zh"&&ZHM[m.n]?ZHM[m.n][0]:m.n}
+function mt(m){return LANG==="zh"&&ZHM[m.n]?ZHM[m.n][1]:m.t}
+function bnm(b){return LANG==="zh"&&BZ[b.id]?BZ[b.id]:[b.n,b.h]}
+var ALL=EX.concat(ST);
+var QB=[];
+function hk(t){var h=5381,i;for(i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return(h>>>0).toString(36)}
+function addQ(lv,qe,qz,o){QB.push({id:QB.length,lv:lv,k:hk(qe),q:[qe,qz],o:o.map(function(x){var p=x.split("~");return[p[0],p[1]||p[0]]})})}
+var RAWQ=`0|How many days are in a week?|一周有几天？|7|5|6|8
+0|What color do you get by mixing blue and yellow?|蓝色和黄色混合会得到什么颜色？|Green~绿色|Purple~紫色|Orange~橙色|Brown~棕色
+0|Which planet do we live on?|我们生活在哪个星球上？|Earth~地球|Mars~火星|Venus~金星|Jupiter~木星
+0|How many legs does a spider have?|蜘蛛有几条腿？|8|6|10|4
+0|What do bees make?|蜜蜂会酿造什么？|Honey~蜂蜜|Milk~牛奶|Silk~蚕丝|Sugar~白糖
+0|Which season comes after winter?|冬天之后是哪个季节？|Spring~春天|Summer~夏天|Autumn~秋天|Monsoon~雨季
+0|Which animal is called the king of the jungle?|哪种动物被称为“丛林之王”？|Lion~狮子|Elephant~大象|Monkey~猴子|Zebra~斑马
+0|What does water turn into when it freezes?|水结冰后会变成什么？|Ice~冰|Steam~水蒸气|Smoke~烟|Sand~沙子
+0|How many continents are there?|地球上有几大洲？|7|5|6|8
+0|Which organ pumps blood around the body?|哪个器官负责在体内泵血？|Heart~心脏|Lungs~肺|Liver~肝脏|Stomach~胃
+0|Which gas do humans need to breathe?|人类呼吸需要哪种气体？|Oxygen~氧气|Helium~氦气|Neon~氖气|Hydrogen~氢气
+0|Which star gives us light and heat during the day?|白天给我们光和热的是哪颗星？|The Sun~太阳|The Moon~月亮|Mars~火星|Polaris~北极星
+0|How many months are in a year?|一年有几个月？|12|10|11|13
+1|What is the largest ocean on Earth?|地球上最大的海洋是哪个？|Pacific Ocean~太平洋|Atlantic Ocean~大西洋|Indian Ocean~印度洋|Arctic Ocean~北冰洋
+1|What is the chemical formula of water?|水的化学式是什么？|H₂O|CO₂|O₂|NaCl
+1|Which country has the largest area in the world?|世界上面积最大的国家是哪个？|Russia~俄罗斯|Canada~加拿大|China~中国|United States~美国
+1|How many bones does an adult human body have?|成年人的身体有多少块骨头？|206|150|256|300
+1|Who painted the Mona Lisa?|《蒙娜丽莎》是谁画的？|Leonardo da Vinci~达·芬奇|Michelangelo~米开朗基罗|Picasso~毕加索|Van Gogh~梵高
+1|Which planet is called the Red Planet?|哪颗行星被称为“红色星球”？|Mars~火星|Venus~金星|Mercury~水星|Saturn~土星
+1|What is the hardest natural substance?|最硬的天然物质是什么？|Diamond~钻石|Gold~黄金|Iron~铁|Quartz~石英
+1|Which instrument has 88 keys?|哪种乐器有 88 个琴键？|Piano~钢琴|Guitar~吉他|Violin~小提琴|Flute~长笛
+1|What is the largest mammal in the world?|世界上最大的哺乳动物是什么？|Blue whale~蓝鲸|African elephant~非洲象|Giraffe~长颈鹿|Hippopotamus~河马
+1|At sea level, water boils at how many °C?|在海平面，水在多少摄氏度沸腾？|100|90|110|120
+1|Which gas do plants take in for photosynthesis?|植物进行光合作用时吸收哪种气体？|Carbon dioxide~二氧化碳|Oxygen~氧气|Nitrogen~氮气|Methane~甲烷
+1|How many players from one team are on the field in football (soccer)?|足球比赛中，每队场上有几名球员？|11|9|10|12
+2|What is the chemical symbol for gold?|金的化学元素符号是什么？|Au|Ag|Fe|Gd
+2|Which is the smallest planet in our solar system?|太阳系中最小的行星是哪颗？|Mercury~水星|Mars~火星|Venus~金星|Neptune~海王星
+2|In which year did World War II end?|第二次世界大战在哪一年结束？|1945|1939|1950|1918
+2|Who wrote “Romeo and Juliet”?|《罗密欧与朱丽叶》的作者是谁？|William Shakespeare~莎士比亚|Charles Dickens~狄更斯|Jane Austen~简·奥斯汀|Mark Twain~马克·吐温
+2|About how fast does light travel, in km per second?|光在真空中每秒大约传播多少千米？|300,000|30,000|3,000,000|150,000
+2|Which element has atomic number 1?|原子序数为 1 的元素是什么？|Hydrogen~氢|Helium~氦|Oxygen~氧|Carbon~碳
+2|Which blood type is the universal red-cell donor?|哪种血型是红细胞的万能供血者？|O negative~O 型阴性|AB positive~AB 型阳性|A negative~A 型阴性|B positive~B 型阳性
+2|What is the largest desert in the world?|世界上最大的沙漠是哪个？|Antarctic Desert~南极沙漠|Sahara~撒哈拉沙漠|Arabian Desert~阿拉伯沙漠|Gobi Desert~戈壁沙漠
+2|Which part of a cell is called its powerhouse?|细胞的哪个部分被称为“能量工厂”？|Mitochondria~线粒体|Nucleus~细胞核|Ribosome~核糖体|Chloroplast~叶绿体
+2|How many chromosomes do humans normally have?|人类通常有多少条染色体？|46|23|44|48
+2|Who developed the theory of general relativity?|广义相对论是谁提出的？|Albert Einstein~爱因斯坦|Isaac Newton~牛顿|Niels Bohr~玻尔|Galileo~伽利略
+2|The Renaissance began in which country?|文艺复兴起源于哪个国家？|Italy~意大利|France~法国|Spain~西班牙|England~英国
+3|About how old is the universe?|宇宙的年龄大约是多少？|13.8 billion years~138 亿年|4.5 billion years~45 亿年|1 trillion years~1 万亿年|6,000 years~6000 年
+3|Which element has the highest electronegativity?|哪种元素的电负性最高？|Fluorine~氟|Oxygen~氧|Chlorine~氯|Nitrogen~氮
+3|In which year did the Berlin Wall fall?|柏林墙在哪一年倒塌？|1989|1991|1979|1985
+3|Which civilization built Machu Picchu?|马丘比丘是哪个文明建造的？|Inca~印加|Maya~玛雅|Aztec~阿兹特克|Olmec~奥尔梅克
+3|What is the SI unit of electrical resistance?|电阻的国际单位是什么？|Ohm~欧姆|Volt~伏特|Ampere~安培|Watt~瓦特
+3|What is the deepest known point in Earth’s oceans?|地球海洋中已知最深的地方是哪里？|Challenger Deep~挑战者深渊|Puerto Rico Trench~波多黎各海沟|Java Trench~爪哇海沟|Tonga Trench~汤加海沟
+3|Who formulated the three laws of planetary motion?|行星运动三大定律是谁提出的？|Johannes Kepler~开普勒|Nicolaus Copernicus~哥白尼|Tycho Brahe~第谷|Galileo Galilei~伽利略
+3|Which treaty formally ended World War I with Germany?|哪份条约正式结束了与德国的第一次世界大战？|Treaty of Versailles~《凡尔赛条约》|Treaty of Paris~《巴黎条约》|Treaty of Vienna~《维也纳条约》|Treaty of Rome~《罗马条约》
+0|Which animal says “moo”?|哪种动物会发出“哞”的叫声？|Cow~牛|Dog~狗|Duck~鸭子|Sheep~绵羊
+0|What colour is a ripe banana?|成熟的香蕉是什么颜色？|Yellow~黄色|Blue~蓝色|Purple~紫色|Red~红色
+0|Which sense do we use our ears for?|我们用耳朵来获得哪种感觉？|Hearing~听觉|Smell~嗅觉|Taste~味觉|Sight~视觉
+0|Which animal has a long trunk?|哪种动物有长长的鼻子（象鼻）？|Elephant~大象|Giraffe~长颈鹿|Horse~马|Rabbit~兔子
+0|Which part of a plant takes in water from the soil?|植物的哪个部分从土壤中吸收水分？|Roots~根|Leaves~叶子|Flowers~花|Fruit~果实
+0|How many wheels does a bicycle have?|自行车有几个轮子？|2|3|4|1
+0|Which meal do people usually eat in the morning?|人们通常在早上吃哪一餐？|Breakfast~早餐|Dinner~晚餐|Supper~宵夜|Lunch~午餐
+0|What is the opposite of “hot”?|“热”的反义词是什么？|Cold~冷|Warm~温暖|Dry~干|Soft~软
+0|How many letters are in the English alphabet?|英文字母表有多少个字母？|26|24|25|28
+0|Which animal is known for black and white stripes?|哪种动物以黑白条纹著称？|Zebra~斑马|Lion~狮子|Bear~熊|Camel~骆驼
+0|Which is the fastest land animal?|跑得最快的陆地动物是哪种？|Cheetah~猎豹|Lion~狮子|Horse~马|Tiger~老虎
+0|What is the main ingredient of bread?|面包的主要原料是什么？|Flour~面粉|Rice~大米|Sugar~糖|Salt~盐
+0|Which instrument do you blow into to make music?|下面哪种乐器需要吹奏？|Trumpet~小号|Drum~鼓|Piano~钢琴|Violin~小提琴
+0|What colour is the sky on a clear day?|晴天的天空是什么颜色？|Blue~蓝色|Green~绿色|Red~红色|Yellow~黄色
+0|Which planet is famous for its rings?|哪颗行星以光环闻名？|Saturn~土星|Mars~火星|Venus~金星|Mercury~水星
+0|Which animal lays eggs?|下面哪种动物会下蛋？|Chicken~鸡|Cow~牛|Dog~狗|Cat~猫
+0|Which country is famous for giant pandas?|哪个国家以大熊猫闻名？|China~中国|Brazil~巴西|Canada~加拿大|Egypt~埃及
+0|Which animal hops and carries its baby in a pouch?|哪种动物会跳跃并用育儿袋带着宝宝？|Kangaroo~袋鼠|Rabbit~兔子|Frog~青蛙|Monkey~猴子
+0|Which body part do we use to see?|我们用身体的哪个部位来看东西？|Eyes~眼睛|Ears~耳朵|Nose~鼻子|Mouth~嘴巴
+0|Which festival is also called Chinese New Year?|哪个节日也被称为“农历新年”？|Spring Festival~春节|Mid-Autumn Festival~中秋节|Dragon Boat Festival~端午节|Lantern Festival~元宵节
+0|What do people traditionally eat at Mid-Autumn Festival?|中秋节传统上要吃什么？|Mooncakes~月饼|Zongzi~粽子|Dumplings~饺子|Tangyuan~汤圆
+0|What do people traditionally eat at the Dragon Boat Festival?|端午节传统上要吃什么？|Zongzi~粽子|Mooncakes~月饼|Dumplings~饺子|Noodles~面条
+0|What colour are red packets at Chinese New Year?|春节的红包是什么颜色？|Red~红色|Blue~蓝色|White~白色|Black~黑色
+0|Which is the biggest planet in our solar system?|太阳系中最大的行星是哪颗？|Jupiter~木星|Saturn~土星|Earth~地球|Mars~火星
+0|Which season is usually the hottest?|通常哪个季节最热？|Summer~夏天|Winter~冬天|Spring~春天|Autumn~秋天
+0|Which animal is a symbol of China and loves bamboo?|哪种动物是中国的象征并且爱吃竹子？|Giant panda~大熊猫|Tiger~老虎|Crane~仙鹤|Golden monkey~金丝猴
+0|What do plants need from the Sun to make food?|植物制造养分需要从太阳获得什么？|Light~光|Wind~风|Sound~声音|Sand~沙子
+0|Which drink is made from tea leaves?|下面哪种饮料由茶叶制成？|Tea~茶|Coffee~咖啡|Juice~果汁|Milk~牛奶
+0|Which animal is known as man’s best friend?|哪种动物被称为“人类最好的朋友”？|Dog~狗|Cat~猫|Horse~马|Rabbit~兔子
+1|Which gas makes up most of Earth’s atmosphere?|地球大气中含量最多的气体是什么？|Nitrogen~氮气|Oxygen~氧气|Carbon dioxide~二氧化碳|Argon~氩气
+1|What is the tallest mountain above sea level?|海拔最高的山峰是哪座？|Mount Everest~珠穆朗玛峰|K2~乔戈里峰|Kilimanjaro~乞力马扎罗山|Mont Blanc~勃朗峰
+1|Which river flows through Egypt?|哪条河流经埃及？|Nile~尼罗河|Amazon~亚马逊河|Danube~多瑙河|Mekong~湄公河
+1|Which is the largest continent?|面积最大的大洲是哪个？|Asia~亚洲|Africa~非洲|Europe~欧洲|Antarctica~南极洲
+1|Which is the smallest continent?|面积最小的大洲是哪个？|Oceania~大洋洲|Europe~欧洲|Antarctica~南极洲|South America~南美洲
+1|What is the largest organ of the human body?|人体最大的器官是什么？|Skin~皮肤|Liver~肝脏|Heart~心脏|Brain~大脑
+1|Which vitamin do we get from sunlight?|我们通过阳光获得哪种维生素？|Vitamin D~维生素 D|Vitamin C~维生素 C|Vitamin A~维生素 A|Vitamin B12~维生素 B12
+1|Which blood cells carry oxygen?|哪种血细胞负责运输氧气？|Red blood cells~红细胞|White blood cells~白细胞|Platelets~血小板|Plasma~血浆
+1|How do plants make food using sunlight?|植物利用阳光制造养分的过程叫什么？|Photosynthesis~光合作用|Respiration~呼吸作用|Digestion~消化|Evaporation~蒸发
+1|What is at the centre of an atom?|原子的中心是什么？|Nucleus~原子核|Electron~电子|Orbit~轨道|Shell~电子层
+1|Which planet is closest to the Sun?|离太阳最近的行星是哪颗？|Mercury~水星|Venus~金星|Earth~地球|Mars~火星
+1|Which metal is liquid at room temperature?|哪种金属在室温下是液态？|Mercury~汞|Iron~铁|Aluminium~铝|Lead~铅
+1|Who was the first person to walk on the Moon?|第一个在月球上行走的人是谁？|Neil Armstrong~尼尔·阿姆斯特朗|Buzz Aldrin~巴兹·奥尔德林|Yuri Gagarin~尤里·加加林|John Glenn~约翰·格伦
+1|Who was the first person in space?|第一个进入太空的人是谁？|Yuri Gagarin~尤里·加加林|Neil Armstrong~尼尔·阿姆斯特朗|Alan Shepard~艾伦·谢泼德|John Glenn~约翰·格伦
+1|Which ancient wonder still stands today?|下列哪项古代奇迹至今仍然矗立？|Great Pyramid of Giza~吉萨大金字塔|Hanging Gardens of Babylon~巴比伦空中花园|Colossus of Rhodes~罗德岛巨像|Lighthouse of Alexandria~亚历山大灯塔
+1|Which dynasty first unified China as an empire?|哪个朝代首次建立了统一的中华帝国？|Qin~秦朝|Han~汉朝|Tang~唐朝|Ming~明朝
+1|Who was the first emperor of a unified China?|统一中国的第一位皇帝是谁？|Qin Shi Huang~秦始皇|Liu Bang~刘邦|Kublai Khan~忽必烈|Emperor Taizong of Tang~唐太宗
+1|Which festival is known for lanterns and riddles?|哪个节日以花灯和猜灯谜闻名？|Lantern Festival~元宵节|Qingming Festival~清明节|Double Ninth Festival~重阳节|Qixi Festival~七夕节
+1|Which language has the most native speakers?|母语使用人数最多的语言是哪种？|Mandarin Chinese~普通话|English~英语|Spanish~西班牙语|Hindi~印地语
+1|How many players are on court for one basketball team?|一支篮球队在场上有几名球员？|5|6|7|11
+1|In which sport is a shuttlecock used?|哪项运动使用羽毛球（shuttlecock）？|Badminton~羽毛球|Tennis~网球|Squash~壁球|Table tennis~乒乓球
+1|Which country hosted the 2008 Summer Olympics?|2008年夏季奥运会在哪个国家举办？|China~中国|Greece~希腊|Brazil~巴西|United Kingdom~英国
+1|Which sport is Wimbledon famous for?|温布尔登以哪项运动闻名？|Tennis~网球|Golf~高尔夫|Cricket~板球|Rugby~橄榄球
+1|Which country is sushi traditionally from?|寿司传统上来自哪个国家？|Japan~日本|Thailand~泰国|South Korea~韩国|Vietnam~越南
+1|Which country is pizza originally from?|披萨起源于哪个国家？|Italy~意大利|France~法国|Greece~希腊|Spain~西班牙
+1|What is tofu made from?|豆腐是用什么做的？|Soybeans~大豆|Rice~大米|Wheat~小麦|Corn~玉米
+1|What is the main ingredient of guacamole?|鳄梨酱（牛油果酱）的主要原料是什么？|Avocado~牛油果|Tomato~番茄|Chilli~辣椒|Cucumber~黄瓜
+1|Which instrument measures temperature?|哪种仪器用来测量温度？|Thermometer~温度计|Barometer~气压计|Ruler~尺子|Compass~指南针
+1|Which country has a maple leaf on its flag?|哪个国家的国旗上有枫叶？|Canada~加拿大|Japan~日本|Australia~澳大利亚|Norway~挪威
+1|Which is the longest river in China?|中国最长的河流是哪条？|Yangtze River~长江|Yellow River~黄河|Pearl River~珠江|Heilong River~黑龙江
+1|What is the name of our galaxy?|我们所在的星系叫什么？|The Milky Way~银河系|Andromeda~仙女座星系|Whirlpool Galaxy~涡状星系|Triangulum~三角座星系
+1|Which planet is known as the “Morning Star” or “Evening Star”?|哪颗行星常被称为“启明星”或“长庚星”？|Venus~金星|Mars~火星|Jupiter~木星|Mercury~水星
+1|What do we call animals that eat only plants?|只吃植物的动物叫什么？|Herbivores~食草动物|Carnivores~食肉动物|Omnivores~杂食动物|Insectivores~食虫动物
+2|What is the SI unit of force?|力的国际单位是什么？|Newton~牛顿|Joule~焦耳|Pascal~帕斯卡|Watt~瓦特
+2|What is the SI unit of energy?|能量的国际单位是什么？|Joule~焦耳|Newton~牛顿|Watt~瓦特|Volt~伏特
+2|Which element is most abundant in the Sun?|太阳中含量最多的元素是什么？|Hydrogen~氢|Helium~氦|Oxygen~氧|Carbon~碳
+2|Which layer of the Earth lies between the crust and the core?|地球的哪一层位于地壳和地核之间？|Mantle~地幔|Stratosphere~平流层|Biosphere~生物圈|Hydrosphere~水圈
+2|Which is the largest moon of Saturn?|土星最大的卫星是哪颗？|Titan~土卫六（泰坦）|Europa~木卫二|Ganymede~木卫三|Enceladus~土卫二
+2|Which planet has the Great Red Spot?|哪颗行星上有“大红斑”？|Jupiter~木星|Saturn~土星|Neptune~海王星|Mars~火星
+2|Which organ produces insulin?|哪个器官分泌胰岛素？|Pancreas~胰腺|Liver~肝脏|Kidney~肾脏|Stomach~胃
+2|Which part of the brain controls balance and coordination?|大脑的哪个部分控制平衡与协调？|Cerebellum~小脑|Cerebrum~大脑|Brainstem~脑干|Hypothalamus~下丘脑
+2|Which ancient people invented cuneiform writing?|楔形文字是哪个古代民族发明的？|Sumerians~苏美尔人|Egyptians~古埃及人|Greeks~古希腊人|Romans~古罗马人
+2|Who was the first President of the United States?|美国的第一任总统是谁？|George Washington~乔治·华盛顿|Abraham Lincoln~亚伯拉罕·林肯|Thomas Jefferson~托马斯·杰斐逊|John Adams~约翰·亚当斯
+2|The Terracotta Army was built for the tomb of which emperor?|兵马俑是为哪位皇帝的陵墓而建的？|Qin Shi Huang~秦始皇|Emperor Wu of Han~汉武帝|Kangxi~康熙|Zhu Yuanzhang~朱元璋
+2|Which was the last imperial dynasty of China?|中国最后一个封建王朝是哪个？|Qing~清朝|Ming~明朝|Yuan~元朝|Song~宋朝
+2|Who is traditionally credited with writing “The Art of War”?|《孙子兵法》的作者是谁？|Sun Tzu~孙子|Confucius~孔子|Laozi~老子|Mencius~孟子
+2|Which thinker is associated with the “Analects”?|《论语》与哪位思想家有关？|Confucius~孔子|Laozi~老子|Zhuangzi~庄子|Mozi~墨子
+2|Which Tang dynasty poet is called the “Immortal of Poetry”?|唐代哪位诗人被称为“诗仙”？|Li Bai~李白|Du Fu~杜甫|Bai Juyi~白居易|Wang Wei~王维
+2|Which Tang dynasty poet is called the “Sage of Poetry”?|唐代哪位诗人被称为“诗圣”？|Du Fu~杜甫|Li Bai~李白|Li Shangyin~李商隐|Meng Haoran~孟浩然
+2|Which lake is the deepest in the world?|世界上最深的湖泊是哪个？|Lake Baikal~贝加尔湖|Lake Tanganyika~坦噶尼喀湖|Caspian Sea~里海|Lake Superior~苏必利尔湖
+2|Which is the longest river in Asia?|亚洲最长的河流是哪条？|Yangtze River~长江|Yellow River~黄河|Mekong~湄公河|Ganges~恒河
+2|Which continent is the driest?|哪个大洲最干燥？|Antarctica~南极洲|Africa~非洲|Australia~澳大利亚|Asia~亚洲
+2|Which is the smallest country in the world by area?|世界上面积最小的国家是哪个？|Vatican City~梵蒂冈|Monaco~摩纳哥|San Marino~圣马力诺|Liechtenstein~列支敦士登
+2|Which element is the most abundant in the Earth’s crust?|地壳中含量最多的元素是什么？|Oxygen~氧|Silicon~硅|Aluminium~铝|Iron~铁
+2|What is the study of weather called?|研究天气的学科叫什么？|Meteorology~气象学|Ecology~生态学|Astronomy~天文学|Geography~地理学
+2|What is the study of earthquakes called?|研究地震的学科叫什么？|Seismology~地震学|Meteorology~气象学|Geology~地质学|Volcanology~火山学
+2|Which scientist is best known for the laws of motion?|哪位科学家以运动定律闻名？|Isaac Newton~牛顿|Galileo Galilei~伽利略|Johannes Kepler~开普勒|Michael Faraday~法拉第
+2|Which country gave the Statue of Liberty to the United States?|自由女神像是哪个国家送给美国的礼物？|France~法国|United Kingdom~英国|Spain~西班牙|Italy~意大利
+2|Who designed the Sagrada Família in Barcelona?|巴塞罗那圣家堂的设计者是谁？|Antoni Gaudí~安东尼·高迪|Frank Lloyd Wright~弗兰克·劳埃德·赖特|Le Corbusier~勒·柯布西耶|Zaha Hadid~扎哈·哈迪德
+2|Which country won the first FIFA World Cup in 1930?|1930年首届世界杯的冠军是哪个国家？|Uruguay~乌拉圭|Brazil~巴西|Argentina~阿根廷|Italy~意大利
+2|Which strait lies between Malaysia and Sumatra?|哪个海峡位于马来西亚与苏门答腊之间？|Strait of Malacca~马六甲海峡|Strait of Hormuz~霍尔木兹海峡|Bering Strait~白令海峡|Strait of Gibraltar~直布罗陀海峡
+2|In which ocean is the Bermuda Triangle located?|百慕大三角位于哪个大洋？|Atlantic Ocean~大西洋|Pacific Ocean~太平洋|Indian Ocean~印度洋|Arctic Ocean~北冰洋
+2|Which is the highest waterfall in the world?|世界上落差最大的瀑布是哪个？|Angel Falls~安赫尔瀑布|Victoria Falls~维多利亚瀑布|Niagara Falls~尼亚加拉瀑布|Iguazu Falls~伊瓜苏瀑布
+3|Who proposed the uncertainty principle in quantum mechanics?|量子力学中的不确定性原理是谁提出的？|Werner Heisenberg~海森堡|Erwin Schrödinger~薛定谔|Niels Bohr~玻尔|Max Planck~普朗克
+3|Which fundamental force binds quarks together inside protons?|哪种基本力把夸克束缚在质子内部？|Strong nuclear force~强核力|Gravity~引力|Electromagnetic force~电磁力|Weak nuclear force~弱核力
+3|Which large spiral galaxy is nearest to the Milky Way?|离银河系最近的大型旋涡星系是哪个？|Andromeda Galaxy~仙女座星系|Triangulum Galaxy~三角座星系|Sombrero Galaxy~草帽星系|Whirlpool Galaxy~涡状星系
+3|What was the first artificial satellite called?|第一颗人造卫星叫什么？|Sputnik 1~斯普特尼克 1 号|Explorer 1~探险者 1 号|Vostok 1~东方 1 号|Apollo 11~阿波罗 11 号
+3|Which space telescope was launched in 1990?|哪台太空望远镜于 1990 年发射？|Hubble Space Telescope~哈勃空间望远镜|James Webb Space Telescope~詹姆斯·韦布空间望远镜|Kepler~开普勒望远镜|Spitzer~斯皮策望远镜
+3|Which Chinese probe landed on the far side of the Moon in 2019?|2019 年在月球背面着陆的中国探测器是哪个？|Chang’e-4~嫦娥四号|Chang’e-3~嫦娥三号|Chang’e-5~嫦娥五号|Tianwen-1~天问一号
+3|In which year did the Titanic sink?|泰坦尼克号沉没于哪一年？|1912|1905|1920|1898
+3|Which treaty ended the Thirty Years’ War in 1648?|哪份和约于 1648 年结束了三十年战争？|Peace of Westphalia~威斯特伐利亚和约|Treaty of Utrecht~乌得勒支条约|Treaty of Tordesillas~托尔德西里亚斯条约|Congress of Vienna~维也纳会议
+3|Who was the first Roman emperor?|罗马帝国的第一位皇帝是谁？|Augustus~奥古斯都|Julius Caesar~尤利乌斯·凯撒|Nero~尼禄|Constantine~君士坦丁
+3|Which battle ended Napoleon’s rule in 1815?|哪场战役结束了拿破仑 1815 年的统治？|Waterloo~滑铁卢|Austerlitz~奥斯特里茨|Trafalgar~特拉法尔加|Borodino~博罗季诺
+3|Which Ming admiral led treasure voyages in the early 1400s?|明朝初期哪位航海家率领宝船下西洋？|Zheng He~郑和|Qi Jiguang~戚继光|Xu Fu~徐福|Lin Zexu~林则徐
+3|Which dynasty did Kublai Khan found?|忽必烈建立了哪个朝代？|Yuan~元朝|Jin~金朝|Liao~辽朝|Western Xia~西夏
+3|Who wrote “Records of the Grand Historian” (Shiji)?|《史记》的作者是谁？|Sima Qian~司马迁|Ban Gu~班固|Chen Shou~陈寿|Fan Ye~范晔
+3|What is the highest mountain in Africa?|非洲最高的山峰是哪座？|Kilimanjaro~乞力马扎罗山|Mount Kenya~肯尼亚山|Mount Stanley~斯坦利山|Atlas Mountains~阿特拉斯山脉
+3|Which is the longest river in Europe?|欧洲最长的河流是哪条？|Volga~伏尔加河|Danube~多瑙河|Rhine~莱茵河|Dnieper~第聂伯河
+3|What was the capital of the ancient Inca Empire?|古印加帝国的首都是哪里？|Cusco~库斯科|Lima~利马|Quito~基多|La Paz~拉巴斯
+3|Which strait separates Europe and Asia at Istanbul?|伊斯坦布尔处分隔欧亚的海峡是哪个？|Bosphorus~博斯普鲁斯海峡|Gibraltar~直布罗陀海峡|Dardanelles~达达尼尔海峡|Malacca~马六甲海峡
+3|Which is the largest island in the world that is not a continent?|世界上最大的岛屿（不含大陆）是哪个？|Greenland~格陵兰岛|Borneo~婆罗洲|Madagascar~马达加斯加岛|New Guinea~新几内亚岛
+3|Who developed the first successful polio vaccine?|谁研制出第一种成功的脊髓灰质炎疫苗？|Jonas Salk~乔纳斯·索尔克|Louis Pasteur~路易·巴斯德|Edward Jenner~爱德华·詹纳|Alexander Fleming~亚历山大·弗莱明
+3|Who is known as the father of modern genetics?|谁被称为“现代遗传学之父”？|Gregor Mendel~孟德尔|Charles Darwin~达尔文|Louis Pasteur~巴斯德|Francis Crick~克里克
+3|What is the study of fungi called?|研究真菌的学科叫什么？|Mycology~真菌学|Botany~植物学|Zoology~动物学|Entomology~昆虫学
+3|What is the study of birds called?|研究鸟类的学科叫什么？|Ornithology~鸟类学|Herpetology~爬虫学|Entomology~昆虫学|Ichthyology~鱼类学
+3|Which Chinese scientist is known for developing hybrid rice?|哪位中国科学家以培育杂交水稻闻名？|Yuan Longping~袁隆平|Qian Xuesen~钱学森|Tu Youyou~屠呦呦|Deng Jiaxian~邓稼先
+3|Which Chinese scientist won the 2015 Nobel Prize in Medicine for artemisinin?|哪位中国科学家因青蒿素获得 2015 年诺贝尔医学奖？|Tu Youyou~屠呦呦|Yuan Longping~袁隆平|Qian Xuesen~钱学森|Zhong Nanshan~钟南山
+3|Which city was the capital of the Tang dynasty?|唐朝的首都是哪座城市？|Chang’an~长安|Luoyang~洛阳|Nanjing~南京|Kaifeng~开封`;
+RAWQ.split("\n").forEach(function(l){var a=l.split("|");addQ(+a[0],a[1],a[2],a.slice(3))});
+var GS={};QB.forEach(function(q){GS[q.q[0]]=1});
+function MR(i){var h=(Math.imul(i+7,2654435761)>>>0)||1;return function(){h=(Math.imul(h,1664525)+1013904223)>>>0;return h/4294967296}}
+function G(lv,cat,qe,qz,a,w){
+ if(GS[qe])return;var u={},o=[a].concat(w).map(String).filter(function(x){if(u[x])return false;u[x]=1;return true});
+ if(o.length<4)return;GS[qe]=1;addQ(lv,qe,qz,o.slice(0,4));QB[QB.length-1].cat=cat;
+}
+function wn(a,i,s){s=Math.max(1,Math.round(s||1));var r=MR(i),c=[],k;for(k=1;k<=8;k++){c.push(a+k*s);if(a-k*s>=1)c.push(a-k*s)}return shuf(c,r).slice(0,3).map(String)}
+function oth(n,i,ex){var r=MR(i),a=[],k;for(k=0;k<n;k++)if(k!==ex)a.push(k);return shuf(a,r).slice(0,3)}
+function om(E,Z,ex,i){return oth(E.length,i,ex).map(function(x){return E[x]+"~"+Z[x]})}
+
+(function(){
+var k,i,j;
+var CZ={"Singapore":"新加坡","South Africa":"南非","United Arab Emirates":"阿联酋"};
+function en(t){return t.split("~")[0]}function zh(t){return t.split("~")[1]||t.split("~")[0]}
+function art(n){n=n.toLowerCase();return(/^[aeiou]/.test(n)?"an ":"a ")+n}
+function rows(str){return str.split(";").map(function(x){return x.split("|")})}
+/* elements */
+var EL="1|H|Hydrogen|氢;2|He|Helium|氦;3|Li|Lithium|锂;4|Be|Beryllium|铍;5|B|Boron|硼;6|C|Carbon|碳;7|N|Nitrogen|氮;8|O|Oxygen|氧;9|F|Fluorine|氟;10|Ne|Neon|氖;11|Na|Sodium|钠;12|Mg|Magnesium|镁;13|Al|Aluminium|铝;14|Si|Silicon|硅;15|P|Phosphorus|磷;16|S|Sulfur|硫;17|Cl|Chlorine|氯;18|Ar|Argon|氩;19|K|Potassium|钾;20|Ca|Calcium|钙;21|Sc|Scandium|钪;22|Ti|Titanium|钛;23|V|Vanadium|钒;24|Cr|Chromium|铬;25|Mn|Manganese|锰;26|Fe|Iron|铁;27|Co|Cobalt|钴;28|Ni|Nickel|镍;29|Cu|Copper|铜;30|Zn|Zinc|锌;31|Ga|Gallium|镓;32|Ge|Germanium|锗;33|As|Arsenic|砷;34|Se|Selenium|硒;35|Br|Bromine|溴;36|Kr|Krypton|氪;37|Rb|Rubidium|铷;38|Sr|Strontium|锶;39|Y|Yttrium|钇;40|Zr|Zirconium|锆;41|Nb|Niobium|铌;42|Mo|Molybdenum|钼;43|Tc|Technetium|锝;44|Ru|Ruthenium|钌;45|Rh|Rhodium|铑;46|Pd|Palladium|钯;47|Ag|Silver|银;48|Cd|Cadmium|镉;49|In|Indium|铟;50|Sn|Tin|锡;51|Sb|Antimony|锑;52|Te|Tellurium|碲;53|I|Iodine|碘;54|Xe|Xenon|氙;74|W|Tungsten|钨;78|Pt|Platinum|铂;79|Au|Gold|金;80|Hg|Mercury|汞;82|Pb|Lead|铅;92|U|Uranium|铀";
+var E=rows(EL).map(function(q){return{z:+q[0],s:q[1],n:q[2],c:q[3]}});
+E.forEach(function(e,ei){
+ var lv=e.z<=8?0:e.z<=20?1:(e.z<=36||/^(Ag|Au|Hg|Pb|Sn|I|U|W|Pt)$/.test(e.s))?2:3;
+ var o=oth(E.length,e.z*7,ei).map(function(x){return E[x]}),o2=oth(E.length,e.z*11,ei).map(function(x){return E[x]});
+ G(lv,"elem","What is the chemical symbol for "+e.n.toLowerCase()+"?",e.c+"的化学元素符号是什么？",e.s,o.map(function(x){return x.s}));
+ G(lv,"elem","Which element has the symbol "+e.s+"?","元素符号 "+e.s+" 代表哪种元素？",e.n+"~"+e.c,o2.map(function(x){return x.n+"~"+x.c}));
+ G(lv,"elem","What is the atomic number of "+e.n.toLowerCase()+"?",e.c+"的原子序数是多少？",e.z,wn(e.z,e.z*3,Math.max(1,Math.round(e.z/9))));
+});
+/* countries */
+var CONT={A:"Asia~亚洲",E:"Europe~欧洲",F:"Africa~非洲",N:"North America~北美洲",S:"South America~南美洲",O:"Oceania~大洋洲"},CK=Object.keys(CONT),AMB={"Turkey":1,"Russia":1,"Kazakhstan":1,"Egypt":1};
+var CT="China~中国|Beijing~北京|A|0;Japan~日本|Tokyo~东京|A|0;India~印度|New Delhi~新德里|A|0;South Korea~韩国|Seoul~首尔|A|0;Thailand~泰国|Bangkok~曼谷|A|0;Malaysia~马来西亚|Kuala Lumpur~吉隆坡|A|0;Indonesia~印度尼西亚|Jakarta~雅加达|A|1;Vietnam~越南|Hanoi~河内|A|1;Philippines~菲律宾|Manila~马尼拉|A|1;Pakistan~巴基斯坦|Islamabad~伊斯兰堡|A|1;Bangladesh~孟加拉国|Dhaka~达卡|A|1;Saudi Arabia~沙特阿拉伯|Riyadh~利雅得|A|1;Iran~伊朗|Tehran~德黑兰|A|1;Iraq~伊拉克|Baghdad~巴格达|A|1;Turkey~土耳其|Ankara~安卡拉|A|1;Nepal~尼泊尔|Kathmandu~加德满都|A|2;Mongolia~蒙古|Ulaanbaatar~乌兰巴托|A|2;Cambodia~柬埔寨|Phnom Penh~金边|A|2;Laos~老挝|Vientiane~万象|A|2;Qatar~卡塔尔|Doha~多哈|A|2;Jordan~约旦|Amman~安曼|A|2;Lebanon~黎巴嫩|Beirut~贝鲁特|A|2;Afghanistan~阿富汗|Kabul~喀布尔|A|2;Kuwait~科威特|Kuwait City~科威特城|A|2;Brunei~文莱|Bandar Seri Begawan~斯里巴加湾市|A|3;Bhutan~不丹|Thimphu~廷布|A|3;Uzbekistan~乌兹别克斯坦|Tashkent~塔什干|A|3;Kazakhstan~哈萨克斯坦|Astana~阿斯塔纳|A|3;Myanmar~缅甸|Naypyidaw~内比都|A|3;France~法国|Paris~巴黎|E|0;Germany~德国|Berlin~柏林|E|0;Italy~意大利|Rome~罗马|E|0;Spain~西班牙|Madrid~马德里|E|0;United Kingdom~英国|London~伦敦|E|0;Russia~俄罗斯|Moscow~莫斯科|E|0;Portugal~葡萄牙|Lisbon~里斯本|E|1;Netherlands~荷兰|Amsterdam~阿姆斯特丹|E|1;Belgium~比利时|Brussels~布鲁塞尔|E|1;Switzerland~瑞士|Bern~伯尔尼|E|1;Austria~奥地利|Vienna~维也纳|E|1;Sweden~瑞典|Stockholm~斯德哥尔摩|E|1;Norway~挪威|Oslo~奥斯陆|E|1;Denmark~丹麦|Copenhagen~哥本哈根|E|1;Finland~芬兰|Helsinki~赫尔辛基|E|1;Greece~希腊|Athens~雅典|E|1;Ireland~爱尔兰|Dublin~都柏林|E|1;Poland~波兰|Warsaw~华沙|E|2;Czech Republic~捷克|Prague~布拉格|E|2;Hungary~匈牙利|Budapest~布达佩斯|E|2;Ukraine~乌克兰|Kyiv~基辅|E|2;Romania~罗马尼亚|Bucharest~布加勒斯特|E|2;Bulgaria~保加利亚|Sofia~索非亚|E|2;Serbia~塞尔维亚|Belgrade~贝尔格莱德|E|2;Croatia~克罗地亚|Zagreb~萨格勒布|E|2;Iceland~冰岛|Reykjavik~雷克雅未克|E|2;Slovakia~斯洛伐克|Bratislava~布拉迪斯拉发|E|3;Slovenia~斯洛文尼亚|Ljubljana~卢布尔雅那|E|3;Estonia~爱沙尼亚|Tallinn~塔林|E|3;Latvia~拉脱维亚|Riga~里加|E|3;Lithuania~立陶宛|Vilnius~维尔纽斯|E|3;Malta~马耳他|Valletta~瓦莱塔|E|3;Albania~阿尔巴尼亚|Tirana~地拉那|E|3;Egypt~埃及|Cairo~开罗|F|0;Nigeria~尼日利亚|Abuja~阿布贾|F|1;Kenya~肯尼亚|Nairobi~内罗毕|F|1;Ethiopia~埃塞俄比亚|Addis Ababa~亚的斯亚贝巴|F|1;Ghana~加纳|Accra~阿克拉|F|1;Morocco~摩洛哥|Rabat~拉巴特|F|1;Algeria~阿尔及利亚|Algiers~阿尔及尔|F|2;Tunisia~突尼斯|Tunis~突尼斯市|F|2;Tanzania~坦桑尼亚|Dodoma~多多马|F|2;Uganda~乌干达|Kampala~坎帕拉|F|2;Senegal~塞内加尔|Dakar~达喀尔|F|2;Zimbabwe~津巴布韦|Harare~哈拉雷|F|2;Zambia~赞比亚|Lusaka~卢萨卡|F|2;Angola~安哥拉|Luanda~罗安达|F|2;Libya~利比亚|Tripoli~的黎波里|F|2;Sudan~苏丹|Khartoum~喀土穆|F|2;Madagascar~马达加斯加|Antananarivo~塔那那利佛|F|3;Rwanda~卢旺达|Kigali~基加利|F|3;Namibia~纳米比亚|Windhoek~温得和克|F|3;Botswana~博茨瓦纳|Gaborone~哈博罗内|F|3;Mozambique~莫桑比克|Maputo~马普托|F|3;Cameroon~喀麦隆|Yaoundé~雅温得|F|3;United States~美国|Washington, D.C.~华盛顿特区|N|0;Canada~加拿大|Ottawa~渥太华|N|0;Mexico~墨西哥|Mexico City~墨西哥城|N|0;Cuba~古巴|Havana~哈瓦那|N|1;Jamaica~牙买加|Kingston~金斯敦|N|2;Panama~巴拿马|Panama City~巴拿马城|N|2;Costa Rica~哥斯达黎加|San José~圣何塞|N|2;Guatemala~危地马拉|Guatemala City~危地马拉城|N|3;Honduras~洪都拉斯|Tegucigalpa~特古西加尔巴|N|3;Brazil~巴西|Brasília~巴西利亚|S|0;Argentina~阿根廷|Buenos Aires~布宜诺斯艾利斯|S|1;Chile~智利|Santiago~圣地亚哥|S|1;Peru~秘鲁|Lima~利马|S|1;Colombia~哥伦比亚|Bogotá~波哥大|S|1;Venezuela~委内瑞拉|Caracas~加拉加斯|S|2;Ecuador~厄瓜多尔|Quito~基多|S|2;Uruguay~乌拉圭|Montevideo~蒙得维的亚|S|2;Paraguay~巴拉圭|Asunción~亚松森|S|3;Australia~澳大利亚|Canberra~堪培拉|O|0;New Zealand~新西兰|Wellington~惠灵顿|O|1;Fiji~斐济|Suva~苏瓦|O|3;Papua New Guinea~巴布亚新几内亚|Port Moresby~莫尔兹比港|O|3";
+var C=rows(CT).map(function(q){return{c:q[0],k:q[1],x:q[2],l:+q[3]}});
+C.forEach(function(x){CZ[en(x.c)]=zh(x.c)});
+C.forEach(function(x,ci){
+ var oc=oth(C.length,ci*5+1,ci).map(function(y){return C[y].k}),on=oth(C.length,ci*5+2,ci).map(function(y){return C[y].c});
+ G(x.l,"cap","What is the capital of "+en(x.c)+"?",zh(x.c)+"的首都是哪里？",x.k,oc);
+ G(x.l,"cap","Which country has "+en(x.k)+" as its capital?",zh(x.k)+"是哪个国家的首都？",x.c,on);
+ if(!AMB[en(x.c)]){var oo=CK.filter(function(y){return y!==x.x});G(x.l,"cont","On which continent is "+en(x.c)+"?",zh(x.c)+"位于哪个洲？",CONT[x.x],shuf(oo,MR(ci+40)).slice(0,3).map(function(y){return CONT[y]}))}
+});
+/* currencies, languages */
+var CU=rows("Japan|Japanese yen~日元|0;United States|US dollar~美元|0;United Kingdom|Pound sterling~英镑|0;China|Renminbi (yuan)~人民币（元）|0;Germany|Euro~欧元|0;France|Euro~欧元|0;Italy|Euro~欧元|1;Spain|Euro~欧元|1;Netherlands|Euro~欧元|1;Portugal|Euro~欧元|1;Greece|Euro~欧元|1;India|Indian rupee~印度卢比|1;Russia|Russian rouble~俄罗斯卢布|1;Canada|Canadian dollar~加拿大元|1;Australia|Australian dollar~澳大利亚元|1;Malaysia|Malaysian ringgit~马来西亚林吉特|1;Singapore|Singapore dollar~新加坡元|1;South Korea|South Korean won~韩元|1;Thailand|Thai baht~泰铢|1;Brazil|Brazilian real~巴西雷亚尔|1;Switzerland|Swiss franc~瑞士法郎|1;New Zealand|New Zealand dollar~新西兰元|1;Indonesia|Indonesian rupiah~印尼盾|2;Vietnam|Vietnamese dong~越南盾|2;Philippines|Philippine peso~菲律宾比索|2;Mexico|Mexican peso~墨西哥比索|2;Argentina|Argentine peso~阿根廷比索|2;Sweden|Swedish krona~瑞典克朗|2;Norway|Norwegian krone~挪威克朗|2;Denmark|Danish krone~丹麦克朗|2;Turkey|Turkish lira~土耳其里拉|2;Egypt|Egyptian pound~埃及镑|2;South Africa|South African rand~南非兰特|2;Saudi Arabia|Saudi riyal~沙特里亚尔|2;United Arab Emirates|UAE dirham~阿联酋迪拉姆|2;Pakistan|Pakistani rupee~巴基斯坦卢比|2;Poland|Polish złoty~波兰兹罗提|3;Czech Republic|Czech koruna~捷克克朗|3;Hungary|Hungarian forint~匈牙利福林|3;Nigeria|Nigerian naira~尼日利亚奈拉|3;Iran|Iranian rial~伊朗里亚尔|3;Bangladesh|Bangladeshi taka~孟加拉塔卡|3;Cambodia|Cambodian riel~柬埔寨瑞尔|3;Myanmar|Myanmar kyat~缅甸缅元|3;Mongolia|Mongolian tögrög~蒙古图格里克|3;Kazakhstan|Kazakhstani tenge~哈萨克斯坦坚戈|3;Chile|Chilean peso~智利比索|3;Colombia|Colombian peso~哥伦比亚比索|3;Peru|Peruvian sol~秘鲁索尔|3;Ukraine|Ukrainian hryvnia~乌克兰格里夫纳|3;Romania|Romanian leu~罗马尼亚列伊|3;Ethiopia|Ethiopian birr~埃塞俄比亚比尔|3;Ghana|Ghanaian cedi~加纳塞地|3;Morocco|Moroccan dirham~摩洛哥迪拉姆|3;Kenya|Kenyan shilling~肯尼亚先令|3".replace(/;/g,";"));
+var cuCount={};CU.forEach(function(r){cuCount[r[1]]=(cuCount[r[1]]||0)+1});
+CU.forEach(function(r,ri){
+ var oc=shuf(CU.map(function(x){return x[1]}).filter(function(x,xi,a){return x!==r[1]&&a.indexOf(x)===xi}),MR(ri+300)).slice(0,3);
+ G(+r[2],"cur","What is the currency of "+r[0]+"?",(CZ[r[0]]||r[0])+"的货币是什么？",r[1],oc);
+ if(cuCount[r[1]]===1)G(+r[2],"cur","Which country uses the "+en(r[1])+"?","哪个国家使用"+zh(r[1])+"？",r[0]+"~"+(CZ[r[0]]||r[0]),shuf(CU.filter(function(x){return x[1]!==r[1]}).map(function(x){return x[0]+"~"+(CZ[x[0]]||x[0])}),MR(ri+340)).slice(0,3));
+});
+var LG=rows("Brazil|Portuguese~葡萄牙语|0;Mexico|Spanish~西班牙语|0;Japan|Japanese~日语|0;China|Mandarin Chinese~普通话|0;France|French~法语|0;Germany|German~德语|0;Italy|Italian~意大利语|0;Russia|Russian~俄语|0;South Korea|Korean~韩语|0;Thailand|Thai~泰语|1;Vietnam|Vietnamese~越南语|1;Indonesia|Indonesian~印尼语|1;Turkey|Turkish~土耳其语|1;Greece|Greek~希腊语|1;Netherlands|Dutch~荷兰语|1;Portugal|Portuguese~葡萄牙语|1;Argentina|Spanish~西班牙语|1;Egypt|Arabic~阿拉伯语|1;Poland|Polish~波兰语|2;Sweden|Swedish~瑞典语|2;Denmark|Danish~丹麦语|2;Norway|Norwegian~挪威语|2;Iran|Persian (Farsi)~波斯语|2;Ukraine|Ukrainian~乌克兰语|2;Hungary|Hungarian~匈牙利语|3;Finland|Finnish~芬兰语|3;Czech Republic|Czech~捷克语|3;Romania|Romanian~罗马尼亚语|3;Bulgaria|Bulgarian~保加利亚语|3;Cambodia|Khmer~高棉语|3;Laos|Lao~老挝语|3;Mongolia|Mongolian~蒙古语|3;Ethiopia|Amharic~阿姆哈拉语|3");
+var lgs=[];LG.forEach(function(r){if(lgs.indexOf(r[1])<0)lgs.push(r[1])});
+LG.forEach(function(r,ri){G(+r[2],"lang","What is the main official language of "+r[0]+"?",(CZ[r[0]]||r[0])+"的主要官方语言是什么？",r[1],shuf(lgs.filter(function(x){return x!==r[1]}),MR(ri+380)).slice(0,3))});
+/* Chinese provinces */
+var PV="Hebei~河北|Shijiazhuang~石家庄|2;Shanxi~山西|Taiyuan~太原|2;Liaoning~辽宁|Shenyang~沈阳|1;Jilin~吉林|Changchun~长春|2;Heilongjiang~黑龙江|Harbin~哈尔滨|1;Jiangsu~江苏|Nanjing~南京|1;Zhejiang~浙江|Hangzhou~杭州|1;Anhui~安徽|Hefei~合肥|2;Fujian~福建|Fuzhou~福州|2;Jiangxi~江西|Nanchang~南昌|2;Shandong~山东|Jinan~济南|2;Henan~河南|Zhengzhou~郑州|1;Hubei~湖北|Wuhan~武汉|1;Hunan~湖南|Changsha~长沙|1;Guangdong~广东|Guangzhou~广州|1;Hainan~海南|Haikou~海口|2;Sichuan~四川|Chengdu~成都|1;Guizhou~贵州|Guiyang~贵阳|2;Yunnan~云南|Kunming~昆明|1;Shaanxi~陕西|Xi’an~西安|1;Gansu~甘肃|Lanzhou~兰州|2;Qinghai~青海|Xining~西宁|3;Inner Mongolia~内蒙古|Hohhot~呼和浩特|3;Guangxi~广西|Nanning~南宁|2;Tibet~西藏|Lhasa~拉萨|1;Ningxia~宁夏|Yinchuan~银川|3;Xinjiang~新疆|Urumqi~乌鲁木齐|2";
+var P=rows(PV).map(function(q){return{p:q[0],c:q[1],l:+q[2]}});
+P.forEach(function(x,pi){
+ G(x.l,"prov","What is the capital city of "+en(x.p)+" in China?",zh(x.p)+"的省会（首府）是哪里？",x.c,oth(P.length,pi+60,pi).map(function(y){return P[y].c}));
+ G(x.l,"prov","Which Chinese province or region has "+en(x.c)+" as its capital?",zh(x.c)+"是哪个省（区）的省会（首府）？",x.p,oth(P.length,pi+90,pi).map(function(y){return P[y].p}));
+});
+/* cities */
+var CI=rows("Shanghai~上海|China|0;Sydney~悉尼|Australia|0;New York~纽约|United States|0;Los Angeles~洛杉矶|United States|0;Rio de Janeiro~里约热内卢|Brazil|0;Osaka~大阪|Japan|1;Kyoto~京都|Japan|1;Melbourne~墨尔本|Australia|1;Chicago~芝加哥|United States|1;San Francisco~旧金山|United States|1;Toronto~多伦多|Canada|1;Vancouver~温哥华|Canada|1;Barcelona~巴塞罗那|Spain|1;Milan~米兰|Italy|1;Venice~威尼斯|Italy|1;Munich~慕尼黑|Germany|1;Manchester~曼彻斯特|United Kingdom|1;Liverpool~利物浦|United Kingdom|1;Istanbul~伊斯坦布尔|Turkey|1;Mumbai~孟买|India|1;São Paulo~圣保罗|Brazil|1;Dubai~迪拜|United Arab Emirates|1;Saint Petersburg~圣彼得堡|Russia|1;Geneva~日内瓦|Switzerland|1;Montreal~蒙特利尔|Canada|2;Florence~佛罗伦萨|Italy|2;Hamburg~汉堡|Germany|2;Frankfurt~法兰克福|Germany|2;Lyon~里昂|France|2;Marseille~马赛|France|2;Edinburgh~爱丁堡|United Kingdom|2;Kolkata~加尔各答|India|2;Lagos~拉各斯|Nigeria|2;Casablanca~卡萨布兰卡|Morocco|2;Johannesburg~约翰内斯堡|South Africa|2;Cape Town~开普敦|South Africa|2;Busan~釜山|South Korea|2;Chiang Mai~清迈|Thailand|2;Ho Chi Minh City~胡志明市|Vietnam|2;Johor Bahru~新山|Malaysia|2;Zurich~苏黎世|Switzerland|2;Cancún~坎昆|Mexico|2;Alexandria~亚历山大港|Egypt|2;Karachi~卡拉奇|Pakistan|2;Seville~塞维利亚|Spain|3;Bengaluru~班加罗尔|India|3;George Town~乔治市|Malaysia|3;Kuching~古晋|Malaysia|3;Kota Kinabalu~亚庇|Malaysia|3;Surabaya~泗水|Indonesia|3;Kraków~克拉科夫|Poland|3;Marrakesh~马拉喀什|Morocco|3;Valparaíso~瓦尔帕莱索|Chile|3;Mombasa~蒙巴萨|Kenya|3;Lahore~拉合尔|Pakistan|3");
+var CN=[];CI.forEach(function(r){if(CN.indexOf(r[1])<0)CN.push(r[1])});
+CN=CN.concat(["Argentina","Peru","Sweden","Greece","Thailand","Netherlands","Austria","Colombia"]);
+CI.forEach(function(r,ri){G(+r[2],"city","In which country is the city of "+en(r[0])+"?",zh(r[0])+"位于哪个国家？",r[1]+"~"+CZ[r[1]],shuf(CN.filter(function(x){return x!==r[1]}),MR(ri+420)).slice(0,3).map(function(x){return x+"~"+CZ[x]}))});
+/* landmarks */
+var LM="Eiffel Tower~埃菲尔铁塔|France~法国|0;Statue of Liberty~自由女神像|United States~美国|0;Big Ben~大本钟|United Kingdom~英国|0;Colosseum~罗马斗兽场|Italy~意大利|0;Taj Mahal~泰姬陵|India~印度|0;Great Wall~长城|China~中国|0;Pyramids of Giza~吉萨金字塔|Egypt~埃及|0;Sydney Opera House~悉尼歌剧院|Australia~澳大利亚|0;Mount Fuji~富士山|Japan~日本|0;Machu Picchu~马丘比丘|Peru~秘鲁|1;Christ the Redeemer~基督像|Brazil~巴西|1;Angkor Wat~吴哥窟|Cambodia~柬埔寨|1;Petronas Twin Towers~双子塔|Malaysia~马来西亚|1;Burj Khalifa~哈利法塔|United Arab Emirates~阿联酋|1;Acropolis~雅典卫城|Greece~希腊|1;Kremlin~克里姆林宫|Russia~俄罗斯|1;Leaning Tower of Pisa~比萨斜塔|Italy~意大利|1;Forbidden City~紫禁城|China~中国|1;Louvre Museum~卢浮宫|France~法国|1;Buckingham Palace~白金汉宫|United Kingdom~英国|1;Golden Gate Bridge~金门大桥|United States~美国|1;Empire State Building~帝国大厦|United States~美国|1;Great Barrier Reef~大堡礁|Australia~澳大利亚|1;Terracotta Army~兵马俑|China~中国|1;Sagrada Família~圣家堂|Spain~西班牙|2;Brandenburg Gate~勃兰登堡门|Germany~德国|2;Stonehenge~巨石阵|United Kingdom~英国|2;Hagia Sophia~圣索菲亚大教堂|Turkey~土耳其|2;Uluru~乌鲁鲁|Australia~澳大利亚|2;Potala Palace~布达拉宫|China~中国|2;Summer Palace~颐和园|China~中国|2;Borobudur~婆罗浮屠|Indonesia~印度尼西亚|2;Mount Kinabalu~京那巴鲁山|Malaysia~马来西亚|2;CN Tower~加拿大国家电视塔|Canada~加拿大|2;Marina Bay Sands~滨海湾金沙|Singapore~新加坡|2;Petra~佩特拉古城|Jordan~约旦|3;Neuschwanstein Castle~新天鹅堡|Germany~德国|3;Chichen Itza~奇琴伊察|Mexico~墨西哥|3;Alhambra~阿尔罕布拉宫|Spain~西班牙|3;Angel Falls~安赫尔瀑布|Venezuela~委内瑞拉|3;Tower of London~伦敦塔|United Kingdom~英国|3;Table Mountain~桌山|South Africa~南非|3;Moai statues~摩艾石像|Chile~智利|3;Mount Kilimanjaro~乞力马扎罗山|Tanzania~坦桑尼亚|3;Sheikh Zayed Grand Mosque~谢赫扎耶德大清真寺|United Arab Emirates~阿联酋|3";
+var L=rows(LM).map(function(q){return{n:q[0],c:q[1],l:+q[2]}}),LC=[];
+L.forEach(function(x){if(LC.indexOf(x.c)<0)LC.push(x.c)});
+L.forEach(function(x,li){G(x.l,"land","In which country can you find "+en(x.n)+"?",zh(x.n)+"位于哪个国家？",x.c,shuf(LC.filter(function(y){return y!==x.c}),MR(li+120)).slice(0,3))});
+/* creators */
+var CR=rows("W|Hamlet~《哈姆雷特》|William Shakespeare~莎士比亚|0;W|Pride and Prejudice~《傲慢与偏见》|Jane Austen~简·奥斯汀|1;W|Nineteen Eighty-Four~《一九八四》|George Orwell~乔治·奥威尔|1;W|War and Peace~《战争与和平》|Leo Tolstoy~托尔斯泰|2;W|Les Misérables~《悲惨世界》|Victor Hugo~雨果|2;W|The Odyssey~《奥德赛》|Homer~荷马|2;W|Don Quixote~《堂吉诃德》|Miguel de Cervantes~塞万提斯|2;W|Dream of the Red Chamber~《红楼梦》|Cao Xueqin~曹雪芹|1;W|Journey to the West~《西游记》|Wu Cheng’en~吴承恩|1;W|Romance of the Three Kingdoms~《三国演义》|Luo Guanzhong~罗贯中|1;W|Water Margin~《水浒传》|Shi Nai’an~施耐庵|2;W|The Little Prince~《小王子》|Antoine de Saint-Exupéry~圣埃克苏佩里|2;W|Great Expectations~《远大前程》|Charles Dickens~狄更斯|3;W|Moby-Dick~《白鲸》|Herman Melville~梅尔维尔|3;W|Frankenstein~《弗兰肯斯坦》|Mary Shelley~玛丽·雪莱|3;W|Harry Potter~《哈利·波特》|J. K. Rowling~J·K·罗琳|0;W|The Adventures of Tom Sawyer~《汤姆·索亚历险记》|Mark Twain~马克·吐温|1;W|Alice’s Adventures in Wonderland~《爱丽丝梦游仙境》|Lewis Carroll~刘易斯·卡罗尔|2;W|Crime and Punishment~《罪与罚》|Fyodor Dostoevsky~陀思妥耶夫斯基|3;W|The Old Man and the Sea~《老人与海》|Ernest Hemingway~海明威|2;P|Mona Lisa~《蒙娜丽莎》|Leonardo da Vinci~达·芬奇|0;P|The Last Supper~《最后的晚餐》|Leonardo da Vinci~达·芬奇|1;P|Starry Night~《星月夜》|Vincent van Gogh~梵高|1;P|Sunflowers~《向日葵》|Vincent van Gogh~梵高|1;P|The Scream~《呐喊》|Edvard Munch~爱德华·蒙克|2;P|Guernica~《格尔尼卡》|Pablo Picasso~毕加索|1;P|The Persistence of Memory~《记忆的永恒》|Salvador Dalí~萨尔瓦多·达利|3;P|Water Lilies~《睡莲》|Claude Monet~莫奈|2;P|The Night Watch~《夜巡》|Rembrandt~伦勃朗|3;P|Girl with a Pearl Earring~《戴珍珠耳环的少女》|Johannes Vermeer~维米尔|3;P|The Birth of Venus~《维纳斯的诞生》|Sandro Botticelli~波提切利|3;P|The Creation of Adam~《创造亚当》|Michelangelo~米开朗基罗|2;P|Impression, Sunrise~《印象·日出》|Claude Monet~莫奈|3;C|Symphony No. 5~《第五交响曲》|Ludwig van Beethoven~贝多芬|1;C|Moonlight Sonata~《月光奏鸣曲》|Ludwig van Beethoven~贝多芬|1;C|Für Elise~《致爱丽丝》|Ludwig van Beethoven~贝多芬|1;C|The Four Seasons~《四季》|Antonio Vivaldi~维瓦尔第|2;C|The Magic Flute~《魔笛》|Wolfgang Amadeus Mozart~莫扎特|2;C|Swan Lake~《天鹅湖》|Pyotr Tchaikovsky~柴可夫斯基|1;C|The Nutcracker~《胡桃夹子》|Pyotr Tchaikovsky~柴可夫斯基|1;C|Boléro~《波莱罗》|Maurice Ravel~拉威尔|3;C|The Blue Danube~《蓝色多瑙河》|Johann Strauss II~小约翰·施特劳斯|3;C|Rhapsody in Blue~《蓝色狂想曲》|George Gershwin~格什温|3;C|Clair de Lune~《月光》|Claude Debussy~德彪西|3;I|the telephone~电话|Alexander Graham Bell~亚历山大·格拉汉姆·贝尔|1;I|the practical electric light bulb~实用电灯泡|Thomas Edison~爱迪生|1;I|the World Wide Web~万维网|Tim Berners-Lee~蒂姆·伯纳斯-李|2;I|the movable-type printing press in Europe~欧洲活字印刷机|Johannes Gutenberg~古腾堡|2;I|the first powered aeroplane~第一架动力飞机|The Wright brothers~莱特兄弟|1;I|dynamite~炸药|Alfred Nobel~诺贝尔|2;I|the seismoscope~地动仪|Zhang Heng~张衡|3;D|penicillin~青霉素|Alexander Fleming~亚历山大·弗莱明|1;D|X-rays~X 射线|Wilhelm Röntgen~伦琴|2;D|the smallpox vaccine~天花疫苗|Edward Jenner~爱德华·詹纳|2;D|the planet Uranus~天王星|William Herschel~威廉·赫歇尔|3;D|the electron~电子|J. J. Thomson~汤姆逊|3;F|the law of universal gravitation~万有引力定律|Isaac Newton~牛顿|1;F|the theory of evolution by natural selection~自然选择进化论|Charles Darwin~达尔文|1;F|the three laws of heredity~遗传定律|Gregor Mendel~孟德尔|2;F|the periodic table~元素周期表|Dmitri Mendeleev~门捷列夫|2");
+var PS=[];CR.forEach(function(r){if(PS.indexOf(r[2])<0)PS.push(r[2])});
+var TQ={W:["Who wrote “@”?","@的作者是谁？"],P:["Who painted “@”?","@是谁画的？"],C:["Who composed “@”?","@是谁作曲的？"],I:["Who invented @?","谁发明了@？"],D:["Who discovered @?","谁发现了@？"],F:["Who formulated @?","谁提出了@？"]};
+CR.forEach(function(r,ri){var t=TQ[r[0]];G(+r[3],"auth",t[0].replace("@",en(r[1])),t[1].replace("@",zh(r[1])),r[2],shuf(PS.filter(function(x){return x!==r[2]}),MR(ri+450)).slice(0,3))});
+/* animals */
+var AK={M:"Mammal~哺乳动物",B:"Bird~鸟类",R:"Reptile~爬行动物",F:"Fish~鱼类",A:"Amphibian~两栖动物",I:"Insect~昆虫",X:"Arachnid~蛛形纲动物",L:"Mollusc~软体动物",K:"Crustacean~甲壳动物"},AKK=Object.keys(AK);
+var AD={C:"Meat (carnivore)~肉（食肉动物）",H:"Plants (herbivore)~植物（食草动物）",O:"Both plants and meat (omnivore)~植物和肉（杂食动物）",I:"Insects (insectivore)~昆虫（食虫动物）"};
+var AN=rows("Dog~狗|M|O|0;Cat~猫|M|C|0;Cow~牛|M|H|0;Horse~马|M|H|0;Pig~猪|M|O|0;Lion~狮子|M|C|0;Tiger~老虎|M|C|0;Elephant~大象|M|H|0;Giraffe~长颈鹿|M|H|0;Zebra~斑马|M|H|0;Rabbit~兔子|M|H|0;Penguin~企鹅|B|C|0;Duck~鸭子|B|O|0;Chicken~鸡|B|O|0;Snake~蛇|R|C|0;Shark~鲨鱼|F|C|0;Goldfish~金鱼|F|O|0;Frog~青蛙|A|I|0;Butterfly~蝴蝶|I|-|0;Bee~蜜蜂|I|-|0;Ant~蚂蚁|I|-|0;Monkey~猴子|M|O|1;Giant panda~大熊猫|M|H|1;Kangaroo~袋鼠|M|H|1;Koala~考拉|M|H|1;Dolphin~海豚|M|C|1;Hippopotamus~河马|M|H|1;Rhinoceros~犀牛|M|H|1;Wolf~狼|M|C|1;Deer~鹿|M|H|1;Camel~骆驼|M|H|1;Bat~蝙蝠|M|-|1;Eagle~鹰|B|C|1;Ostrich~鸵鸟|B|O|1;Owl~猫头鹰|B|C|1;Swan~天鹅|B|H|1;Crocodile~鳄鱼|R|C|1;Lizard~蜥蜴|R|I|1;Turtle~乌龟|R|-|1;Salmon~鲑鱼|F|C|1;Spider~蜘蛛|X|C|1;Snail~蜗牛|L|H|1;Fox~狐狸|M|O|2;Platypus~鸭嘴兽|M|C|2;Blue whale~蓝鲸|M|-|2;Chameleon~变色龙|R|I|2;Komodo dragon~科莫多巨蜥|R|C|2;Seahorse~海马|F|-|2;Toad~蟾蜍|A|I|2;Scorpion~蝎子|X|C|2;Octopus~章鱼|L|C|2;Crab~螃蟹|K|O|2;Hummingbird~蜂鸟|B|-|2;Salamander~蝾螈|A|C|3;Lobster~龙虾|K|O|3;Squid~鱿鱼|L|C|3;Tarantula~狼蛛|X|C|3");
+AN.forEach(function(r,ai){
+ var cls=AK[r[1]],oc=shuf(AKK.filter(function(x){return x!==r[1]}),MR(ai+500)).slice(0,3).map(function(x){return AK[x]});
+ G(+r[3],"anim","What kind of animal is "+art(en(r[0]))+"?",zh(r[0])+"属于哪一类动物？",cls,oc);
+ if(r[2]!=="-")G(+r[3],"anim","Which best describes what "+art(en(r[0]))+" mainly eats?",zh(r[0])+"主要吃什么？",AD[r[2]],Object.keys(AD).filter(function(x){return x!==r[2]}).map(function(x){return AD[x]}));
+});
+var BB=rows("Dog~狗|Puppy~小狗|0;Cat~猫|Kitten~小猫|0;Sheep~绵羊|Lamb~羊羔|0;Chicken~鸡|Chick~小鸡|0;Duck~鸭子|Duckling~小鸭|0;Cow~牛|Calf~小牛|1;Pig~猪|Piglet~小猪|1;Frog~青蛙|Tadpole~蝌蚪|1;Bear~熊|Cub~幼熊|1;Horse~马|Foal~小马|2;Kangaroo~袋鼠|Joey~小袋鼠|2;Deer~鹿|Fawn~小鹿|2;Goat~山羊|Kid~小山羊|2;Swan~天鹅|Cygnet~小天鹅|3;Goose~鹅|Gosling~小鹅|3;Owl~猫头鹰|Owlet~小猫头鹰|3;Eagle~鹰|Eaglet~雏鹰|3;Seal~海豹|Pup~小海豹|3");
+BB.forEach(function(r,bi){G(+r[2],"baby","What is a baby "+en(r[0]).toLowerCase()+" called?",zh(r[0])+"的幼崽叫什么？",r[1],shuf(BB.filter(function(x){return x[1]!==r[1]}).map(function(x){return x[1]}),MR(bi+540)).slice(0,3))});
+/* planets, zodiac, calendar */
+var PL=["Mercury~水星","Venus~金星","Earth~地球","Mars~火星","Jupiter~木星","Saturn~土星","Uranus~天王星","Neptune~海王星"];
+PL.forEach(function(x,pi){G(pi<4?0:pi<6?1:2,"planet","Which planet is number "+(pi+1)+" from the Sun?","离太阳第 "+(pi+1)+" 近的行星是哪颗？",x,om(PL.map(en),PL.map(zh),pi,pi+170))});
+var ZE=["Rat","Ox","Tiger","Rabbit","Dragon","Snake","Horse","Goat","Monkey","Rooster","Dog","Pig"],ZZ=["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"];
+ZE.forEach(function(x,zi){var n=(zi+1)%12;G(1,"zod","Which animal comes after the "+x+" in the Chinese zodiac?","生肖中，"+ZZ[zi]+"的下一个是什么？",ZE[n]+"~"+ZZ[n],om(ZE,ZZ,n,zi+190))});
+var MN=["January","February","March","April","May","June","July","August","September","October","November","December"],MZ=["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],MD=[31,28,31,30,31,30,31,31,30,31,30,31];
+for(k=0;k<12;k++)G(0,"cal","How many days does "+MN[k]+" have in a normal (non-leap) year?","平年的"+MZ[k]+"有多少天？",MD[k],[28,29,30,31,32].filter(function(x){return x!==MD[k]}).slice(0,3));
+})();
+
+var LV={easy:{n:"Easy",m:.75,t:"Gentle pace: fewer reps and easier moves."},medium:{n:"Medium",m:1,t:"A balanced mix of moves and reps."},hard:{n:"Hard",m:1.4,t:"Tougher moves and more reps. Keep a steady pace."}};
+var RP={"Squat":[8,12,18],"Wall push-up":[6,10,15],"Glute bridge":[8,12,16],"Calf raises":[10,15,25],"High knees":[20,30,40],"Arm circles":[8,10,15],"Jumping jacks":[10,15,25],"Push-up":[3,6,10],"Lunge":[6,10,14]};
+var HD={"Forearm plank":[10,20,30],"Side bend stretch":[10,16,24],"Forward fold":[10,16,24],"Standing quad stretch":[10,16,24]};
+function lvi(){return store.level==="easy"?0:store.level==="hard"?2:1}
+function amt(mv){var r=RP[mv.n];return r?{reps:r[lvi()]}:{hold:(HD[mv.n]||[10,16,24])[lvi()]}}
+function sc(mv){var a=amt(mv);return a.reps?Math.min(40,Math.max(10,Math.round(a.reps*2/5)*5)):a.hold}
+function amtText(mv){var a=amt(mv);return a.reps?(LANG==="zh"?a.reps+" 次":a.reps+" reps"):(LANG==="zh"?"保持 "+a.hold+" 秒":"Hold "+a.hold+" sec")}
+function elig(m,L){return L==="easy"?m.d<=2:L==="hard"?m.d>=2:true}
+function pad(n){return(n<10?"0":"")+n}
+function dk(t){return t.getFullYear()+"-"+pad(t.getMonth()+1)+"-"+pad(t.getDate())}
+var d=new Date(),key=dk(d);
+function seed(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return function(){h=(h*1103515245+12345)|0;return((h>>>8)&0xffff)/0xffff}}
+var gi=[];
+function pick(L){
+ var r=seed(key+L),ep=[],sp=[],q;
+ for(q=0;q<EX.length;q++)if(elig(EX[q],L))ep.push(q);
+ for(q=0;q<ST.length;q++)sp.push(EX.length+q);
+ var a=ep.splice(Math.floor(r()*ep.length),1)[0],b=ep.splice(Math.floor(r()*ep.length),1)[0];
+ return [a,b,sp[Math.floor(r()*sp.length)]];
+}
+var store={done:{},extra:[],streak:0,last:"",complete:false,hist:{}};
+try{var raw=localStorage.getItem("dailymoves4");if(raw){var p=JSON.parse(raw);if(p&&typeof p==="object")store=p}}catch(e){}
+if(!store.hist)store.hist={};if(!store.extra)store.extra=[];if(!store.done)store.done={};if(!store.earned)store.earned={};if(!store.cdays)store.cdays={};
+if(store.last!==key){
+ var yd=new Date(d.getFullYear(),d.getMonth(),d.getDate()-1),yk=dk(yd);
+ if(!(store.last===yk&&store.complete))store.streak=0;
+ store.done={};store.extra=[];store.complete=false;store.last=key;
+}
+if(!store.level||!LV[store.level])store.level="medium";LANG=store.lang||(/^zh/i.test(navigator.language||"")?"zh":"en");gi=(store.swp&&store.swp.day===key&&store.swp.lv===store.level)?store.swp.gi.slice():pick(store.level);
+if(store.qv!==3){store.qs={c:{},w:{}};store.qd=null;store.qv=3}
+if(store.qv!==3){store.qs={c:{},w:{}};store.qd=null;store.qv=3}
+if(!store.qs)store.qs={c:{},w:{}};if(!store.qhist)store.qhist={};if(!store.qcor)store.qcor={};if(!store.lvdone)store.lvdone={};if(!store.langs)store.langs={};store.langs[LANG]=1;
+if(!store.qd||store.qd.day!==key)store.qd={day:key,ids:qpick(),ans:{}};
+function save(){try{localStorage.setItem("dailymoves4",JSON.stringify(store))}catch(e){}}
+var BADGES=[
+{id:"daily",e:"🏅",n:"Daily Done",h:"Finish 3 moves in a day"},
+{id:"bonus",e:"💫",n:"Bonus mover",h:"Finish a bonus move"},
+{id:"s3",e:"🔥",n:"3-day streak",h:"3 days in a row"},
+{id:"s7",e:"⚡",n:"7-day streak",h:"7 days in a row"},
+{id:"s14",e:"🚀",n:"14-day streak",h:"14 days in a row"},
+{id:"s30",e:"👑",n:"30-day streak",h:"30 days in a row"},
+{id:"d10",e:"🌟",n:"10 days done",h:"Finish 10 days in total"},
+{id:"m25",e:"🏃",n:"25 moves",h:"25 moves in total"},
+{id:"m100",e:"💪",n:"100 moves",h:"100 moves in total"},
+{id:"m250",e:"🦾",n:"250 moves",h:"250 moves in total"},
+{id:"m500",e:"🏆",n:"500 moves",h:"500 moves in total"},
+{id:"q10",e:"❓",n:"10 answers",h:"Answer 10 questions"},
+{id:"q50",e:"📘",n:"50 answers",h:"Answer 50 questions"},
+{id:"q100",e:"🎓",n:"100 answers",h:"Answer 100 questions"},
+{id:"q250",e:"🧠",n:"250 answers",h:"Answer 250 questions"},
+{id:"qfirst",e:"📝",n:"Quiz starter",h:"Finish a daily quiz"},
+{id:"q8",e:"🎯",n:"Sharp mind",h:"Score 8 or more"},
+{id:"q10p",e:"💯",n:"Perfect 10",h:"Score 10 out of 10"},
+{id:"redeem",e:"🔁",n:"Second chance",h:"Fix a missed question"},
+{id:"dbl",e:"✨",n:"Double day",h:"Finish moves and quiz in a day"},
+{id:"c25",e:"✅",n:"25 correct",h:"25 correct answers in total"},
+{id:"c100",e:"🥇",n:"100 correct",h:"100 correct answers in total"},
+{id:"exp",e:"🧩",n:"Expert solver",h:"Get an expert question right"},
+{id:"encore",e:"🎬",n:"Encore",h:"Finish two quiz sets in a day"},
+{id:"lvall",e:"🧭",n:"Level explorer",h:"Finish a day on Easy, Medium and Hard"},
+{id:"hardday",e:"🌶️",n:"Tough cookie",h:"Finish a day on Hard"},
+{id:"swap",e:"🔀",n:"Picky mover",h:"Swap a move you don’t want"},
+{id:"poster",e:"📸",n:"Show-off",h:"Make a result poster"},
+{id:"bi",e:"🌏",n:"Bilingual",h:"Use both English and 中文"},
+{id:"b5",e:"🎁",n:"Bonus bonanza",h:"Finish 5 bonus moves in a day"}
+];
+var fresh=[];
+function aw(id){if(!store.earned[id]){store.earned[id]=1;fresh.push(id)}}
+function nmOf(id){for(var q=0;q<BADGES.length;q++)if(BADGES[q].id===id)return BADGES[q].e+" "+bnm(BADGES[q])[0];return id}
+function recompute(){
+ var n=0,x=0;
+ for(var j=0;j<3;j++)if(store.done[j])n++;
+ store.extra.forEach(function(e){if(e.done)x++});
+ if(n===3&&!store.complete){store.complete=true;store.streak=(store.streak||0)+1}
+ if(n<3&&store.complete){store.complete=false;store.streak=Math.max(0,store.streak-1)}
+ store.hist[key]=n+x;
+ if(store.complete)store.cdays[key]=1;else delete store.cdays[key];
+ var cd=Object.keys(store.cdays).length;
+ if(store.complete){store.lvdone[store.level]=1;if(store.lvdone.easy&&store.lvdone.medium&&store.lvdone.hard)aw("lvall");if(store.level==="hard")aw("hardday");aw("daily");if(store.streak>=3)aw("s3");if(store.streak>=7)aw("s7");if(store.streak>=14)aw("s14");if(store.streak>=30)aw("s30");if(cd>=10)aw("d10")}
+ if(x>0)aw("bonus");if(x>=5)aw("b5");chkBadges();
+}
+function addExtra(){
+ var used=gi.concat(store.extra.map(function(e){return e.id})),pool=[];
+ ALL.forEach(function(m,k){if(used.indexOf(k)<0&&(k>=EX.length||elig(m,store.level)))pool.push(k)});
+ if(!pool.length)ALL.forEach(function(m,k){if(gi.indexOf(k)<0)pool.push(k)});
+ store.extra.push({id:pool[Math.floor(Math.random()*pool.length)],done:false});
+}
+function weekKeys(){var off=(d.getDay()+6)%7,a=[];for(var k=0;k<7;k++)a.push({k:dk(new Date(d.getFullYear(),d.getMonth(),d.getDate()-off+k)),l:(LANG==="zh"?"一二三四五六日":"MTWTFSS").charAt(k)});return a}
+function monthKeys(){var n=new Date(d.getFullYear(),d.getMonth()+1,0).getDate(),a=[];for(var k=1;k<=n;k++)a.push({k:d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(k),l:k%5===1?String(k):""});return a}
+function total(a){var t=0;a.forEach(function(x){t+=store.hist[x.k]||0});return t}
+function $(id){return document.getElementById(id)}
+document.title="Daily Tasks";
+function card(mv,on,kind,idx){
+ var li=document.createElement("li"),st=ST.indexOf(mv)>=0;if(on)li.className="done";
+ li.innerHTML='<div class="row"><input type="checkbox"><div class="t"><b></b><div class="tags"><span class="tag"></span><span class="tag"></span></div></div><button class="go">'+T("▶ Time it")+'</button></div><p class="how"></p>'+mfig(mv)+'<div class="cf"><button class="sw">'+T("↻ Swap")+'</button></div>';
+ bindFig(li.querySelector(".mf"),mv);var cb=li.querySelector("input");cb.checked=on;cb.setAttribute("aria-label","Mark "+mv.n+" done");
+ cb.onchange=function(){setDone(kind,idx,cb.checked)};
+ li.querySelector("b").textContent=mn(mv);
+ var tg=li.querySelectorAll(".tag");tg[0].textContent=T(st?"Stretch":"Exercise");tg[1].textContent=amtText(mv);
+ li.querySelector(".how").textContent=mt(mv);
+ li.querySelector(".go").onclick=function(){openStage(mv,sc(mv),kind,idx)};
+ var swb=li.querySelector(".sw");if(on)swb.remove();else swb.onclick=function(){swapMove(kind,idx)};
+ return li;
+}
+var tab="week";
+function renderProg(){
+ var arr=tab==="week"?weekKeys():monthKeys(),t=0,act=0,mx=3;
+ arr.forEach(function(a){a.v=store.hist[a.k]||0;t+=a.v;if(a.v)act++;if(a.v>mx)mx=a.v});
+ $("sum").textContent=LANG==="zh"?(tab==="week"?"本周":"本月")+"共完成 "+t+" 个动作，活跃 "+act+" 天":t+" moves done "+(tab==="week"?"this week":"this month")+" across "+act+" active "+(act===1?"day":"days");
+ $("chart").innerHTML=arr.map(function(a){
+  return '<div class="col" title="'+a.k+': '+a.v+'"><div class="bar'+(a.v?' has':'')+(a.k===key?' now':'')+'" style="height:'+(Math.round(a.v/mx*88)+3)+'px"></div><span>'+a.l+'</span></div>';
+ }).join("");
+ $("tabW").setAttribute("aria-pressed",tab==="week");$("tabM").setAttribute("aria-pressed",tab==="month");
+}
+var HC=213.63;
+function render(){
+ var list=$("list"),b=$("bonus"),n=0;
+ list.innerHTML="";b.innerHTML="";
+ gi.forEach(function(g,k){var on=!!store.done[k];if(on)n++;list.appendChild(card(ALL[g],on,"main",k))});
+ var nx=list.querySelector("li:not(.done)");if(nx)nx.classList.add("next");
+ if(store.complete){
+  if(!store.extra.length){addExtra();addExtra();save()}
+  store.extra.forEach(function(e,k){b.appendChild(card(ALL[e.id],e.done,"extra",k))});
+  $("hint").textContent=T("Optional. Every extra move counts toward your week and month.");$("more").hidden=false;
+ }else{$("hint").textContent=T("Finish today’s three moves to unlock bonus moves.");$("more").hidden=true}
+ $("sDone").textContent=n+"/3";$("sStreak").textContent=store.streak;
+ $("sWeek").textContent=total(weekKeys());$("sMonth").textContent=total(monthKeys());
+ $("hRing").style.strokeDashoffset=HC*(1-n/3);
+ Array.prototype.forEach.call(document.querySelectorAll("#lv button"),function(q){var l=q.getAttribute("data-l");q.setAttribute("aria-pressed",l===store.level);q.disabled=store.complete&&l!==store.level});
+ $("lvTip").textContent=T(LV[store.level].t)+" "+T(store.complete?"Level changes unlock tomorrow.":"Changing level gives you a fresh set of three.");
+ renderProg();renderBadges();renderQuiz();
+}
+function setDone(kind,idx,v){
+ var was=store.complete;
+ if(kind==="main")store.done[idx]=v;else store.extra[idx].done=v;
+ fresh=[];recompute();save();render();
+ if(!was&&store.complete){if(stg&&!stg.hidden)pending=true;else celebrate()}
+ else if(fresh.length){toast(T("New badge")+(LANG==="zh"?"：":": ")+fresh.map(nmOf).join(LANG==="zh"?"、":", "));fresh=[]}
+}
+var AC=null;
+function ac(){try{if(!AC){var A=window.AudioContext||window.webkitAudioContext;AC=new A()}if(AC.state==="suspended")AC.resume();return AC}catch(e){return null}}
+function tone(f,t0,dur,type,vol){
+ if(store.mute)return;var c=ac();if(!c)return;
+ var o=c.createOscillator(),g=c.createGain(),t=c.currentTime+(t0||0);
+ o.type=type||"sine";o.frequency.value=f;o.connect(g);g.connect(c.destination);
+ g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol||.2,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+ o.start(t);o.stop(t+dur+.05);
+}
+var SFX={
+ start:function(){tone(523,0,.15,"triangle");tone(784,.13,.3,"triangle")},
+ tick:function(){tone(660,0,.09,"square",.07)},
+ end:function(){tone(784,0,.2,"triangle");tone(988,.17,.2,"triangle");tone(1318,.34,.5,"triangle",.25);if(!store.mute&&navigator.vibrate)try{navigator.vibrate([150,80,250])}catch(e){}}
+};
+var PAIRS=[[0,1],[1,2],[1,3],[3,4],[1,5],[5,6],[2,7],[7,8],[2,9],[9,10]];
+var figs=[],raf=0,RM=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
+function mfig(mv){
+ if(RM)return fig(mv);
+ var q,o='<svg class="fig mf" viewBox="0 0 100 100" role="img" aria-label="Animation of '+mv.n+'"><line class="fl" x1="4" y1="90" x2="96" y2="90"/>';
+ if(mv.w)o+='<line class="wl" x1="90" y1="6" x2="90" y2="90"/>';
+ o+='<g class="bg">';for(q=0;q<PAIRS.length;q++)o+='<line class="bl"/>';
+ return o+'<circle r="7"/></g></svg>';
+}
+function pose(f,k,bob){
+ var a=f.a,b=f.b||f.a,P=[],j;
+ for(j=0;j<22;j++)P[j]=a[j]+(b[j]-a[j])*k;
+ for(j=0;j<PAIRS.length;j++){var u=PAIRS[j][0],v=PAIRS[j][1],l=f.ls[j];l.setAttribute("x1",P[2*u]);l.setAttribute("y1",P[2*u+1]);l.setAttribute("x2",P[2*v]);l.setAttribute("y2",P[2*v+1])}
+ f.c.setAttribute("cx",P[0]);f.c.setAttribute("cy",P[1]);f.g.setAttribute("transform","translate(0 "+bob+")");
+}
+function loop(t){
+ figs=figs.filter(function(f){return f.svg.isConnected});
+ if(!figs.length){raf=0;return}
+ var k=(1-Math.cos(t/2400*2*Math.PI))/2,bob=Math.sin(t/650)*1.3;
+ figs.forEach(function(f){f.b?pose(f,k,0):pose(f,0,bob)});
+ raf=requestAnimationFrame(loop);
+}
+function bindFig(svg,mv){
+ if(!svg)return;
+ var f={svg:svg,g:svg.querySelector(".bg"),ls:svg.querySelectorAll(".bl"),c:svg.querySelector("circle"),a:mv.a,b:mv.b||null};
+ figs.push(f);pose(f,0,0);if(!raf)raf=requestAnimationFrame(loop);
+}
+var stg=$("stage"),tot=30,left=30,iv=null,endAt=0,cK=null,cI=-1,label="",pending=false,autoT=0;
+function fmt(s){return pad(Math.floor(s/60))+":"+pad(s%60)}
+function sdraw(){$("sTime").textContent=fmt(left);$("sRing").style.strokeDashoffset=741.42*(1-(tot-left)/tot);stg.classList.toggle("last",!!iv&&left>0&&left<=3)}
+function stopT(){clearInterval(iv);iv=null}
+function runT(){stopT();endAt=Date.now()+left*1000;$("sGo").textContent=T("Pause");iv=setInterval(tick,200);sdraw()}
+function tick(){
+ var r=Math.max(0,Math.ceil((endAt-Date.now())/1000));
+ if(r===left)return;
+ left=r;sdraw();
+ if(left>0){if(left<=3)SFX.tick()}else finishT();
+}
+function finishT(){
+ stopT();left=0;sdraw();stg.classList.remove("last");stg.classList.add("done");
+ $("sName").textContent=T("Nice work!");
+ SFX.end();clearTimeout(autoT);autoT=setTimeout(closeStage,2300);
+ var already=cK==="main"?store.done[cI]:(cK&&store.extra[cI]&&store.extra[cI].done);
+ if(cK&&!already)setDone(cK,cI,true);
+}
+function openStage(mv,secs,kind,idx){
+ stopT();clearTimeout(autoT);cK=kind;cI=idx;label=mn(mv);tot=left=secs;
+ stg.classList.remove("done","last");
+ $("sName").textContent=mn(mv);$("sHow").textContent=mt(mv);$("sReps").textContent=amtText(mv);$("sNote").textContent=amt(mv).reps?T("Finish your reps before the timer ends"):T("Hold steady until the timer ends");
+ $("sFig").innerHTML=mfig(mv);bindFig($("sFig").querySelector(".mf"),mv);
+ $("sMute").textContent=store.mute?"🔇":"🔊";
+ var r=$("sRing");r.style.transition="none";sdraw();void r.getBoundingClientRect();r.style.transition="";
+ stg.hidden=false;SFX.start();runT();$("sGo").focus();
+}
+function closeStage(){
+ stopT();clearTimeout(autoT);stg.hidden=true;stg.classList.remove("done","last");$("sFig").innerHTML="";
+ if(pending){pending=false;celebrate()}
+}
+$("sGo").onclick=function(){
+ if(left===0){left=tot;stg.classList.remove("done");$("sName").textContent=label;SFX.start();var r=$("sRing");r.style.transition="none";sdraw();void r.getBoundingClientRect();r.style.transition="";runT();return}
+ if(iv){stopT();$("sGo").textContent=T("Resume");stg.classList.remove("last")}else{SFX.start();runT()}
+};
+$("sClose").onclick=closeStage;$("sCheck").onclick=closeStage;
+$("sMute").onclick=function(){store.mute=!store.mute;save();$("sMute").textContent=store.mute?"🔇":"🔊"};
+$("clear").onclick=function(){store.done={};store.extra=[];recompute();save();render()};
+$("more").onclick=function(){addExtra();save();render()};
+$("tabW").onclick=function(){tab="week";renderProg()};
+$("tabM").onclick=function(){tab="month";renderProg()};
+var ov=$("ov");
+function closeOv(){ov.hidden=true}
+function celebrate(){
+ var cf=$("conf"),cols=["#ff6a45","#8a5426","#ffc93c","#2dbf8a","#e84a9c"],h="";
+ for(var k=0;k<40;k++)h+='<span style="left:'+Math.round(Math.random()*100)+'%;background:'+cols[k%5]+';animation-delay:'+(Math.random()*.9).toFixed(2)+'s;animation-duration:'+(2+Math.random()*1.6).toFixed(2)+'s"></span>';
+ cf.innerHTML=h;
+ $("cP").textContent=LANG==="zh"?"太棒了！连续 "+store.streak+" 天，本周共完成 "+total(weekKeys())+" 个动作。":"Great work. Streak: "+store.streak+(store.streak===1?" day":" days")+". "+total(weekKeys())+" moves this week.";
+ $("cNew").innerHTML=fresh.filter(function(id){return id!=="daily"}).map(function(id){return"<span>"+(LANG==="zh"?"已解锁 "+nmOf(id):nmOf(id)+" unlocked")+"</span>"}).join("");fresh=[];
+ ov.hidden=false;SFX.end();$("cPoster").focus();
+}
+$("cClose").onclick=closeOv;
+$("cKeep").onclick=function(){closeOv();showTab("today");$("bh").scrollIntoView({behavior:"smooth",block:"start"})};
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(!$("stage").hidden)closeStage();else{if(!ov.hidden)closeOv();$("pov").hidden=true}}});
+function toast(t){var q=$("toast");q.textContent=t;q.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){q.hidden=true},3500)}
+function renderBadges(){
+ var cd=Object.keys(store.cdays).length,n=0,h="";
+ BADGES.forEach(function(b){var on=!!store.earned[b.id];if(on)n++;
+  h+='<div class="bd'+(on?'':' lock')+'"><i>'+b.e+'</i><b>'+bnm(b)[0]+'</b><small>'+(b.id==="daily"&&cd>0?"×"+cd+" "+(LANG==="zh"?"天":(cd===1?"day":"days")):bnm(b)[1])+'</small></div>'});
+ $("bgrid").innerHTML=h;var tt=totals();$("aCor").textContent=tt.tc;$("aCorT").textContent=(LANG==="zh"?"今日 ":"Today ")+(store.qcor[key]||0);$("bsum").textContent=LANG==="zh"?"已获得 "+n+"/"+BADGES.length+" 枚徽章 · 累计 "+tt.tm+" 个动作 · "+tt.tq+" 道题":n+" of "+BADGES.length+" badges · "+tt.tm+" moves · "+tt.tq+" questions";
+}
+function rr(X,x,y,w,h,r){X.beginPath();X.moveTo(x+r,y);X.arcTo(x+w,y,x+w,y+h,r);X.arcTo(x+w,y+h,x,y+h,r);X.arcTo(x,y+h,x,y,r);X.arcTo(x,y,x+w,y,r);X.closePath()}
+function drawPoster(){
+ var c=$("pc"),X=c.getContext("2d"),W=1080,H=1350,F='Georgia,"Times New Roman",serif',S2='"Avenir Next","Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif',k,done=store.complete;
+ X.clearRect(0,0,W,H);
+ var g=X.createLinearGradient(0,0,W,H);g.addColorStop(0,"#a86a30");g.addColorStop(1,"#3a2412");X.fillStyle=g;X.fillRect(0,0,W,H);
+ X.fillStyle="rgba(255,255,255,.07)";X.beginPath();X.arc(940,150,260,0,7);X.fill();X.beginPath();X.arc(100,1250,320,0,7);X.fill();
+ X.textAlign="center";X.fillStyle="#fff";X.font="bold 72px "+F;X.fillText(T("Daily Tasks"),W/2,130);
+ X.fillStyle="rgba(255,255,255,.75)";X.font="34px "+S2;
+ X.fillText(d.toLocaleDateString(LANG==="zh"?"zh-CN":undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"}),W/2,190);
+ X.font="28px "+S2;X.fillText(T("Level")+(LANG==="zh"?"：":": ")+T(LV[store.level].n),W/2,236);
+ X.beginPath();X.arc(W/2,400,150,0,7);
+ if(done){var bg=X.createLinearGradient(390,250,690,550);bg.addColorStop(0,"#ffd35a");bg.addColorStop(1,"#ff9d3c");X.fillStyle=bg}else X.fillStyle="rgba(255,255,255,.12)";
+ X.fill();
+ X.font="150px "+S2;X.textBaseline="middle";X.fillStyle="#fff";X.fillText(done?"🏅":"🏃",W/2,408);X.textBaseline="alphabetic";
+ X.font="bold 56px "+F;X.fillText(T(done?"Daily Done":"Moves in progress"),W/2,640);
+ X.font="32px "+S2;X.fillStyle="rgba(255,255,255,.75)";X.fillText(T(done?"All three moves complete":"Three small moves a day"),W/2,692);
+ X.textAlign="left";
+ for(k=0;k<3;k++){
+  var y=780+k*78,on=!!store.done[k];
+  X.beginPath();X.arc(190,y,26,0,7);
+  if(on){X.fillStyle="#ffd35a";X.fill();X.strokeStyle="#3a2412";X.lineWidth=6;X.lineCap="round";X.lineJoin="round";X.beginPath();X.moveTo(178,y);X.lineTo(187,y+9);X.lineTo(203,y-9);X.stroke()}
+  else{X.strokeStyle="rgba(255,255,255,.5)";X.lineWidth=4;X.stroke()}
+  X.fillStyle=on?"#fff":"rgba(255,255,255,.6)";X.font="bold 42px "+S2;X.fillText(mn(ALL[gi[k]]),240,y+14);
+ }
+ var bx=store.extra.filter(function(e){return e.done}).length;
+ X.textAlign="center";
+ if(bx){X.fillStyle="#ffd35a";X.font="bold 34px "+S2;X.fillText(LANG==="zh"?"+ "+bx+" 个加练动作":"+ "+bx+" bonus "+(bx===1?"move":"moves"),W/2,1000)}
+ var st=[[store.streak,T("day streak")],[total(weekKeys()),T("this week")],[total(monthKeys()),T("this month")]];
+ st.forEach(function(q,i){
+  var bxx=81+i*314;
+  X.fillStyle="rgba(255,255,255,.14)";rr(X,bxx,1040,290,190,28);X.fill();
+  X.fillStyle="#fff";X.font="bold 84px "+F;X.fillText(String(q[0]),bxx+145,1130);
+  X.fillStyle="rgba(255,255,255,.75)";X.font="30px "+S2;X.fillText(q[1],bxx+145,1186);
+ });
+ X.fillStyle="rgba(255,255,255,.6)";X.font="28px "+S2;X.fillText(T("Small goals. Every day."),W/2,1310);
+}
+function openPoster(m){posterMode=m||"move";fresh=[];aw("poster");var nbd=fresh.slice();fresh=[];if(nbd.length){save();renderBadges();toast(T("New badge")+(LANG==="zh"?"：":": ")+nbd.map(nmOf).join(LANG==="zh"?"、":", "))}
+ (posterMode==="quiz"?drawQuizPoster:posterMode==="badge"?drawBadgePoster:drawPoster)();$("pov").hidden=false;$("pSave").focus()}
+async function savePoster(){
+ $("pc").toBlob(async function(blob){
+  if(!blob)return;
+  var name="daily-"+posterMode+"-"+key+".png",dl=null;
+  try{if(window.claude&&window.claude.use)dl=await window.claude.use("downloads")}catch(e){}
+  if(dl){try{await dl.save({filename:name,data:blob})}catch(e){}return}
+  try{var f=new File([blob],name,{type:"image/png"});
+   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Daily Tasks"});return}
+  }catch(e){if(e&&e.name==="AbortError")return}
+  var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();
+ },"image/png");
+}
+function tr(root){
+ var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n,a=[];
+ while(n=w.nextNode())a.push(n);
+ a.forEach(function(n){var pn=n.parentNode&&n.parentNode.nodeName;if(pn==="SCRIPT"||pn==="STYLE")return;
+  if(n._en===undefined)n._en=n.nodeValue;var k=n._en.trim();if(!k)return;
+  var z=ZHD[k];n.nodeValue=(LANG==="zh"&&z)?n._en.replace(k,z):n._en});
+}
+function setDate(){$("date").textContent=d.toLocaleDateString(LANG==="zh"?"zh-CN":undefined,{weekday:"long",month:"long",day:"numeric"})+" · "+T("two exercises and a stretch")}
+function applyLang(){document.documentElement.lang=LANG==="zh"?"zh-CN":"en";tr(document.body);setDate();$("lEn").setAttribute("aria-pressed",LANG==="en");$("lZh").setAttribute("aria-pressed",LANG==="zh")}
+function setLang(l){LANG=l;store.lang=l;store.langs[l]=1;fresh=[];chkBadges();save();applyLang();render();if(fresh.length){toast(T("New badge")+(LANG==="zh"?"：":": ")+fresh.map(nmOf).join(LANG==="zh"?"、":", "));fresh=[]}}
+$("lEn").onclick=function(){setLang("en")};
+$("lZh").onclick=function(){setLang("zh")};
+
+function shuf(a,r){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function pickVaried(arr,need,r){
+ var g={},keys=[],out=[];
+ arr.forEach(function(q){var c=q.cat||"g";if(!g[c]){g[c]=[];keys.push(c)}g[c].push(q)});
+ while(out.length<need&&keys.length){var k=keys[Math.floor(r()*keys.length)],a=g[k];out.push(a.splice(Math.floor(r()*a.length),1)[0]);if(!a.length)keys.splice(keys.indexOf(k),1)}
+ return out;
+}
+function qpick(seen,n){
+ seen=seen||[];n=n||0;var need=[2,3,3,2],ids=[],sn={};seen.forEach(function(x){sn[x]=1});
+ for(var L=0;L<4;L++){
+  var all=QB.filter(function(q){return q.lv===L}),pool=all.filter(function(q){return !sn[q.id]}),r=seed(key+"q"+L+n);
+  if(pool.length<need[L])pool=all;
+  var wr=pool.filter(function(q){return store.qs.w[q.k]}).sort(function(a,b){return store.qs.w[a.k]-store.qs.w[b.k]});
+  var take=wr.slice(0,Math.max(1,Math.floor(need[L]/2)));
+  if(take.length<need[L])take=take.concat(pickVaried(pool.filter(function(q){return !store.qs.c[q.k]&&!store.qs.w[q.k]}),need[L]-take.length,r));
+  if(take.length<need[L])take=take.concat(pickVaried(pool.filter(function(q){return take.indexOf(q)<0}),need[L]-take.length,r));
+  take.forEach(function(q){ids.push(q.id)});
+ }
+ return shuf(ids,seed(key+"mix"+n));
+}
+function newSet(){var o=store.qd,n=(o.n||0)+1,seen=(o.seen||[]).concat(o.ids);store.qd={day:key,n:n,ids:qpick(seen,n),ans:{},seen:seen};qi=0;save();renderQuiz();window.scrollTo(0,0)}
+function qOrder(id){var r=seed(key+"o"+id),o=[0,1,2,3],i,j,t;for(i=3;i>0;i--){j=Math.floor(r()*(i+1));t=o[i];o[i]=o[j];o[j]=t}return o}
+function qans(){return Object.keys(store.qd.ans).length}
+function qScore(){var n=0;for(var k in store.qd.ans)if(store.qd.ans[k]===0)n++;return n}
+function totals(){var tm=0,tq=0,tc=0,k;for(k in store.qcor)tc+=store.qcor[k]||0;for(k in store.hist)tm+=store.hist[k]||0;for(k in store.qhist)tq+=store.qhist[k]||0;return{tm:tm,tq:tq,tc:tc}}
+function chkBadges(){
+ var t=totals();
+ [[25,"m25"],[100,"m100"],[250,"m250"],[500,"m500"]].forEach(function(x){if(t.tm>=x[0])aw(x[1])});
+ [[10,"q10"],[50,"q50"],[100,"q100"],[250,"q250"]].forEach(function(x){if(t.tq>=x[0])aw(x[1])});
+ [[25,"c25"],[100,"c100"]].forEach(function(x){if(t.tc>=x[0])aw(x[1])});if(store.langs&&store.langs.en&&store.langs.zh)aw("bi");
+ if(qans()>=10){aw("qfirst");var sc=qScore();if(sc>=8)aw("q8");if(sc>=10)aw("q10p");if((store.qd.n||0)>=1)aw("encore");if(store.complete)aw("dbl")}
+}
+var qi=0;
+function qinit(){var i=0;while(i<10&&store.qd.ans[i]!==undefined)i++;qi=i}
+function ql(o){return o[LANG==="zh"?1:0]}
+function qtxt(q){return q.q[LANG==="zh"?1:0]}
+var LVN=["Easy","Medium","Hard","Expert"];
+function answerQ(i,oi){
+ var qd=store.qd,id=qd.ids[i];if(qd.ans[i]!==undefined)return;
+ var ok=oi===0,kq=QB[id].k,had=!!store.qs.w[kq];
+ qd.ans[i]=oi;
+ if(ok){delete store.qs.w[kq];store.qs.c[kq]=1}else{delete store.qs.c[kq];store.qs.w[kq]=Date.now()}
+ store.qhist[key]=(store.qhist[key]||0)+1;store.qcor[key]=(store.qcor[key]||0)+(ok?1:0);
+ fresh=[];if(ok&&had)aw("redeem");if(ok&&QB[id].lv===3)aw("exp");
+ chkBadges();save();
+ if(ok){tone(784,0,.12,"triangle");tone(1175,.1,.22,"triangle")}else tone(220,0,.28,"sawtooth",.1);
+ renderQuiz();render();
+ if(fresh.length){toast(T("New badge")+(LANG==="zh"?"：":": ")+fresh.map(nmOf).join(LANG==="zh"?"、":", "));fresh=[]}
+}
+function renderQuiz(){
+ var B=$("qbody"),n=qans(),sc=qScore(),t=totals();B.innerHTML="";
+ $("qNum").textContent=n+"/10";$("qToday").textContent=store.qcor[key]||0;$("qTotal").textContent=t.tc;
+ $("qRing").style.strokeDashoffset=HC*(1-n/10);
+ var c=document.createElement("div");c.className="qcard";
+ if(qi>=10){
+  var msg=sc===10?"Perfect!":sc>=9?"Brilliant!":sc>=7?"Great job!":sc>=5?"Good effort":"Keep learning!";
+  c.innerHTML='<div class="score">'+sc+'/10</div><p class="rmsg">'+T(msg)+'</p><button class="nextq" id="qMore">'+T("Another set")+'</button><button class="nextq alt" id="qShare">'+T("Share result poster")+'</button>';
+  B.appendChild(c);$("qMore").onclick=newSet;$("qShare").onclick=function(){openPoster("quiz")};return;
+ }
+ var id=store.qd.ids[qi],q=QB[id],a=store.qd.ans[qi],h2='<div class="qmeta"><span>'+T("Question")+" "+(qi+1)+'/10</span><span class="lvt l'+q.lv+'">'+T(LVN[q.lv])+'</span></div><p class="qq"></p><div class="opts"></div>';
+ c.innerHTML=h2;c.querySelector(".qq").textContent=qtxt(q);
+ var op=c.querySelector(".opts");
+ qOrder(id).forEach(function(oi){
+  var b=document.createElement("button");b.className="opt";b.textContent=ql(q.o[oi]);
+  if(a!==undefined){b.disabled=true;if(oi===0)b.classList.add("ok");else if(oi===a)b.classList.add("bad")}
+  else b.onclick=function(){answerQ(qi,oi)};
+  op.appendChild(b);
+ });
+ if(a!==undefined){
+  var f=document.createElement("p");f.className="fb";f.style.color=a===0?"#1f9a6a":"var(--hot)";
+  f.textContent=a===0?T("Correct!"):T("Not quite.")+" "+T("Answer")+(LANG==="zh"?"：":": ")+ql(q.o[0]);
+  c.appendChild(f);
+  var nb=document.createElement("button");nb.className="nextq";nb.textContent=T(qi===9?"See results":"Next question");
+  nb.onclick=function(){qi++;renderQuiz();window.scrollTo(0,0)};c.appendChild(nb);
+ }
+ B.appendChild(c);
+}
+function star(X,x,y,r,col){X.fillStyle=col;X.beginPath();for(var i=0;i<8;i++){var a=i*Math.PI/4,q=i%2?r*.35:r;X.lineTo(x+Math.cos(a)*q,y+Math.sin(a)*q)}X.closePath();X.fill()}
+function drawQuizPoster(){
+ var c=$("pc"),X=c.getContext("2d"),W=1080,H=1350,sc=qScore(),i;
+ var F='Georgia,"Times New Roman","Songti SC","Noto Serif CJK SC",serif',S2='"Avenir Next","Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif';
+ X.clearRect(0,0,W,H);
+ var g=X.createLinearGradient(0,0,W,H);g.addColorStop(0,"#a86a30");g.addColorStop(1,"#2d1a0c");X.fillStyle=g;X.fillRect(0,0,W,H);
+ X.fillStyle="rgba(255,255,255,.07)";X.beginPath();X.arc(960,120,230,0,7);X.fill();X.beginPath();X.arc(80,1280,300,0,7);X.fill();
+ star(X,150,150,26,"#ffd35a");star(X,930,330,18,"rgba(255,211,90,.8)");star(X,120,1170,20,"rgba(255,211,90,.7)");star(X,980,1120,28,"#ffd35a");
+ X.textAlign="center";X.fillStyle="#fff";X.font="bold 62px "+F;X.fillText(T("Daily Tasks"),W/2,112);
+ X.fillStyle="rgba(255,255,255,.8)";X.font="30px "+S2;
+ X.fillText(T("Daily Quiz")+" · "+new Date().toLocaleDateString(LANG==="zh"?"zh-CN":undefined,{month:"long",day:"numeric",year:"numeric"}),W/2,166);
+ X.fillStyle="#fbf4e8";rr(X,70,215,940,1010,52);X.fill();
+ X.font="110px "+S2;X.textBaseline="middle";X.fillStyle="#3a2a1c";X.fillText(sc>=8?"🏆":sc>=5?"🌟":"📚",W/2,310);X.textBaseline="alphabetic";
+ X.lineWidth=34;X.lineCap="round";X.strokeStyle="#ecdcc4";X.beginPath();X.arc(W/2,610,170,0,7);X.stroke();
+ if(sc>0){var rg=X.createLinearGradient(370,440,710,780);rg.addColorStop(0,"#ffb347");rg.addColorStop(1,"#d9542a");X.strokeStyle=rg;X.beginPath();X.arc(W/2,610,170,-Math.PI/2,-Math.PI/2+2*Math.PI*sc/10);X.stroke()}
+ X.fillStyle="#3a2a1c";X.font="bold 160px "+F;X.fillText(String(sc),W/2,655);
+ X.fillStyle="#7b6550";X.font="46px "+S2;X.fillText("/ 10",W/2,722);
+ var msg=sc===10?"Perfect!":sc>=9?"Brilliant!":sc>=7?"Great job!":sc>=5?"Good effort":"Keep learning!";
+ X.fillStyle="#8a5426";X.font="bold 70px "+F;X.fillText(T(msg),W/2,880);
+ X.fillStyle="#7b6550";X.font="32px "+S2;X.fillText(LANG==="zh"?"答对 "+sc+" / 10 题":sc+" of 10 correct",W/2,930);
+ for(i=0;i<10;i++){
+  var ok=store.qd.ans[i]===0,cx=W/2-4.5*84+i*84,cy=1000;
+  X.fillStyle=ok?"#2dbf8a":"#e9633a";X.beginPath();X.arc(cx,cy,30,0,7);X.fill();
+  X.strokeStyle="#fff";X.lineWidth=6;X.lineCap="round";X.lineJoin="round";X.beginPath();
+  if(ok){X.moveTo(cx-12,cy);X.lineTo(cx-3,cy+10);X.lineTo(cx+13,cy-9)}else{X.moveTo(cx-10,cy-10);X.lineTo(cx+10,cy+10);X.moveTo(cx+10,cy-10);X.lineTo(cx-10,cy+10)}
+  X.stroke();
+ }
+ var cnt=[0,0,0],tot=[0,0,0];
+ store.qd.ids.forEach(function(id,k){var b=Math.min(QB[id].lv,2);tot[b]++;if(store.qd.ans[k]===0)cnt[b]++});
+ var lb=["Easy","Medium","Hard+"];
+ for(i=0;i<3;i++){
+  var bx=117+i*288;
+  X.fillStyle="#f0e2cc";rr(X,bx,1060,270,120,26);X.fill();
+  X.fillStyle="#3a2a1c";X.font="bold 52px "+F;X.fillText(cnt[i]+"/"+tot[i],bx+135,1124);
+  X.fillStyle="#7b6550";X.font="26px "+S2;X.fillText(T(lb[i]),bx+135,1160);
+ }
+ X.fillStyle="rgba(255,255,255,.75)";X.font="28px "+S2;X.fillText(T("Small goals. Every day."),W/2,1292);
+}
+function drawBadgePoster(){
+ var c=$("pc"),X=c.getContext("2d"),W=1080,H=1350,i,t=totals(),n=Object.keys(store.earned).length;
+ var F='Georgia,"Times New Roman","Songti SC","Noto Serif CJK SC",serif',S2='"Avenir Next","Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif';
+ X.clearRect(0,0,W,H);
+ var g=X.createLinearGradient(0,0,W,H);g.addColorStop(0,"#a86a30");g.addColorStop(1,"#2d1a0c");X.fillStyle=g;X.fillRect(0,0,W,H);
+ X.fillStyle="rgba(255,255,255,.07)";X.beginPath();X.arc(950,130,230,0,7);X.fill();X.beginPath();X.arc(90,1270,300,0,7);X.fill();
+ star(X,150,150,26,"#ffd35a");star(X,940,330,18,"rgba(255,211,90,.8)");star(X,110,1160,20,"rgba(255,211,90,.7)");star(X,990,1110,26,"#ffd35a");
+ X.textAlign="center";X.fillStyle="#fff";X.font="bold 62px "+F;X.fillText(T("Daily Tasks"),W/2,112);
+ X.fillStyle="rgba(255,255,255,.8)";X.font="30px "+S2;
+ X.fillText(T("Achievements")+" · "+new Date().toLocaleDateString(LANG==="zh"?"zh-CN":undefined,{month:"long",day:"numeric",year:"numeric"}),W/2,166);
+ X.fillStyle="#fbf4e8";rr(X,60,205,960,1010,52);X.fill();
+ X.fillStyle="#3a2a1c";X.font="bold 120px "+F;X.fillText(n+"/"+BADGES.length,W/2,345);
+ X.fillStyle="#7b6550";X.font="34px "+S2;X.fillText(T("badges earned"),W/2,400);
+ X.textBaseline="middle";
+ for(i=0;i<BADGES.length;i++){
+  var on=!!store.earned[BADGES[i].id],cx=165+(i%6)*150,cy=495+Math.floor(i/6)*118;
+  X.beginPath();X.arc(cx,cy,46,0,7);
+  if(on){var bg=X.createLinearGradient(cx-46,cy-46,cx+46,cy+46);bg.addColorStop(0,"#ffd35a");bg.addColorStop(1,"#ff9d3c");X.fillStyle=bg}else X.fillStyle="#eadfcd";
+  X.fill();
+  X.font="46px "+S2;X.fillStyle="#3a2a1c";
+  if(on)X.fillText(BADGES[i].e,cx,cy+3);else{X.globalAlpha=.35;X.fillText("🔒",cx,cy+3);X.globalAlpha=1}
+ }
+ X.textBaseline="alphabetic";
+ var bx=[[t.tm,"Moves"],[t.tq,"Answers"]];
+ bx.forEach(function(q,k){
+  var x0=255+k*300;
+  X.fillStyle="#f0e2cc";rr(X,x0,1075,270,110,26);X.fill();
+  X.fillStyle="#3a2a1c";X.font="bold 50px "+F;X.fillText(String(q[0]),x0+135,1130);
+  X.fillStyle="#7b6550";X.font="26px "+S2;X.fillText(T(q[1]),x0+135,1166);
+ });
+ X.fillStyle="rgba(255,255,255,.75)";X.font="28px "+S2;X.fillText(T("Small goals. Every day."),W/2,1292);
+}
+function shareText(){
+ if(posterMode==="badge"){var bn=Object.keys(store.earned).length;return LANG==="zh"?"我在「每日任务」里获得了 "+bn+"/"+BADGES.length+" 枚徽章！🏅":"I’ve earned "+bn+"/"+BADGES.length+" badges in Daily Tasks! 🏅"}
+ if(posterMode==="quiz")return LANG==="zh"?"我在今天的「每日任务」常识问答中得了 "+qScore()+"/10 分！🎯":"I scored "+qScore()+"/10 on today’s Daily Tasks quiz! 🎯";
+ return LANG==="zh"?"我完成了今天的伸展运动！🔥 连续 "+store.streak+" 天":"I finished today’s stretching moves! 🔥 "+store.streak+"-day streak";
+}
+async function sharePoster(){
+ $("pc").toBlob(async function(blob){
+  if(!blob)return;
+  var name="daily-"+posterMode+"-"+key+".png",text=shareText();
+  try{var f=new File([blob],name,{type:"image/png"});
+   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],text:text,title:T("Daily Tasks")});return}
+  }catch(e){if(e&&e.name==="AbortError")return}
+  savePoster();
+  try{window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank","noopener")}catch(e){}
+ },"image/png");
+}
+var posterMode="move";
+function swapMove(kind,idx){
+ var cur=kind==="main"?gi[idx]:store.extra[idx].id,isSt=cur>=EX.length,used=gi.concat(store.extra.map(function(e){return e.id})),pool=[];
+ ALL.forEach(function(m,k){if(k===cur||used.indexOf(k)>=0)return;if(isSt?k>=EX.length:(k<EX.length&&elig(m,store.level)))pool.push(k)});
+ if(!pool.length)return;
+ var nk=pool[Math.floor(Math.random()*pool.length)];
+ if(kind==="main"){gi[idx]=nk;store.done[idx]=false;store.swp={day:key,lv:store.level,gi:gi.slice()}}else store.extra[idx]={id:nk,done:false};
+ fresh=[];aw("swap");recompute();save();render();
+ if(fresh.length){toast(T("New badge")+(LANG==="zh"?"：":": ")+fresh.map(nmOf).join(LANG==="zh"?"、":", "));fresh=[]}
+}
+function showTab(t){["Today","Quiz","Prog"].forEach(function(n){var k=n.toLowerCase();$("v"+n).hidden=t!==(n==="Today"?"today":k);$("tab"+n).setAttribute("aria-pressed",t===(n==="Today"?"today":k))});window.scrollTo(0,0)}
+$("tabToday").onclick=function(){showTab("today")};
+$("tabQuiz").onclick=function(){showTab("quiz")};
+$("tabProg").onclick=function(){showTab("prog")};
+Array.prototype.forEach.call(document.querySelectorAll("#lv button"),function(q){q.onclick=function(){
+ var L=q.getAttribute("data-l");if(store.complete||L===store.level)return;
+ store.level=L;store.done={};store.extra=[];store.swp=null;gi=pick(L);recompute();save();closeStage();render();
+}});
+$("mkPoster").onclick=function(){openPoster("move")};
+$("mkQPoster").onclick=function(){if(qans()<10){toast(T("Finish today’s quiz first"));return}openPoster("quiz")};
+$("pShare").onclick=sharePoster;
+$("mkBPoster").onclick=function(){openPoster("badge")};
+$("cPoster").onclick=function(){closeOv();openPoster()};
+$("pClose").onclick=function(){$("pov").hidden=true};
+$("pSave").onclick=savePoster;
+qinit();recompute();fresh=[];save();applyLang();render();
+})();
+</script>
+</body>
+</html>
